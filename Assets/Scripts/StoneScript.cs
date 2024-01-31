@@ -7,49 +7,15 @@ public class StoneScript : MonoBehaviour
 {
     // --- VARIABLES ---
     public RouteScript currentRoute;
-    public TextMeshProUGUI diceText;
-    public DiceRollManager drm;
 
-    private int routePos;
-    private bool isMoving;
+    public int routePos;
+    public bool isMoving;
 
     public int stoneID;
     public int steps;
 
     // --- METHODS ---
-    private void Start()
-    {
-        drm = GameObject.Find("_DiceRollManager").GetComponent<DiceRollManager>();
-    }
-
-    private void Update()
-    {
-        // Rolls Dice
-        if (Input.GetKeyDown(KeyCode.Space) && !isMoving && !drm.isRolling) 
-        {
-            StartCoroutine(RollAndMove());
-        }
-    }
-
-    IEnumerator RollAndMove()
-    {
-        // Dice Logic
-        drm.RollDice();
-        yield return new WaitForSeconds(4f);
-        steps = drm.DetectResult();
-
-        // Movement Logic
-        if (routePos + steps < currentRoute.childNodeList.Count)
-        {
-            StartCoroutine(Move());
-        }
-        else
-        {
-            Debug.Log("Rolled Number Is Too High");
-        }
-    }
-
-    IEnumerator Move()
+    public IEnumerator Move()
     {
         if (isMoving)
         {
@@ -68,8 +34,6 @@ public class StoneScript : MonoBehaviour
             steps--;
             routePos++;
         }
-
-        diceText.text = "'Space' to Roll Dice";
         isMoving = false;
     }
 
