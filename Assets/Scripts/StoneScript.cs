@@ -8,6 +8,7 @@ public class StoneScript : MonoBehaviour
     // --- VARIABLES ---
     public RouteScript currentRoute;
     public TextMeshProUGUI diceText;
+    public DiceRollManager drm;
 
     private int routePos;
     private bool isMoving;
@@ -16,24 +17,35 @@ public class StoneScript : MonoBehaviour
     public int steps;
 
     // --- METHODS ---
+    private void Start()
+    {
+        drm = GameObject.Find("_DiceRollManager").GetComponent<DiceRollManager>();
+    }
+
     private void Update()
     {
         // Rolls Dice
-        if (Input.GetKeyDown(KeyCode.Space) && !isMoving) 
+        if (Input.GetKeyDown(KeyCode.Space) && !isMoving && !drm.isRolling) 
         {
-            // Dice Logic
-            steps = Random.Range(1, 7);
-            Debug.Log("Dice Rolled " + steps);
+            StartCoroutine(RollAndMove());
+        }
+    }
 
-            if (routePos + steps < currentRoute.childNodeList.Count)
-            {
-                diceText.text = "You Rolled a " + steps + "!";
-                StartCoroutine(Move());
-            }
-            else
-            {
-                Debug.Log("Rolled Number Is Too High");
-            }
+    IEnumerator RollAndMove()
+    {
+        // Dice Logic
+        drm.RollDice();
+        yield return new WaitForSeconds(4f);
+        steps = drm.DetectResult();
+
+        // Movement Logic
+        if (routePos + steps < currentRoute.childNodeList.Count)
+        {
+            StartCoroutine(Move());
+        }
+        else
+        {
+            Debug.Log("Rolled Number Is Too High");
         }
     }
 
@@ -52,7 +64,7 @@ public class StoneScript : MonoBehaviour
             // Moving to position
             while (MoveToNextNode(nextPos)) { yield return null; }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
             steps--;
             routePos++;
         }
