@@ -34,11 +34,6 @@ public class StoneScript : MonoBehaviour
             steps--;
             routePos++;
         }
-
-        GameManager.instance.diceTutText.enabled = true;
-        GameManager.instance.diceFace.enabled = false;
-        GameManager.instance.rollText.enabled = false;
-        GameManager.instance.canStartNextTurn = true;
         isMoving = false;
 
         transform.LookAt(Camera.main.transform);
