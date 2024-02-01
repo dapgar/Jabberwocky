@@ -34,11 +34,19 @@ public class StoneScript : MonoBehaviour
             steps--;
             routePos++;
         }
+
+        GameManager.instance.diceTutText.enabled = true;
+        GameManager.instance.diceFace.enabled = false;
+        GameManager.instance.rollText.enabled = false;
+        GameManager.instance.canStartNextTurn = true;
         isMoving = false;
+
+        transform.LookAt(Camera.main.transform);
     }
 
     private bool MoveToNextNode(Vector3 target)
     {
+        transform.LookAt(target);
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, 2f * Time.deltaTime));
     }
 }
