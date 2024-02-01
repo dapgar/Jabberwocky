@@ -34,7 +34,7 @@
             "id": "20645a21-6654-473c-be3d-36db525d5976",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "RLGL_Move",
                     "type": "Button",
                     "id": "c05d5bad-8946-460a-afcb-41214a65340f",
                     "expectedControlType": "Button",
@@ -47,11 +47,44 @@
                 {
                     "name": "",
                     "id": "3680f7cf-974b-46fb-91e3-587cfe55157c",
-                    "path": "",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "RLGL_Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d47b57b7-0ef5-4621-803d-5883c4af2637",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RLGL_Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "263d20ff-87b7-4604-8244-51fe458d88e6",
+                    "path": "<Keyboard>/#(R)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RLGL_Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6f69f9b-eef1-4a21-8c6f-5d4ef707fdde",
+                    "path": "<Keyboard>/#(U)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RLGL_Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
