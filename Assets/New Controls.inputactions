@@ -32,30 +32,8 @@
         {
             "name": "Minigame",
             "id": "20645a21-6654-473c-be3d-36db525d5976",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "c05d5bad-8946-460a-afcb-41214a65340f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "3680f7cf-974b-46fb-91e3-587cfe55157c",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []
