@@ -7,7 +7,7 @@ public class RLGL_Manager : MonoBehaviour {
     private float speed;
 
     [SerializeField]
-    private GameObject[] players;
+    private RLGL_Character[] players;
 
     [SerializeField]
     private Transform lightIndicator;
@@ -59,6 +59,10 @@ public class RLGL_Manager : MonoBehaviour {
         }
 
         StartCoroutine(LightController());
+
+        for (int i = 0; i < players.Length; i++) {
+            players[i].SetupCamera(i, players.Length);
+        }
     }
 
     private void Update() {
