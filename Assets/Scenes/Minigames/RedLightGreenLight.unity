@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -147,8 +147,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211944158}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.443, z: 4}
+  m_LocalRotation: {x: 0.13052616, y: -0, z: -0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 1, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -969,8 +969,8 @@ Transform:
   m_GameObject: {fileID: 1269984860}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.08, z: 0}
-  m_LocalScale: {x: 1.25, y: 1, z: 1.4949617}
+  m_LocalPosition: {x: 0, y: 0.08, z: -0.84}
+  m_LocalScale: {x: 1.25, y: 1, z: 1.6307043}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1736810205}
@@ -1087,7 +1087,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f90bc4802bcf054daadeb6ebccb1858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  gameTime: 1
+  speed: 30
+  finishLineZ: 4
   players:
   - {fileID: 470103325448907667}
   - {fileID: 450684436}
@@ -1099,7 +1101,6 @@ MonoBehaviour:
   minRedLightDuration: 1.5
   maxGreenLightDuration: 4
   minGreenLightDuration: 2
-  finishLineZ: 4
   reactionTimeBuffer: 0.25
 --- !u!1 &1631043210
 GameObject:

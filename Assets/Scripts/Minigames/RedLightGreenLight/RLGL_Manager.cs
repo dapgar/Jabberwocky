@@ -1,112 +1,135 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class RLGL_Manager : MonoBehaviour {
+    [Header("Gameplay Stuff")]
+    [SerializeField]
+    private float gameTime;
     [SerializeField]
     private float speed;
-
+    [SerializeField]
+    private float finishLineZ;
     [SerializeField]
     private RLGL_Character[] players;
 
+    [Header("Light Stuff")]
     [SerializeField]
     private Transform lightIndicator;
     [SerializeField]
     private float rotationTime = 0.75f;
-
-    private bool[] movingPlayers;
-    private bool isLightRed = true;
-
     [SerializeField]
     private float maxRedLightDuration = 4f;
     [SerializeField]
     private float minRedLightDuration = 1.5f;
-
     [SerializeField]
     private float maxGreenLightDuration = 5f;
     [SerializeField]
     private float minGreenLightDuration = 2f;
-
-    [SerializeField]
-    private float finishLineZ;
-
     /* Higher reaction time buffer makes game easier */
     [SerializeField]
     private float reactionTimeBuffer = 0.75f;
+
+    private float timer = 0f;
+
+    private bool isLightRed = true;
     private bool lightJustSwitched = false;
     private float reactionTimeTimer = 0f;
 
     private bool runLightCoroutine = true;  // For cleanup, set this to false to stop looping coroutine
+    private bool gameRunning = true;
 
-    /*
-     * Could be better with a RLGL_Character class with the following:
-     * bool for moving
-     * bool for alive
-     * bool for isFinished
-     * 
-     * that way we can do:
-     * players[index].moving
-     * players[index].finished or .dead --> Don't take input actions
-     * 
-     * Would need own prefabs for characters for this game
-     * prefabs would need a RLGL_Character script on them
-     */
+    private int playingPlayers;
 
     private void Start() {
-        movingPlayers = new bool[players.Length];
-        for (int i = 0; i < movingPlayers.Length; i++) {
-            movingPlayers[i] = false;
-        }
-
         StartCoroutine(LightController());
 
         for (int i = 0; i < players.Length; i++) {
-            players[i].SetupCamera(i, players.Length);
+            players[i].SetupPlayer(i, players.Length, speed);
         }
+        playingPlayers = players.Length;
     }
 
     private void Update() {
-        MovePlayer(0, Key.Q);
-        MovePlayer(1, Key.R);
-        MovePlayer(2, Key.U);
-        MovePlayer(3, Key.P);
-
-        if (lightJustSwitched) {
-            reactionTimeTimer += Time.deltaTime;
-            if (reactionTimeTimer > reactionTimeBuffer) {
-                reactionTimeTimer = 0;
-                lightJustSwitched = false;
+        if (gameRunning) {
+            timer += Time.deltaTime;
+            if (timer >= gameTime) {
+                GameOver(true);
             }
-        }   // May be better for "else if", however that may save them 1 frame longer
-        if (isLightRed && !lightJustSwitched) {
-            for (int i = 0; i < movingPlayers.Length; i++) {
-                if (movingPlayers[i]) {
-                    // Kill that player
-                    Debug.Log($"Player {i + 1} died");
+
+            foreach (RLGL_Character player in players) {
+                if (!player.IsFinished && player.IsAlive) {
+                    player.Move();
+                    if (player.CheckFinish(finishLineZ)) playingPlayers--;
                 }
+            }
+
+            if (lightJustSwitched) {
+                reactionTimeTimer += Time.deltaTime;
+                if (reactionTimeTimer > reactionTimeBuffer) {
+                    reactionTimeTimer = 0;
+                    lightJustSwitched = false;
+                }
+            }
+            if (isLightRed && !lightJustSwitched) {
+                foreach (RLGL_Character player in players) {
+                    if (player.IsAlive && player.IsMoving) {
+                        player.Kill();
+                        playingPlayers--;
+                    }
+                }
+            }
+
+           if (playingPlayers == 0) {
+                GameOver(false);
             }
         }
     }
 
+    private void GameOver(bool bTimeRanOut) {
+        if (!gameRunning) return;
+        gameRunning = false;
+        runLightCoroutine = false;
 
-    private void MovePlayer(int index, Key key) {
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard == null) return; // no keyboard
-
-        if (keyboard[key].isPressed) {
-            players[index].transform.Translate(new Vector3(0f, 0f, 1) * speed * Time.deltaTime);
-            movingPlayers[index] = true;
+        if (bTimeRanOut) {
+            Debug.Log("Game Over: Time ran out");
+            foreach (RLGL_Character player in players) {
+                if (player.IsFinished) {
+                    // Handle giving the winners their rewards
+                    Debug.Log($"Player {player.PlayerIndex + 1} finished. They can move forward.");
+                }
+                else if (player.IsAlive) player.Kill();
+                
+            }
         }
+        else {
+            // This 'else' triggers IF:
+            // - All players are dead
+            // - All players have finished
+            // - All players are dead or finished
 
-        // There is no "key released" so it just checks if they're NOT pressing key but were previously moving, if so sets moving to false
-        if (!keyboard[key].isPressed && movingPlayers[index]) {
-            movingPlayers[index] = false;
+            bool allDead = true;
+            bool allFinished = true;
+            foreach (RLGL_Character player in players) {
+                if (player.IsAlive) allDead = false;
+                if (!player.IsFinished) allFinished = false;
+            }
+            if (allDead) {
+                Debug.Log("Game Over: Everyone's Dead");
+            }
+            else if (allFinished) {
+                Debug.Log("Game Over: Everyone Finished, you can all move forward");
+            }
+            else {
+                Debug.Log("Game Over: All players either died or finished.");
+                foreach (RLGL_Character player in players) {
+                    // Handle giving the winning players movement
+                    if (player.IsFinished) Debug.Log($"Player {player.PlayerIndex + 1} finished. They can move forward.");
+                }
+            }
         }
-
-        if (players[index].transform.position.z >= finishLineZ) {
-            // TODO: Actual win & safety for that player, disable movement & face them towards camera?
-            Debug.Log($"Player {index + 1} finished");
-        }
+        
+            
+        
     }
 
     private IEnumerator LightController() {

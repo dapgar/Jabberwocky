@@ -48,9 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 7771083841677672849}
-  bIsMoving: 0
-  bIsAlive: 1
-  bIsFinished: 0
+  model: {fileID: 3789729833594404646}
+  deathRotateSpeed: 5
 --- !u!1 &6462804176173381811
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,13 +182,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7120133276799147817}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: 0, y: 1.75, z: -2}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 1.5, z: -1.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5295700413322170389}
-  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!20 &7771083841677672849
 Camera:
   m_ObjectHideFlags: 0
@@ -219,8 +218,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 0.5
+    height: 0.5
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -295,7 +294,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 3a07d44b5e0889c49bdc2f04e7cd6397, type: 2}
     - target: {fileID: 919132149155446097, guid: a94f6a38a4aea0344bfd8c177c4008f1, type: 3}
       propertyPath: m_Name
-      value: char03
+      value: char
       objectReference: {fileID: 0}
     - target: {fileID: 8449996119470504636, guid: a94f6a38a4aea0344bfd8c177c4008f1, type: 3}
       propertyPath: m_Materials.Array.data[0]
