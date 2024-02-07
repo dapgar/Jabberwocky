@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RLGL_Character : MonoBehaviour
@@ -25,6 +23,25 @@ public class RLGL_Character : MonoBehaviour
             }
             else if (playerIndex == 3) {
                 cam.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+            }
+        }
+        else if (totalPlayers == 3) {
+            if (playerIndex == 0) {
+                cam.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+            }
+            else if (playerIndex == 1) {
+                cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+            }
+            else {
+                cam.rect = new Rect(0, 0f, 1f, 0.5f);
+            }
+        }
+        else {
+            if (playerIndex == 0) {
+                cam.rect = new Rect(0, 0f, 0.5f, 1f);
+            }
+            else if (playerIndex == 1) {
+                cam.rect = new Rect(0.5f, 0f, 0.5f, 1f);
             }
         }
     }
