@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    public List <Camera> cameras;
     public List<StoneScript> players;
     public int diceRoll;
 
@@ -24,5 +24,17 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+
+
+    public void TurnOffCamerasBut(Camera camToKeep)
+    {
+        foreach (Camera c in cameras) 
+        {
+            c.enabled = false;
+        }
+
+        camToKeep.enabled = true;
     }
 }
