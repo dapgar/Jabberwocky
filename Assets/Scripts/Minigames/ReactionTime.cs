@@ -9,24 +9,29 @@
 //    float currentTimer;
 //    float timeGoal;
 
-//    [SerializeField] private float minTime;
-//    [SerializeField] private float maxTime;
+    [SerializeField]
+    private GameObject[] players;
 
-//    private float[] playerTime;
+    [SerializeField] private float minTime;
+    [SerializeField] private float maxTime;
+
+    private float[] playerScore;
+    private bool[] buttonPressed;
 
 //    // Start is called before the first frame update
 //    void Start()
 //    {
 //        timeGoal = -Random.Range(minTime, maxTime);
 
-//        buttonPressed = new bool[players.Length];
-//        for (int i = 0; i < buttonPressed.Length; i++)
-//        {
-//            buttonPressed[i] = false;
-//        }
+        playerScore = new float[players.Length];
+        buttonPressed = new bool[players.Length];
+        for (int i = 0; i < buttonPressed.Length; i++)
+        {
+            buttonPressed[i] = false;
+        }
 
-//        StartCoroutine(LightController());
-//    }
+        //StartCoroutine(LightController());
+    
 
 //    // Update is called once per frame
 //    void Update()
@@ -39,44 +44,44 @@
         
 //    }
 
-//    private void MovePlayer(int index, Key key)
-//    {
-//        Keyboard keyboard = Keyboard.current;
-//        if (keyboard == null) return; // no keyboard
+    //private void MovePlayer(int index, Key key)
+    //{
+    //    Keyboard keyboard = Keyboard.current;
+    //    if (keyboard == null) return; // no keyboard
 
-//        if (keyboard[key].isPressed)
-//        {
-//            players[index].transform.Translate(new Vector3(0f, 0f, 1) * speed * Time.deltaTime);
-//            movingPlayers[index] = true;
-//        }
+    //    if (keyboard[key].isPressed)
+    //    {
+    //        players[index].transform.Translate(new Vector3(0f, 0f, 1) * speed * Time.deltaTime);
+    //        movingPlayers[index] = true;
+    //    }
 
-//        // There is no "key released" so it just checks if they're NOT pressing key but were previously moving, if so sets moving to false
-//        if (!keyboard[key].isPressed && movingPlayers[index])
-//        {
-//            movingPlayers[index] = false;
-//        }
+    //    // There is no "key released" so it just checks if they're NOT pressing key but were previously moving, if so sets moving to false
+    //    if (!keyboard[key].isPressed && movingPlayers[index])
+    //    {
+    //        movingPlayers[index] = false;
+    //    }
 
-//        if (players[index].transform.position.z >= finishLineZ)
-//        {
-//            // TODO: Actual win & safety for that player, disable movement & face them towards camera?
-//            Debug.Log($"Player {index + 1} finished");
-//        }
-//    }
+    //    if (players[index].transform.position.z >= finishLineZ)
+    //    {
+    //        // TODO: Actual win & safety for that player, disable movement & face them towards camera?
+    //        Debug.Log($"Player {index + 1} finished");
+    //    }
+    //}
 
-//    private IEnumerator LightController()
-//    {
-//        while (runLightCoroutine)
-//        {
-//            float duration = isLightRed ? Random.Range(minRedLightDuration, maxRedLightDuration) : Random.Range(minGreenLightDuration, maxGreenLightDuration);
+    //private IEnumerator LightController()
+    //{
+    //    while (runLightCoroutine)
+    //    {
+    //        float duration = isLightRed ? Random.Range(minRedLightDuration, maxRedLightDuration) : Random.Range(minGreenLightDuration, maxGreenLightDuration);
 
-//            //Debug.Log($"Light is {(isLightRed ? "Red" : "Green")} for {duration} seconds");
+    //        //Debug.Log($"Light is {(isLightRed ? "Red" : "Green")} for {duration} seconds");
 
-//            StartCoroutine(RotateCoroutine(isLightRed ? 0 : 180));
+    //        StartCoroutine(RotateCoroutine(isLightRed ? 0 : 180));
 
-//            yield return new WaitForSeconds(duration);
+    //        yield return new WaitForSeconds(duration);
 
-//            isLightRed = !isLightRed;
-//            lightJustSwitched = true;
-//        }
-//    }
-//}
+    //        isLightRed = !isLightRed;
+    //        lightJustSwitched = true;
+    //    }
+    //}
+
