@@ -5,18 +5,18 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public List <Camera> cameras;
 
     public int numPlayers = 4;
-    private int[] moveData;
+    public int[] moveData;
+    public int[] routeData;
 
-    public List<StoneScript> players;
     public int diceRoll;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.gameObject);
         moveData = new int[numPlayers];
+        routeData = new int[numPlayers];
     }
 
     private void Start()
@@ -25,22 +25,15 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-    }
-
-
-
-    public void TurnOffCamerasBut(Camera camToKeep)
-    {
-        foreach (Camera c in cameras) 
+        else
         {
-            c.enabled = false;
+            Destroy(this);
         }
-
-        camToKeep.enabled = true;
-
     }
     
-    public void MoveData(int[] moveData) {
+    public void MoveData(int[] moveData) 
+    {
         this.moveData = moveData;
+        Debug.Log("MoveData Test: " + moveData[0]);
     }
 }

@@ -145,6 +145,8 @@ public class RLGL_Manager : MonoBehaviour {
         }
         if (firstFinishIndex != -1) moveData[firstFinishIndex] += firstFinishBonus;
 
+        GameManager.instance.MoveData(moveData);
+
         // back to board
         StartCoroutine(ReturnToBoardCoroutine());
     }

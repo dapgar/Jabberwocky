@@ -61,7 +61,7 @@ public class TurnManager : MonoBehaviour
         diceAnim.SetBool("isRolling", true);
 
         int diceRoll;
-        diceRoll = Random.Range(0, 7);
+        diceRoll = Random.Range(1, 7);
 
         return diceRoll;
     }
@@ -73,7 +73,7 @@ public class TurnManager : MonoBehaviour
 
         dice.SetActive(true);
 
-        Debug.Log(faceNumber);
+        Debug.Log("Rolled a " + faceNumber);
         switch (faceNumber)
         {
             case 1:
