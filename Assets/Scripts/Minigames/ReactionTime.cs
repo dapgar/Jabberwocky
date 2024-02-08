@@ -1,13 +1,13 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.InputSystem;
-//using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
-//public class ReactionTime : MonoBehaviour
-//{
-//    float currentTimer;
-//    float timeGoal;
+public class ReactionTime : MonoBehaviour
+{
+    float currentTimer;
+    float timeGoal;
 
     [SerializeField]
     private GameObject[] players;
@@ -18,10 +18,10 @@
     private float[] playerScore;
     private bool[] buttonPressed;
 
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-//        timeGoal = -Random.Range(minTime, maxTime);
+    // Start is called before the first frame update
+    void Start()
+    {
+        timeGoal = -Random.Range(minTime, maxTime);
 
         playerScore = new float[players.Length];
         buttonPressed = new bool[players.Length];
@@ -29,6 +29,8 @@
         {
             buttonPressed[i] = false;
         }
+    }
+}
 
         //StartCoroutine(LightController());
     
