@@ -13,9 +13,14 @@ public class ReactionTime : MonoBehaviour
 
     [SerializeField]
     private GameObject bigCenterButton;
+    private Button bcbScript;
 
     [SerializeField]
     private GameObject[] players;
+
+    [SerializeField]
+    private GameObject[] playerButtons;
+    private Button[] pbScript;
 
     [SerializeField]
     private TMP_Text timerText;
@@ -29,6 +34,7 @@ public class ReactionTime : MonoBehaviour
     private float[] playerScore;
     private bool[] buttonPressed;
     private int playersLeft;
+    private int score;
 
     public int round;
     private float roundTimer;
@@ -38,18 +44,31 @@ public class ReactionTime : MonoBehaviour
     {
         playerScore = new float[players.Length];
         buttonPressed = new bool[players.Length];
-        for (int i = 0; i < buttonPressed.Length; i++)
+        pbScript = new Button[playerButtons.Length];
+        for (int i = 0; i < players.Length; i++)
         {
             buttonPressed[i] = false;
+            playerScore[i] = 0;
+            players[i].gameObject.transform.LookAt(bigCenterButton.transform);
+
+            pbScript[i] = playerButtons[i].GetComponent<Button>();
         }
 
         playersLeft = 0;
+        score = 0;
         roundTimer = -1;
+
+        bcbScript = bigCenterButton.GetComponent<Button>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (playersLeft <= 0)
+        {
+            OnRoundEnd();
+        }
+
         if (roundTimer > 0)
         {
             roundTimer -= Time.deltaTime;
@@ -59,11 +78,11 @@ public class ReactionTime : MonoBehaviour
 
         if (currentTimer < 0)
         {
-            
+            bcbScript.SetReady();
         }
         else
         {
-
+            bcbScript.SetPressed();
         }
 
         PlayerInput(0, Key.Q);
@@ -76,11 +95,7 @@ public class ReactionTime : MonoBehaviour
         if (currentTimer >= 5)
         {
             playersLeft = 0;
-        }
-
-        if (playersLeft <= 0)
-        {
-            OnRoundEnd();
+            bcbScript.SetInactive();
         }
     }
 
@@ -92,21 +107,35 @@ public class ReactionTime : MonoBehaviour
         if (keyboard[key].isPressed && !buttonPressed[index])
         {
             playerScore[index] += GetScore();
+            if (GetScore() == 0)
+            {
+                pbScript[index].SetReady();
+            }
+            else
+            {
+                pbScript[index].SetPressed();
+                score--;
+            }
             scoreTexts[index].text = playerScore[index].ToString("F0");
             playersLeft--;
             buttonPressed[index] = true;
+
+            if (playersLeft <= 0)
+            {
+                currentTimer = 5;
+            }
         }
     }
 
     private int GetScore()
     {
-        int score = 0;
+        int scoreToReturn = 0;
         if (currentTimer >= 0)
         {
-            score = playersLeft;
+            scoreToReturn = score;
         }
 
-        return score;
+        return scoreToReturn;
     }
 
     private void OnRoundEnd()
@@ -114,10 +143,12 @@ public class ReactionTime : MonoBehaviour
         if (round < 3)
         {
             playersLeft = players.Length;
+            score = playersLeft;
             currentTimer = -Random.Range(minTime, maxTime);
             for (int i = 0; i < buttonPressed.Length; i++)
             {
                 buttonPressed[i] = false;
+                pbScript[i].SetInactive();
             }
             roundTimer = 3;
             round++;
@@ -129,48 +160,3 @@ public class ReactionTime : MonoBehaviour
         // End();
     }
 }
-
-//StartCoroutine(LightController());
-
-
-//private void MovePlayer(int index, Key key)
-//{
-//    Keyboard keyboard = Keyboard.current;
-//    if (keyboard == null) return; // no keyboard
-
-//    if (keyboard[key].isPressed)
-//    {
-//        players[index].transform.Translate(new Vector3(0f, 0f, 1) * speed * Time.deltaTime);
-//        movingPlayers[index] = true;
-//    }
-
-//    // There is no "key released" so it just checks if they're NOT pressing key but were previously moving, if so sets moving to false
-//    if (!keyboard[key].isPressed && movingPlayers[index])
-//    {
-//        movingPlayers[index] = false;
-//    }
-
-//    if (players[index].transform.position.z >= finishLineZ)
-//    {
-//        // TODO: Actual win & safety for that player, disable movement & face them towards camera?
-//        Debug.Log($"Player {index + 1} finished");
-//    }
-//}
-
-//private IEnumerator LightController()
-//{
-//    while (runLightCoroutine)
-//    {
-//        float duration = isLightRed ? Random.Range(minRedLightDuration, maxRedLightDuration) : Random.Range(minGreenLightDuration, maxGreenLightDuration);
-
-//        //Debug.Log($"Light is {(isLightRed ? "Red" : "Green")} for {duration} seconds");
-
-//        StartCoroutine(RotateCoroutine(isLightRed ? 0 : 180));
-
-//        yield return new WaitForSeconds(duration);
-
-//        isLightRed = !isLightRed;
-//        lightJustSwitched = true;
-//    }
-//}
-

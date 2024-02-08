@@ -4,36 +4,31 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
-    private IState _currentState;
+    private Renderer btnRenderer;
 
     [SerializeField]
-    private IState _inactive;
-
+    private Material inactiveMat;
     [SerializeField]
-    private IState _ready;
-
+    private Material readyMat;
     [SerializeField]
-    private IState _pressed;
+    private Material pressedMat;
+
+    void Start()
+    {
+        btnRenderer = GetComponent<Renderer>();
+        SetInactive();
+    }
 
     public void SetInactive()
     {
-        ChangeState(_inactive);
+        btnRenderer.material = inactiveMat;
     }
-
     public void SetReady()
     {
-        ChangeState(_ready);
+        btnRenderer.material = readyMat;
     }
-
     public void SetPressed()
     {
-        ChangeState(_pressed);
-    }
-
-    private void ChangeState(IState newState)
-    {
-        _currentState.Exit();
-        _currentState = newState;
-        _currentState.Enter();
+        btnRenderer.material = pressedMat;
     }
 }
