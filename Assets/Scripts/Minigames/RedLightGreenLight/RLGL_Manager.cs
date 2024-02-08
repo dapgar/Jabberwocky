@@ -23,6 +23,9 @@ public class RLGL_Manager : MonoBehaviour {
     [SerializeField]
     private float finishTimerDecreaseAmount = 2f;
 
+    [SerializeField]
+    private int firstFinishBonus = 1;
+
     [Header("Light Stuff")]
     [SerializeField]
     private Transform lightIndicator;
@@ -51,6 +54,8 @@ public class RLGL_Manager : MonoBehaviour {
 
     private int playingPlayers;
 
+    private int firstFinishIndex = -1;
+
     private void Start() {
         StartCoroutine(LightController());
 
@@ -67,15 +72,16 @@ public class RLGL_Manager : MonoBehaviour {
             timer -= Time.deltaTime;
             timerText.text = timer.ToString("F1");
             if (timer <= 0.0f) {
-                GameOver(true);
+                GameOver();
             }
 
-            foreach (RLGL_Character player in players) {
-                if (!player.IsFinished && player.IsAlive) {
-                    player.Move();
-                    if (player.CheckFinish(finishLineZ)) {
+            for (int i = 0; i < players.Length; i++) {
+                if (!players[i].IsFinished && players[i].IsAlive) {
+                    players[i].Move();
+                    if (players[i].CheckFinish(finishLineZ)) {
                         playingPlayers--;
                         timer -= finishTimerDecreaseAmount;
+                        if (firstFinishIndex == -1) firstFinishIndex = i;
                     }
                 }
             }
@@ -97,56 +103,24 @@ public class RLGL_Manager : MonoBehaviour {
             }
 
            if (playingPlayers == 0) {
-                GameOver(false);
+                GameOver();
             }
         }
     }
 
-    private void GameOver(bool bTimeRanOut) {
+    private void GameOver() {
         if (!gameRunning) return;
         gameRunning = false;
         runLightCoroutine = false;
 
-        if (bTimeRanOut) {
-            Debug.Log("Game Over: Time ran out");
-            foreach (RLGL_Character player in players) {
-                if (player.IsFinished) {
-                    // Handle giving the winners their rewards
-                    Debug.Log($"Player {player.PlayerIndex + 1} finished. They can move forward.");
-                }
-                else if (player.IsAlive) player.Kill();
-                
-            }
-        }
-        else {
-            // This 'else' triggers IF:
-            // - All players are dead
-            // - All players have finished
-            // - All players are dead or finished
+        int[] moveData = new int[GameManager.instance.numPlayers];
+        int spacesToMove = GameManager.instance.diceRoll;
 
-            bool allDead = true;
-            bool allFinished = true;
-            foreach (RLGL_Character player in players) {
-                if (player.IsAlive) allDead = false;
-                if (!player.IsFinished) allFinished = false;
-            }
-            if (allDead) {
-                Debug.Log("Game Over: Everyone's Dead");
-            }
-            else if (allFinished) {
-                Debug.Log("Game Over: Everyone Finished, you can all move forward");
-            }
-            else {
-                Debug.Log("Game Over: All players either died or finished.");
-                foreach (RLGL_Character player in players) {
-                    // Handle giving the winning players movement
-                    if (player.IsFinished) Debug.Log($"Player {player.PlayerIndex + 1} finished. They can move forward.");
-                }
-            }
+        for (int i = 0; i < players.Length; i++) {
+            if (players[i].IsAlive) players[i].Kill();
+            moveData[i] = players[i].IsFinished ? spacesToMove : 0;
         }
-        
-            
-        
+        if (firstFinishIndex != -1) moveData[firstFinishIndex] += firstFinishBonus;
     }
 
     private IEnumerator LightController() {
