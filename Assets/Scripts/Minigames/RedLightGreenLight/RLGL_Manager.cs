@@ -10,7 +10,7 @@ public class RLGL_Manager : MonoBehaviour {
     [SerializeField]
     private TMP_Text timerText;
     [SerializeField]
-    private GameObject GameTimer;
+    private GameObject gameTimer;
     [SerializeField]
     private TMP_Text preGameTimerText;
     private float gameStartTimer = 5f;
@@ -61,11 +61,13 @@ public class RLGL_Manager : MonoBehaviour {
     private float reactionTimeTimer = 0f;
 
     private bool runLightCoroutine = true;  // For cleanup, set this to false to stop looping coroutine
-    private bool gameRunning = true;
+    private bool gameRunning = false;
 
     private int playingPlayers;
 
     private int firstFinishIndex = -1;
+
+    private bool gameStarting = true;
 
     private void Start() {
         StartCoroutine(LightController());
@@ -79,9 +81,15 @@ public class RLGL_Manager : MonoBehaviour {
     }
 
     private void Update() {
-        if (gameStartTimer > 0) {
+        if (gameStarting) {
             gameStartTimer -= Time.deltaTime;
             preGameTimerText.text = $"Game Starts In: {gameStartTimer.ToString("F1")}";
+            if (gameStartTimer < 0) {
+                gameStarting = false;
+                gameRunning = true;
+                preGameTimer.gameObject.SetActive(false);
+                gameTimer.gameObject.SetActive(true);
+            }
         }
         else if (gameRunning) {
             timer -= Time.deltaTime;
