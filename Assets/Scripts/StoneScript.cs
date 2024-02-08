@@ -23,6 +23,9 @@ public class StoneScript : MonoBehaviour
         }
         isMoving = true;
 
+        // Target cams
+        GameManager.instance.TurnOffCamerasBut(GameManager.instance.cameras[stoneID]);
+
         while (steps > 0) 
         { 
             Vector3 nextPos = currentRoute.childNodeList[routePos + 1].position;
@@ -36,7 +39,11 @@ public class StoneScript : MonoBehaviour
         }
         isMoving = false;
 
-        transform.LookAt(Camera.main.transform);
+        transform.LookAt(GameManager.instance.cameras[0].transform);
+        yield return new WaitForSeconds(1f);
+
+        // Return to main cams
+        GameManager.instance.TurnOffCamerasBut(GameManager.instance.cameras[0]);
     }
 
     private bool MoveToNextNode(Vector3 target)
