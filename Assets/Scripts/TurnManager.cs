@@ -105,6 +105,11 @@ public class TurnManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3f);
+
+        // Stores Dice Roll
+        GameManager.instance.diceRoll = result;
+
+        // Loads Load Scene
         SceneManager.LoadScene(1); // Hard coded for now
     }
 

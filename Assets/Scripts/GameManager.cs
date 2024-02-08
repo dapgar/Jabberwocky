@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public List<StoneScript> players;
+    public int diceRoll;
 
     private void Awake()
     {
