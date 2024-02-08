@@ -1,16 +1,27 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class RLGL_Manager : MonoBehaviour {
     [Header("Gameplay Stuff")]
     [SerializeField]
-    private float gameTime;
+    private float acceleration = 2f;
     [SerializeField]
-    private float speed;
+    private float deceleration = 4f;
+    [SerializeField]
+    private float maxSpeed = 5f;
+
+    [SerializeField]
+    private float gameTime;
     [SerializeField]
     private float finishLineZ;
     [SerializeField]
     private RLGL_Character[] players;
+    [SerializeField]
+    private TMP_Text timerText;
+    /* Time that the timer decreases by every time a player finishes */
+    [SerializeField]
+    private float finishTimerDecreaseAmount = 2f;
 
     [Header("Light Stuff")]
     [SerializeField]
@@ -44,22 +55,28 @@ public class RLGL_Manager : MonoBehaviour {
         StartCoroutine(LightController());
 
         for (int i = 0; i < players.Length; i++) {
-            players[i].SetupPlayer(i, players.Length, speed);
+            players[i].SetupPlayer(i, players.Length, acceleration, deceleration, maxSpeed);
         }
         playingPlayers = players.Length;
+
+        timer = gameTime;
     }
 
     private void Update() {
         if (gameRunning) {
-            timer += Time.deltaTime;
-            if (timer >= gameTime) {
+            timer -= Time.deltaTime;
+            timerText.text = timer.ToString("F1");
+            if (timer <= 0.0f) {
                 GameOver(true);
             }
 
             foreach (RLGL_Character player in players) {
                 if (!player.IsFinished && player.IsAlive) {
                     player.Move();
-                    if (player.CheckFinish(finishLineZ)) playingPlayers--;
+                    if (player.CheckFinish(finishLineZ)) {
+                        playingPlayers--;
+                        timer -= finishTimerDecreaseAmount;
+                    }
                 }
             }
 
