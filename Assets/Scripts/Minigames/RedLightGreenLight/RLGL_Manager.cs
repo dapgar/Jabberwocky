@@ -1,8 +1,20 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class RLGL_Manager : MonoBehaviour {
+    [Header("UI Stuff")]
+    [SerializeField]
+    private GameObject preGameTimer;
+    [SerializeField]
+    private TMP_Text timerText;
+    [SerializeField]
+    private GameObject GameTimer;
+    [SerializeField]
+    private TMP_Text preGameTimerText;
+    private float gameStartTimer = 5f;
+
     [Header("Gameplay Stuff")]
     [SerializeField]
     private float acceleration = 2f;
@@ -17,8 +29,7 @@ public class RLGL_Manager : MonoBehaviour {
     private float finishLineZ;
     [SerializeField]
     private RLGL_Character[] players;
-    [SerializeField]
-    private TMP_Text timerText;
+    
     /* Time that the timer decreases by every time a player finishes */
     [SerializeField]
     private float finishTimerDecreaseAmount = 2f;
@@ -68,7 +79,11 @@ public class RLGL_Manager : MonoBehaviour {
     }
 
     private void Update() {
-        if (gameRunning) {
+        if (gameStartTimer > 0) {
+            gameStartTimer -= Time.deltaTime;
+            preGameTimerText.text = $"Game Starts In: {gameStartTimer.ToString("F1")}";
+        }
+        else if (gameRunning) {
             timer -= Time.deltaTime;
             timerText.text = timer.ToString("F1");
             if (timer <= 0.0f) {
@@ -121,6 +136,15 @@ public class RLGL_Manager : MonoBehaviour {
             moveData[i] = players[i].IsFinished ? spacesToMove : 0;
         }
         if (firstFinishIndex != -1) moveData[firstFinishIndex] += firstFinishBonus;
+
+        // back to board
+        StartCoroutine(ReturnToBoardCoroutine());
+    }
+
+    private IEnumerator ReturnToBoardCoroutine() {
+        yield return new WaitForSeconds(5);
+
+        SceneManager.LoadScene(0);
     }
 
     private IEnumerator LightController() {
