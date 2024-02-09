@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -31,7 +32,7 @@ public class ReactionTime : MonoBehaviour
     [SerializeField] private float minTime;
     [SerializeField] private float maxTime;
 
-    private float[] playerScore;
+    private int[] playerScore;
     private bool[] buttonPressed;
     private int playersLeft;
     private int score;
@@ -42,7 +43,7 @@ public class ReactionTime : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerScore = new float[players.Length];
+        playerScore = new int[players.Length];
         buttonPressed = new bool[players.Length];
         pbScript = new Button[playerButtons.Length];
         for (int i = 0; i < players.Length; i++)
@@ -91,7 +92,6 @@ public class ReactionTime : MonoBehaviour
         PlayerInput(3, Key.P);
 
         currentTimer += Time.deltaTime;
-        Debug.Log(currentTimer);
         if (currentTimer >= 5)
         {
             playersLeft = 0;
@@ -157,6 +157,43 @@ public class ReactionTime : MonoBehaviour
             return;
         }
 
-        // End();
+        GameOver();
+    }
+
+    private void GameOver()
+    {
+        int[] moveData = new int[GameManager.instance.numPlayers];
+        int spacesToMove = GameManager.instance.diceRoll;
+
+        int highestScore = -1;
+        // check to see what the highest score is
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (playerScore[i] > highestScore)
+            {
+                highestScore = playerScore[i];
+            }
+        }
+
+        // loop back through to see who moves in case of ties
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (playerScore[i] == highestScore)
+            {
+                moveData[i] = spacesToMove;
+            }
+        }
+
+        GameManager.instance.MoveData(moveData);
+
+        // back to board
+        StartCoroutine(ReturnToBoardCoroutine());
+    }
+
+    private IEnumerator ReturnToBoardCoroutine()
+    {
+        yield return new WaitForSeconds(4);
+
+        SceneManager.LoadScene(0);
     }
 }
