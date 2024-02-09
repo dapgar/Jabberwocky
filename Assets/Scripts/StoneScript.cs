@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UIElements;
 
 public class StoneScript : MonoBehaviour
 {
@@ -15,16 +16,19 @@ public class StoneScript : MonoBehaviour
     public int steps;
 
     // --- METHODS ---
-    public IEnumerator Move()
+    public IEnumerator Move(int moveAmount)
     {
+        Debug.Log("Player Moving...");
         if (isMoving)
         {
             yield break;
         }
+
         isMoving = true;
+        steps = moveAmount;
 
         // Target cams
-        GameManager.instance.TurnOffCamerasBut(GameManager.instance.cameras[stoneID]);
+        BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[stoneID]);
 
         while (steps > 0) 
         { 
@@ -39,11 +43,15 @@ public class StoneScript : MonoBehaviour
         }
         isMoving = false;
 
-        transform.LookAt(GameManager.instance.cameras[0].transform);
+        BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[0]);
+        LookAtCamera();
         yield return new WaitForSeconds(1f);
 
         // Return to main cams
-        GameManager.instance.TurnOffCamerasBut(GameManager.instance.cameras[0]);
+    }
+
+    public void LookAtCamera() {
+        transform.LookAt(BoardManager.instance.cameras[0].transform);
     }
 
     private bool MoveToNextNode(Vector3 target)

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -38,6 +37,10 @@ public class TurnManager : MonoBehaviour
         {
             StartCoroutine(StartTurn());
         }
+        // TEMP QUIT GAME
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 
     IEnumerator StartTurn()
@@ -61,7 +64,7 @@ public class TurnManager : MonoBehaviour
         diceAnim.SetBool("isRolling", true);
 
         int diceRoll;
-        diceRoll = Random.Range(0, 7);
+        diceRoll = Random.Range(1, 7);
 
         return diceRoll;
     }
@@ -73,7 +76,7 @@ public class TurnManager : MonoBehaviour
 
         dice.SetActive(true);
 
-        Debug.Log(faceNumber);
+        Debug.Log("Rolled a " + faceNumber);
         switch (faceNumber)
         {
             case 1:

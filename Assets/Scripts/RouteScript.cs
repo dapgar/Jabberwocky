@@ -5,7 +5,7 @@ using UnityEngine;
 public class RouteScript : MonoBehaviour
 {
     // --- VARIABLES ---
-    private Transform[] childNodes; // Array of child objects
+    public Transform[] childNodes; // Array of child objects
     public List<Transform> childNodeList = new List<Transform>();
 
     // --- METHODS ---
