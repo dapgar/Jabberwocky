@@ -44,10 +44,14 @@ public class StoneScript : MonoBehaviour
         isMoving = false;
 
         BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[0]);
-        transform.LookAt(BoardManager.instance.cameras[0].transform);
+        LookAtCamera();
         yield return new WaitForSeconds(1f);
 
         // Return to main cams
+    }
+
+    public void LookAtCamera() {
+        transform.LookAt(BoardManager.instance.cameras[0].transform);
     }
 
     private bool MoveToNextNode(Vector3 target)

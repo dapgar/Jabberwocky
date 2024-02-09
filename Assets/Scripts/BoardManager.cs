@@ -14,10 +14,7 @@ public class BoardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        if (instance == null) instance = this;
 
         cameras.Add(GameObject.Find("MainCamera").GetComponent<Camera>());
         cameras.Add(GameObject.Find("PlayerCam1").GetComponent<Camera>());
@@ -30,14 +27,24 @@ public class BoardManager : MonoBehaviour
         players.Add(GameObject.Find("Player (3)").GetComponent<StoneScript>());
         players.Add(GameObject.Find("Player (4)").GetComponent<StoneScript>());
 
+        for (int i = 0; i < GameManager.instance.playersPos.Length; i++) {
+            players[i].routePos = GameManager.instance.routeData[i];
+            if (GameManager.instance.playersPos[i] != Vector3.zero) players[i].transform.position = GameManager.instance.playersPos[i];
+            if (GameManager.instance.playerRots[i] != Quaternion.identity)  players[i].transform.rotation = GameManager.instance.playerRots[i];
+        }
 
-        for (int i = 0; i < GameManager.instance.routeData.Length; i++)
+        // Old using routes instead of Vector & Quaternion
+        /*for (int i = 0; i < GameManager.instance.routeData.Length; i++)
         {
             if (GameManager.instance.routeData[i] != 0)
             {
                 players[i].routePos = GameManager.instance.routeData[i];
                 players[i].transform.position = route.childNodeList[i].position;
             }
+        }*/
+
+        foreach (StoneScript p in players) {
+            p.LookAtCamera();
         }
 
         StartCoroutine(UpdateBoard());
@@ -65,6 +72,14 @@ public class BoardManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
             }
             GameManager.instance.routeData[player.stoneID - 1] = player.routePos;
+            //GameManager.instance.playersPos[player.stoneID - 1] = player.transform.position;
+        }
+
+        // Used for storing prev board pos / rot
+        // Can clean this up AFTER MVI - don't wanna mess smth up rn lol
+        for (int i = 0; i < players.Count; i++) {
+            GameManager.instance.playersPos[i] = players[i].transform.position;
+            GameManager.instance.playerRots[i] = players[i].transform.rotation;
         }
     }
 

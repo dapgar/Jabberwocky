@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public int numPlayers = 4;
     public int[] moveData;
     public int[] routeData;
+    public Vector3[] playersPos;
+    public Quaternion[] playerRots;
 
     public int diceRoll;
 
@@ -17,6 +19,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(transform.gameObject);
         moveData = new int[numPlayers];
         routeData = new int[numPlayers];
+        playersPos = new Vector3[numPlayers];
+        playerRots = new Quaternion[numPlayers];
     }
 
     private void Start()

@@ -37,6 +37,10 @@ public class RLGL_Character : MonoBehaviour {
     private float deathRotateSpeed = 5f;
     private float deathYOffset = 0.35f;
 
+    private float bobbingAmount = 2f;
+    private float bobbingSpeed = 1f;
+    private float bobbingResetSpeed = 3f;
+
     private float acceleration = 2f;
     private float deceleration = 4f;
     private float maxSpeed = 5f;
@@ -63,12 +67,21 @@ public class RLGL_Character : MonoBehaviour {
 
         if (keyboard[key].isPressed) {
             Accelerate();
+            bIsMoving = true;
             // For static movement without acceleration/deceleration, uncomment below
             //gameObject.transform.Translate(new Vector3(0f, 0f, 1) * maxSpeed * Time.deltaTime);
-            bIsMoving = true;
         }
         else if (bIsMoving) {
             Decelerate();
+        }
+
+        // Bob character left & right
+        if (bIsMoving && model != null) {
+            float bobbingAngle = Mathf.Lerp(-bobbingAmount, bobbingAmount, Mathf.PingPong(Time.time * bobbingSpeed, 1f));
+            model.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, bobbingAngle);
+        }
+        else {
+            model.transform.rotation = Quaternion.Lerp(model.transform.rotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * bobbingResetSpeed);
         }
 
         transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);

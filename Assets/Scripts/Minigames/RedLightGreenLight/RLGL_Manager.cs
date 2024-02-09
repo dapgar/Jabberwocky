@@ -70,8 +70,6 @@ public class RLGL_Manager : MonoBehaviour {
     private bool gameStarting = true;
 
     private void Start() {
-        StartCoroutine(LightController());
-
         for (int i = 0; i < players.Length; i++) {
             players[i].SetupPlayer(i, players.Length, acceleration, deceleration, maxSpeed);
         }
@@ -89,6 +87,14 @@ public class RLGL_Manager : MonoBehaviour {
                 gameRunning = true;
                 preGameTimer.gameObject.SetActive(false);
                 gameTimer.gameObject.SetActive(true);
+
+                // Turn light green
+                StartCoroutine(RotateCoroutine(180));
+                isLightRed = false;
+
+                // Start light timer
+                StartCoroutine(LightController());
+
             }
         }
         else if (gameRunning) {
@@ -140,7 +146,7 @@ public class RLGL_Manager : MonoBehaviour {
         int spacesToMove = GameManager.instance.diceRoll;
 
         for (int i = 0; i < players.Length; i++) {
-            if (players[i].IsAlive) players[i].Kill();
+            if (players[i].IsAlive && !players[i].IsFinished) players[i].Kill();
             moveData[i] = players[i].IsFinished ? spacesToMove : 0;
         }
         if (firstFinishIndex != -1) moveData[firstFinishIndex] += firstFinishBonus;
@@ -152,7 +158,7 @@ public class RLGL_Manager : MonoBehaviour {
     }
 
     private IEnumerator ReturnToBoardCoroutine() {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
 
         SceneManager.LoadScene(0);
     }
