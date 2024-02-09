@@ -37,6 +37,10 @@ public class TurnManager : MonoBehaviour
         {
             StartCoroutine(StartTurn());
         }
+        // TEMP QUIT GAME
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 
     IEnumerator StartTurn()
