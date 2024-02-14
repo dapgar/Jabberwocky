@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class RLGL_Manager : MonoBehaviour {
     [Header("UI Stuff")]
@@ -13,7 +14,10 @@ public class RLGL_Manager : MonoBehaviour {
     private GameObject gameTimer;
     [SerializeField]
     private TMP_Text preGameTimerText;
+    [SerializeField]
     private float gameStartTimer = 5f;
+    [SerializeField]
+    private Slider[] progressBars;
 
     [Header("Gameplay Stuff")]
     [SerializeField]
@@ -22,20 +26,33 @@ public class RLGL_Manager : MonoBehaviour {
     private float deceleration = 4f;
     [SerializeField]
     private float maxSpeed = 5f;
-
+    [SerializeField]
+    private float pushBackAmount = 1f;
+    [SerializeField]
+    private float pushBackSpeed = 2f;
     [SerializeField]
     private float gameTime;
     [SerializeField]
     private float finishLineZ;
     [SerializeField]
     private RLGL_Character[] players;
-    
     /* Time that the timer decreases by every time a player finishes */
     [SerializeField]
     private float finishTimerDecreaseAmount = 2f;
-
     [SerializeField]
     private int firstFinishBonus = 1;
+
+    [Header("Camera Follow Stuff")]
+    [SerializeField]
+    private float followSpeed = 5f;
+    [SerializeField]
+    private float minFollowDistance = 3.5f;
+    [SerializeField]
+    private float maxFollowDistance = 7f;
+    [SerializeField]
+    private Camera followCam;
+    [SerializeField]
+    private float maxFollowZ = 2f;
 
     [Header("Light Stuff")]
     [SerializeField]
@@ -70,12 +87,17 @@ public class RLGL_Manager : MonoBehaviour {
     private bool gameStarting = true;
 
     private void Start() {
+        if (progressBars.Length == 0) Debug.Log("Set RLGL_Manager Progress Bars Array");
+        
+
         for (int i = 0; i < players.Length; i++) {
-            players[i].SetupPlayer(i, players.Length, acceleration, deceleration, maxSpeed);
+            players[i].SetupPlayer(i, acceleration, deceleration, maxSpeed, pushBackAmount, pushBackSpeed, finishLineZ, progressBars[i]);
         }
         playingPlayers = players.Length;
 
+        isLightRed = true;
         timer = gameTime;
+        timerText.text = gameTime.ToString("F1");
     }
 
     private void Update() {
@@ -103,17 +125,29 @@ public class RLGL_Manager : MonoBehaviour {
             if (timer <= 0.0f) {
                 GameOver();
             }
-
+            float lastPlaceZ = players[0].transform.position.z; // Variable for camera follow
             for (int i = 0; i < players.Length; i++) {
-                if (!players[i].IsFinished && players[i].IsAlive) {
-                    players[i].Move();
-                    if (players[i].CheckFinish(finishLineZ)) {
+                players[i].UpdateProgressBar();
+                if (!players[i].IsFinished) {
+                    players[i].Move(isLightRed);
+                    if (players[i].CheckFinish()) {
                         playingPlayers--;
                         timer -= finishTimerDecreaseAmount;
                         if (firstFinishIndex == -1) firstFinishIndex = i;
                     }
                 }
+
+                // For camera follow
+                if (players[i].transform.position.z < lastPlaceZ) {
+                    lastPlaceZ = players[i].transform.position.z;
+                }
             }
+
+            // Smoothly move the camera forwards (or back) to follow last place player
+            Vector3 targetPosition = followCam.transform.position - new Vector3(0f, 0f, minFollowDistance);
+            targetPosition.z = Mathf.Clamp(targetPosition.z, lastPlaceZ - maxFollowDistance, lastPlaceZ - minFollowDistance);
+            if (targetPosition.z > maxFollowZ) targetPosition.z = maxFollowZ;
+            followCam.transform.position = Vector3.Lerp(followCam.transform.position, targetPosition, followSpeed * Time.deltaTime);
 
             if (lightJustSwitched) {
                 reactionTimeTimer += Time.deltaTime;
@@ -124,14 +158,13 @@ public class RLGL_Manager : MonoBehaviour {
             }
             if (isLightRed && !lightJustSwitched) {
                 foreach (RLGL_Character player in players) {
-                    if (player.IsAlive && player.IsMoving) {
-                        player.Kill();
-                        playingPlayers--;
+                    if (player.IsMoving) {
+                        player.PushBack();
                     }
                 }
             }
 
-           if (playingPlayers == 0) {
+           if (playingPlayers <= 0) {
                 GameOver();
             }
         }
@@ -142,16 +175,20 @@ public class RLGL_Manager : MonoBehaviour {
         gameRunning = false;
         runLightCoroutine = false;
 
+        // COMMENT THIS OUT IF TESTING LOCALLY
+        
         int[] moveData = new int[GameManager.instance.numPlayers];
         int spacesToMove = GameManager.instance.diceRoll;
 
         for (int i = 0; i < players.Length; i++) {
-            if (players[i].IsAlive && !players[i].IsFinished) players[i].Kill();
+            if (!players[i].IsFinished) players[i].DropModel();
             moveData[i] = players[i].IsFinished ? spacesToMove : 0;
         }
         if (firstFinishIndex != -1) moveData[firstFinishIndex] += firstFinishBonus;
 
         GameManager.instance.MoveData(moveData);
+        
+        // END COMMENT REGION IF TESTING LOCALLY
 
         // back to board
         StartCoroutine(ReturnToBoardCoroutine());
