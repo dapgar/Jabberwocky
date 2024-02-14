@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 using TMPro;
 
 public class RLGL_Character : MonoBehaviour {
-    [SerializeField]
-    private Camera cam;
-
     private bool bIsMoving = false;
     private bool bIsFinished = false;
     private bool bIsAlive = true;
@@ -24,10 +21,6 @@ public class RLGL_Character : MonoBehaviour {
     private float winMoveSpeed = 3f;
     [SerializeField]
     private float winZMoveOffset = 1f;
-    [SerializeField]
-    private float winCamZOffset = 6f;
-    [SerializeField]
-    private float winCamRotateSpeed = 1f;
 
     [Header("Death Stuff")]
     [SerializeField]
@@ -113,9 +106,9 @@ public class RLGL_Character : MonoBehaviour {
 
             Quaternion targetRotation = Quaternion.Euler(0f, 180f, 0f);
             Vector3 targetPosition = gameObject.transform.position + new Vector3(0f, 0f, winZMoveOffset);
-            Vector3 targetCamPosition = cam.transform.position + new Vector3(0f, 0f, winCamZOffset);
+            //Vector3 targetCamPosition = cam.transform.position + new Vector3(0f, 0f, winCamZOffset);
             StartCoroutine(MoveOnWin(gameObject.transform, targetPosition, winMoveSpeed));
-            StartCoroutine(MoveCamOnWin(cam.transform, targetCamPosition, targetRotation, winCamRotateSpeed));
+            //StartCoroutine(MoveCamOnWin(cam.transform, targetCamPosition, targetRotation, winCamRotateSpeed));
 
             return true;
         }
@@ -134,7 +127,7 @@ public class RLGL_Character : MonoBehaviour {
         SetMovementKey();
 
         // TODO: Only setup for 4 players ATM, need to support 2-4 after MVI
-        if (totalPlayers == 4) {
+        /*if (totalPlayers == 4) {
             if (playerIndex == 0) {
                 cam.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
             }
@@ -167,7 +160,7 @@ public class RLGL_Character : MonoBehaviour {
             else if (playerIndex == 1) {
                 cam.rect = new Rect(0.5f, 0f, 0.5f, 1f);
             }
-        }
+        }*/
     }
 
     public void Kill() {
@@ -184,9 +177,9 @@ public class RLGL_Character : MonoBehaviour {
         }
 
         // Point camera down facing model
-        Quaternion cameraStartRotation = cam.transform.rotation;
+       /* Quaternion cameraStartRotation = cam.transform.rotation;
         Quaternion cameraTargetRotation = Quaternion.Euler(30f, cameraStartRotation.eulerAngles.y, cameraStartRotation.eulerAngles.z);
-        StartCoroutine(MoveCameraOverTime(cam.transform, cameraTargetRotation, deathRotateSpeed));
+        StartCoroutine(MoveCameraOverTime(cam.transform, cameraTargetRotation, deathRotateSpeed));*/
 
     }
 
