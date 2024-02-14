@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
@@ -7,6 +8,9 @@ public class BoardManager : MonoBehaviour
     public static BoardManager instance;
 
     public List<StoneScript> players;
+    public GameObject[] crowns;
+    private int furthestPlayer = 0;
+
     public List<Camera> cameras;
 
     public RouteScript route;
@@ -15,17 +19,6 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         if (instance == null) instance = this;
-
-        cameras.Add(GameObject.Find("MainCamera").GetComponent<Camera>());
-        cameras.Add(GameObject.Find("PlayerCam1").GetComponent<Camera>());
-        cameras.Add(GameObject.Find("PlayerCam2").GetComponent<Camera>());
-        cameras.Add(GameObject.Find("PlayerCam3").GetComponent<Camera>());
-        cameras.Add(GameObject.Find("PlayerCam4").GetComponent<Camera>());
-
-        players.Add(GameObject.Find("Player (1)").GetComponent<StoneScript>());
-        players.Add(GameObject.Find("Player (2)").GetComponent<StoneScript>());
-        players.Add(GameObject.Find("Player (3)").GetComponent<StoneScript>());
-        players.Add(GameObject.Find("Player (4)").GetComponent<StoneScript>());
 
         for (int i = 0; i < GameManager.instance.playersPos.Length; i++) {
             players[i].routePos = GameManager.instance.routeData[i];
@@ -54,16 +47,15 @@ public class BoardManager : MonoBehaviour
     {
         if (GameManager.instance)
         {
-            Debug.Log("GameManager Exists");
             TurnOffCamerasBut(cameras[0]);
         }
 
         yield return new WaitForSeconds(3f);
         Debug.Log("Updating Player Positions...");
 
+        // Moves players after each game.
         foreach(StoneScript player in players)
         {
-            Debug.Log("Moving Player " +  player.stoneID);
             if ((GameManager.instance.moveData[player.stoneID - 1] > 0))
             {
                 StartCoroutine(player.Move(GameManager.instance.moveData[player.stoneID - 1]));
@@ -73,6 +65,20 @@ public class BoardManager : MonoBehaviour
             }
             GameManager.instance.routeData[player.stoneID - 1] = player.routePos;
             //GameManager.instance.playersPos[player.stoneID - 1] = player.transform.position;
+        }
+
+        // Handles crown logic.
+        for (int i = 0; i < crowns.Length; i++)
+        {
+            if (players[i].routePos > furthestPlayer)
+            {
+                furthestPlayer = i;
+                crowns[furthestPlayer].SetActive(true);
+            }
+            else
+            {
+                crowns[i].SetActive(false);
+            }
         }
 
         // Used for storing prev board pos / rot

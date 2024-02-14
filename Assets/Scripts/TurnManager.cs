@@ -52,6 +52,7 @@ public class TurnManager : MonoBehaviour
 
         // Dice Logic
         diceAnimObj.SetActive(true);
+        diceAnim.SetBool("isRolling", true);
 
         result = RollDice();
         yield return new WaitForSeconds(3f);
@@ -61,7 +62,6 @@ public class TurnManager : MonoBehaviour
     private int RollDice()
     {
         isRolling = true;
-        diceAnim.SetBool("isRolling", true);
 
         int diceRoll;
         diceRoll = Random.Range(1, 7);

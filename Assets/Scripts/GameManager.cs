@@ -38,6 +38,5 @@ public class GameManager : MonoBehaviour
     public void MoveData(int[] moveData) 
     {
         this.moveData = moveData;
-        Debug.Log("MoveData Test: " + moveData[0]);
     }
 }
