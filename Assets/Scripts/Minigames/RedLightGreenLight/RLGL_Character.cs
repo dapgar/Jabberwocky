@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class RLGL_Character : MonoBehaviour {
     [Header("Win Stuff")]
@@ -37,7 +38,6 @@ public class RLGL_Character : MonoBehaviour {
     private float pushBackSpeed;
 
     private float finishLineZ;
-    private Slider progressBar;
     private float totalDistance;
     private float startingZ;
 
@@ -48,7 +48,7 @@ public class RLGL_Character : MonoBehaviour {
     /// <summary>
     /// Sets up variables for the player.
     /// </summary>
-    public void SetupPlayer(int playerIndex, float acceleration, float deceleration, float maxSpeed, float pushBackAmount, float pushBackSpeed, float finishLineZ, Slider progressBar) {
+    public void SetupPlayer(int playerIndex, float acceleration, float deceleration, float maxSpeed, float pushBackAmount, float pushBackSpeed, float finishLineZ) {
         totalDistance = Mathf.Abs(transform.position.z - finishLineZ);
         startingZ = transform.position.z;
 
@@ -59,11 +59,8 @@ public class RLGL_Character : MonoBehaviour {
         this.pushBackAmount = pushBackAmount;
         this.pushBackSpeed = pushBackSpeed;
         this.finishLineZ = finishLineZ;
-        this.progressBar = progressBar;
 
         SetMovementKey();
-
-        UpdateProgressBar();
 
         // Split Screen Setup:  Splitscreen 
         // TODO: Only setup for 4 players ATM, need to support 2-4 after MVI
@@ -119,7 +116,7 @@ public class RLGL_Character : MonoBehaviour {
     }
 
     public void Move(bool bIsLightRed) {
-        if (bIsLightRed && !bCanGetPushedBack) return;  // Light is red and currently mid push-back, disable movement
+        //if (bIsLightRed && !bCanGetPushedBack) return;  // Light is red and currently mid push-back, disable movement
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null) return; // if no keyboard
 
@@ -161,7 +158,6 @@ public class RLGL_Character : MonoBehaviour {
             bIsMoving = false;
 
             StartCoroutine(MoveAndRotateOnFinish());
-            progressBar.value = 1;
             return true;
         }
         return false;
@@ -182,6 +178,7 @@ public class RLGL_Character : MonoBehaviour {
     /// </summary>
     public void PushBack() {
         if (!bCanGetPushedBack) return;
+        //bIsMoving = false;
         StartCoroutine(PushBackTimerCoroutine());
         StartCoroutine(PushBackCoroutine());
     }
@@ -244,7 +241,7 @@ public class RLGL_Character : MonoBehaviour {
         }
     }
 
-    public void UpdateProgressBar() {
-        progressBar.value = transform.position.z / totalDistance;
+    public float DistanceRatio() {
+        return transform.position.z / totalDistance;
     }
 }
