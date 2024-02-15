@@ -4,13 +4,17 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class LoadManager : MonoBehaviour
+public class MiniLoadManager : MonoBehaviour
 {
+    public int numberOfGames;
     public TextMeshProUGUI hintText;
+    public GameObject playButton;
+
     private bool hintShown = false;
 
     private void Start()
     {
+        playButton.SetActive(false);
         StartCoroutine(WaitToLoad());
     }
 
@@ -22,10 +26,18 @@ public class LoadManager : MonoBehaviour
         }
     }
 
+    public void OnPlayClicked()
+    {
+        int randomGame = Random.Range(0, numberOfGames);
+
+        // Loads minigame scene accounting for menus.
+        SceneManager.LoadScene(randomGame + 4);
+    }
+
     IEnumerator WaitToLoad()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(2);
+        playButton.SetActive(true);
     }
 
     IEnumerator GameHints()

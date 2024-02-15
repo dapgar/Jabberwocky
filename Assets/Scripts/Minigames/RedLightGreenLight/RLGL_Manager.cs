@@ -160,7 +160,7 @@ public class RLGL_Manager : MonoBehaviour {
     private IEnumerator ReturnToBoardCoroutine() {
         yield return new WaitForSeconds(4);
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     private IEnumerator LightController() {

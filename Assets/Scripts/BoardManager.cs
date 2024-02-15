@@ -67,7 +67,7 @@ public class BoardManager : MonoBehaviour
             //GameManager.instance.playersPos[player.stoneID - 1] = player.transform.position;
         }
 
-        // Handles crown logic.
+        /*// Handles crown logic.
         for (int i = 0; i < crowns.Length; i++)
         {
             if (players[i].routePos > furthestPlayer)
@@ -79,7 +79,7 @@ public class BoardManager : MonoBehaviour
             {
                 crowns[i].SetActive(false);
             }
-        }
+        }*/
 
         // Used for storing prev board pos / rot
         // Can clean this up AFTER MVI - don't wanna mess smth up rn lol

@@ -6,13 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 4357e663f4ad55646af688a5bdb36f08
+  - enabled: 1
+    path: Assets/Scenes/LoadScreen.unity
+    guid: 18de1a69edf81904d94c6d5b7630c0eb
+  - enabled: 1
     path: Assets/Scenes/BoardScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/LoadScene.unity
+    path: Assets/Scenes/MiniLoadScene.unity
     guid: 09fa8f33ae14d3949aabee59ccc8e226
   - enabled: 1
-    path: Assets/Scenes/Minigames/RedLightGreenLight.unity
+    path: Assets/Scenes/Minigames/Red Light Green Light.unity
     guid: d20baad1da212554299d7c074e2fac32
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c378c930b11584b4e81b8b31f40d433c, type: 2}

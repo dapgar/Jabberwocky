@@ -113,7 +113,7 @@ public class TurnManager : MonoBehaviour
         GameManager.instance.diceRoll = result;
 
         // Loads Load Scene
-        SceneManager.LoadScene(1); // Hard coded for now
+        SceneManager.LoadScene(3); // Hard coded for now
     }
 
 

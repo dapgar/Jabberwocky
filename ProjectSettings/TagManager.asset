@@ -10,6 +10,7 @@ TagManager:
   - Face4
   - Face5
   - Face6
+  - Node
   layers:
   - Default
   - TransparentFX

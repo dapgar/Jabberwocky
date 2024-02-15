@@ -28,7 +28,7 @@ public class StoneScript : MonoBehaviour
         steps = moveAmount;
 
         // Target cams
-        BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[stoneID]);
+        //BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[stoneID]);
 
         while (steps > 0) 
         { 
@@ -43,7 +43,7 @@ public class StoneScript : MonoBehaviour
         }
         isMoving = false;
 
-        BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[0]);
+         // BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[0]);
         LookAtCamera();
         yield return new WaitForSeconds(1f);
 
