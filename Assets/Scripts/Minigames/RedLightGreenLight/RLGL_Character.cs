@@ -1,41 +1,27 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
-using TMPro;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class RLGL_Character : MonoBehaviour {
-    [SerializeField]
-    private Camera cam;
-
-    private bool bIsMoving = false;
-    private bool bIsFinished = false;
-    private bool bIsAlive = true;
-    private int playerIndex;
-    private Key key;
-    public bool IsAlive { get { return bIsAlive; } }
-    public bool IsFinished { get { return bIsFinished; } }
-    public bool IsMoving { get { return bIsMoving; } }
-    public int PlayerIndex { get { return playerIndex; } }
-
-    //private float speed;
-
     [Header("Win Stuff")]
     [SerializeField]
     private float winMoveSpeed = 3f;
     [SerializeField]
     private float winZMoveOffset = 1f;
-    [SerializeField]
-    private float winCamZOffset = 6f;
-    [SerializeField]
-    private float winCamRotateSpeed = 1f;
 
-    [Header("Death Stuff")]
+    [Header("Model Stuff")]
     [SerializeField]
     private Transform model;
-
     [SerializeField]
-    private float deathRotateSpeed = 5f;
-    private float deathYOffset = 0.35f;
+    private float dropModelRotateSpeed = 5f;
+    private float dropModelOffsetY = 0.35f;
+
+    private bool bIsMoving = false;
+    private bool bIsFinished = false;
+    private int playerIndex;
+    private Key key;
 
     private float bobbingAmount = 2f;
     private float bobbingSpeed = 1f;
@@ -46,95 +32,39 @@ public class RLGL_Character : MonoBehaviour {
     private float maxSpeed = 5f;
     private float currentSpeed = 0f;
 
-    void SetMovementKey() {
-        if (playerIndex == 0) {
-            key = Key.Q;
-        }
-        else if (playerIndex == 1) {
-            key = Key.R;
-        }
-        else if (playerIndex == 2) {
-            key = Key.U;
-        }
-        else {
-            key = Key.P;
-        }
-    }
+    private bool bCanGetPushedBack = true;
+    private float pushBackDelay = 0.8f;
+    private float pushBackAmount;
+    private float pushBackSpeed;
 
-    public void Move() {
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard == null) return; // no keyboard
+    private float finishLineZ;
+    private float totalDistance;
+    private float startingZ;
 
-        if (keyboard[key].isPressed) {
-            Accelerate();
-            bIsMoving = true;
-            // For static movement without acceleration/deceleration, uncomment below
-            //gameObject.transform.Translate(new Vector3(0f, 0f, 1) * maxSpeed * Time.deltaTime);
-        }
-        else if (bIsMoving) {
-            Decelerate();
-        }
-
-        // Bob character left & right
-        if (bIsMoving && model != null) {
-            float bobbingAngle = Mathf.Lerp(-bobbingAmount, bobbingAmount, Mathf.PingPong(Time.time * bobbingSpeed, 1f));
-            model.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, bobbingAngle);
-        }
-        else {
-            model.transform.rotation = Quaternion.Lerp(model.transform.rotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * bobbingResetSpeed);
-        }
-
-        transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
-
-        // For static movement without acceleration/deceleration, uncomment below
-        // There is no "key released" so it just checks if they're NOT pressing key but were previously moving, if so sets moving to false
-        /*if (!keyboard[key].isPressed && bIsMoving) {
-            bIsMoving = false;
-        }*/
-    }
-
-    void Accelerate() {
-        currentSpeed = Mathf.MoveTowards(currentSpeed, maxSpeed, acceleration * Time.deltaTime);
-    }
-
-    void Decelerate() {
-        currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
-
-        if (currentSpeed == 0f) {
-            bIsMoving = false;
-        }
-    }
-
-    public bool CheckFinish(float finishLineZ) {
-        if (gameObject.transform.position.z >= finishLineZ) {
-            Debug.Log($"Player {playerIndex + 1} finished");
-            bIsFinished = true;
-            bIsMoving = false;
-
-            Quaternion targetRotation = Quaternion.Euler(0f, 180f, 0f);
-            Vector3 targetPosition = gameObject.transform.position + new Vector3(0f, 0f, winZMoveOffset);
-            Vector3 targetCamPosition = cam.transform.position + new Vector3(0f, 0f, winCamZOffset);
-            StartCoroutine(MoveOnWin(gameObject.transform, targetPosition, winMoveSpeed));
-            StartCoroutine(MoveCamOnWin(cam.transform, targetCamPosition, targetRotation, winCamRotateSpeed));
-
-            return true;
-        }
-        return false;
-    }
+    public bool IsFinished { get { return bIsFinished; } }
+    public bool IsMoving { get { return bIsMoving; } }
+    public int PlayerIndex { get { return playerIndex; } }
 
     /// <summary>
-    /// Sets up split screen cameras for each player.
+    /// Sets up variables for the player.
     /// </summary>
-    public void SetupPlayer(int playerIndex, int totalPlayers, float acceleration, float deceleration, float maxSpeed) {
+    public void SetupPlayer(int playerIndex, float acceleration, float deceleration, float maxSpeed, float pushBackAmount, float pushBackSpeed, float finishLineZ) {
+        totalDistance = Mathf.Abs(transform.position.z - finishLineZ);
+        startingZ = transform.position.z;
+
         this.playerIndex = playerIndex;
         this.acceleration = acceleration;
         this.deceleration = deceleration;
         this.maxSpeed = maxSpeed;
+        this.pushBackAmount = pushBackAmount;
+        this.pushBackSpeed = pushBackSpeed;
+        this.finishLineZ = finishLineZ;
 
         SetMovementKey();
 
+        // Split Screen Setup:  Splitscreen 
         // TODO: Only setup for 4 players ATM, need to support 2-4 after MVI
-        if (totalPlayers == 4) {
+        /*if (totalPlayers == 4) {
             if (playerIndex == 0) {
                 cam.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
             }
@@ -167,27 +97,108 @@ public class RLGL_Character : MonoBehaviour {
             else if (playerIndex == 1) {
                 cam.rect = new Rect(0.5f, 0f, 0.5f, 1f);
             }
+        }*/
+    }
+
+    void SetMovementKey() {
+        if (playerIndex == 0) {
+            key = Key.Q;
+        }
+        else if (playerIndex == 1) {
+            key = Key.R;
+        }
+        else if (playerIndex == 2) {
+            key = Key.U;
+        }
+        else {
+            key = Key.P;
         }
     }
 
-    public void Kill() {
-        // Debug.Log($"Player {playerIndex + 1} died");
-        bIsAlive = false;
-        
-        // Drop model
-        if (model != null) {
-            Quaternion targetRotation = Quaternion.Euler(-90f, 0f, 0f);
-            StartCoroutine(RotateOverTime(model, targetRotation, deathRotateSpeed));
+    public void Move(bool bIsLightRed) {
+        //if (bIsLightRed && !bCanGetPushedBack) return;  // Light is red and currently mid push-back, disable movement
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null) return; // if no keyboard
 
-            Vector3 targetPosition = model.position + new Vector3(0f, deathYOffset, 0f);
-            StartCoroutine(MoveYPositionOverTime(model, targetPosition, deathRotateSpeed));
+        if (keyboard[key].isPressed) {
+            Accelerate();
+            bIsMoving = true;
+        }
+        else if (bIsMoving) {
+            Decelerate();
         }
 
-        // Point camera down facing model
-        Quaternion cameraStartRotation = cam.transform.rotation;
-        Quaternion cameraTargetRotation = Quaternion.Euler(30f, cameraStartRotation.eulerAngles.y, cameraStartRotation.eulerAngles.z);
-        StartCoroutine(MoveCameraOverTime(cam.transform, cameraTargetRotation, deathRotateSpeed));
+        // Bob character left & right
+        if (bIsMoving && model != null) {
+            float bobbingAngle = Mathf.Lerp(-bobbingAmount, bobbingAmount, Mathf.PingPong(Time.time * bobbingSpeed, 1f));
+            model.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, bobbingAngle);
+        }
+        else {
+            model.transform.rotation = Quaternion.Lerp(model.transform.rotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * bobbingResetSpeed);
+        }
 
+        transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
+    }
+
+    void Accelerate() {
+        currentSpeed = Mathf.MoveTowards(currentSpeed, maxSpeed, acceleration * Time.deltaTime);
+    }
+
+    void Decelerate() {
+        currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
+
+        if (currentSpeed == 0f) {
+            bIsMoving = false;
+        }
+    }
+
+    public bool CheckFinish() {
+        if (gameObject.transform.position.z >= finishLineZ) {
+            bIsFinished = true;
+            bIsMoving = false;
+
+            StartCoroutine(MoveAndRotateOnFinish());
+            return true;
+        }
+        return false;
+    }
+
+    public void DropModel() {
+        if (model != null) {
+            Quaternion targetRotation = Quaternion.Euler(-90f, 0f, 0f);
+            StartCoroutine(RotateOverTime(model, targetRotation, dropModelRotateSpeed));
+
+            Vector3 targetPosition = model.position + new Vector3(0f, dropModelOffsetY, 0f);
+            StartCoroutine(MoveYPositionOverTime(model, targetPosition, dropModelRotateSpeed));
+        }
+    }
+
+    /// <summary>
+    /// Pushes player back by specified amount
+    /// </summary>
+    public void PushBack() {
+        if (!bCanGetPushedBack) return;
+        //bIsMoving = false;
+        StartCoroutine(PushBackTimerCoroutine());
+        StartCoroutine(PushBackCoroutine());
+    }
+
+    private IEnumerator PushBackCoroutine() {
+        Vector3 targetPosition = transform.position + new Vector3(0f, 0f, -pushBackAmount);
+        targetPosition.z = targetPosition.z < startingZ ? targetPosition.z = startingZ : targetPosition.z;  // Ensure they don't get pushed back beyond start
+        Vector3 startPosition = transform.position;
+        float t = 0f;
+        while (t < 1) {
+            t += Time.deltaTime * pushBackSpeed;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            yield return null;
+        }
+    }
+
+    private IEnumerator PushBackTimerCoroutine() {
+        bCanGetPushedBack = false;
+        yield return new WaitForSeconds(pushBackDelay);
+        bCanGetPushedBack = true;
     }
 
     private IEnumerator RotateOverTime(Transform targetTransform, Quaternion targetRotation, float speed) {
@@ -212,42 +223,25 @@ public class RLGL_Character : MonoBehaviour {
         }
     }
 
-    private IEnumerator MoveCameraOverTime(Transform targetTransform, Quaternion targetRotation, float speed) {
+    private IEnumerator MoveAndRotateOnFinish() {
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = startPosition + new Vector3(0f, 0f, winZMoveOffset);
+        
+        Quaternion startRotation = transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(0f, 180f, 0f);
+        
         float t = 0f;
-        Quaternion startRotation = targetTransform.rotation;
 
         while (t < 1) {
-            t += Time.deltaTime * speed;
-            targetTransform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
-            yield return null;
-        }
-    }
-
-    private IEnumerator MoveOnWin(Transform targetTransform, Vector3 targetPosition, float speed) {
-        float t = 0f;
-        Vector3 startPosition = targetTransform.position;
-
-        while (t < 1) {
-            t += Time.deltaTime * speed;
-            targetTransform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            t += Time.deltaTime * winMoveSpeed;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            transform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
             yield return null;
 
         }
     }
 
-    private IEnumerator MoveCamOnWin(Transform targetTransform, Vector3 targetPosition, Quaternion targetRotation, float speed) {
-        float t = 0f;
-        Quaternion startRotation = targetTransform.rotation;
-        Vector3 startPosition = targetTransform.position;
-
-        while (t < 1) {
-            t += Time.deltaTime * speed;
-            targetTransform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            targetTransform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
-            yield return null;
-
-        }
+    public float DistanceRatio() {
+        return transform.position.z / totalDistance;
     }
-
-
 }
