@@ -37,6 +37,8 @@ public class ReactionTime : MonoBehaviour
     private int playersLeft;
     private int score;
 
+    bool playerScored;
+
     public int round;
     private float roundTimer;
 
@@ -113,6 +115,7 @@ public class ReactionTime : MonoBehaviour
             }
             else
             {
+                playerScored = true;
                 pbScript[index].SetPressed();
                 score--;
             }
@@ -130,9 +133,9 @@ public class ReactionTime : MonoBehaviour
     private int GetScore()
     {
         int scoreToReturn = 0;
-        if (currentTimer >= 0)
+        if (currentTimer >= 0 && !playerScored)
         {
-            scoreToReturn = score;
+            scoreToReturn = 1;
         }
 
         return scoreToReturn;
@@ -140,7 +143,16 @@ public class ReactionTime : MonoBehaviour
 
     private void OnRoundEnd()
     {
-        if (round < 3)
+        int highestScore = -1;
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (playerScore[i] > highestScore)
+            {
+                highestScore = playerScore[i];
+            }
+        }
+
+        if (highestScore < 3)
         {
             playersLeft = players.Length;
             score = playersLeft;
@@ -150,6 +162,7 @@ public class ReactionTime : MonoBehaviour
                 buttonPressed[i] = false;
                 pbScript[i].SetInactive();
             }
+            playerScored = false;
             roundTimer = 3;
             round++;
             Debug.Log("Round " +  round);
