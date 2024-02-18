@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -833,8 +833,7 @@ PrefabInstance:
       value: Player4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7120133276799147817, guid: 2968e0602d4a2774dac6520a33a7f236, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2968e0602d4a2774dac6520a33a7f236, type: 3}
@@ -1251,10 +1250,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1519328372443604201, guid: 1160ec13773a9d54592d01728426d558, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5295700413322170389, guid: 1160ec13773a9d54592d01728426d558, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -2214,8 +2209,7 @@ PrefabInstance:
       value: Player3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7120133276799147817, guid: d7b77c4e224f457479eafa21287c3a56, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7b77c4e224f457479eafa21287c3a56, type: 3}
@@ -2450,8 +2444,8 @@ MonoBehaviour:
   rotationTime: 0.5
   maxRedLightDuration: 3.5
   minRedLightDuration: 1.5
-  maxGreenLightDuration: 95
-  minGreenLightDuration: 92.5
+  maxGreenLightDuration: 5
+  minGreenLightDuration: 2.5
   reactionTimeBuffer: 0.7
 --- !u!1 &1597189120
 GameObject:
@@ -2875,10 +2869,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1519328372443604201, guid: 8f8923e45f887c540963aaa801a7f101, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5295700413322170389, guid: 8f8923e45f887c540963aaa801a7f101, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3

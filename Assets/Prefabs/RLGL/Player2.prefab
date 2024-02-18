@@ -46,13 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47290260065f9894f830aad7284ac215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   winMoveSpeed: 3
   winZMoveOffset: 1
-  winCamZOffset: 6
-  winCamRotateSpeed: 1
   model: {fileID: 1963167912768437143}
-  deathRotateSpeed: 5
+  dropModelRotateSpeed: 5
 --- !u!1 &6462804176173381811
 GameObject:
   m_ObjectHideFlags: 0
