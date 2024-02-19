@@ -9,7 +9,6 @@ public class BoardManager : MonoBehaviour
 
     public List<StoneScript> players;
     public GameObject[] crowns;
-    private int furthestPlayer = 0;
 
     public List<Camera> cameras;
 
@@ -59,8 +58,9 @@ public class BoardManager : MonoBehaviour
             if ((GameManager.instance.moveData[player.stoneID - 1] > 0))
             {
                 StartCoroutine(player.Move(GameManager.instance.moveData[player.stoneID - 1]));
+                TurnOffCamerasBut(cameras[player.stoneID]);
                 while (player.isMoving) { yield return null; }
-
+                TurnOffCamerasBut(cameras[0]);
                 yield return new WaitForSeconds(1f);
             }
             GameManager.instance.routeData[player.stoneID - 1] = player.routePos;

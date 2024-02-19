@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MiniLoadManager : MonoBehaviour
 {
-    public int numberOfGames;
+    public int numberOfGames = 2;
     public TextMeshProUGUI hintText;
     public GameObject playButton;
 
@@ -23,6 +23,7 @@ public class MiniLoadManager : MonoBehaviour
         if (!hintShown)
         {
             StartCoroutine(GameHints());
+            hintShown = true;
         }
     }
 
@@ -42,8 +43,6 @@ public class MiniLoadManager : MonoBehaviour
 
     IEnumerator GameHints()
     {
-        hintShown = true;
-
         int randomHint = Random.Range(0, 3);
 
         switch (randomHint)
@@ -61,7 +60,7 @@ public class MiniLoadManager : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         hintShown = false;
     }
 }
