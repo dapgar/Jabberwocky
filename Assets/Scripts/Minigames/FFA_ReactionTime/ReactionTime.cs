@@ -207,6 +207,6 @@ public class ReactionTime : MonoBehaviour
     {
         yield return new WaitForSeconds(4);
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }
