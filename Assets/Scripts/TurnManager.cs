@@ -55,7 +55,7 @@ public class TurnManager : MonoBehaviour
         diceAnim.SetBool("isRolling", true);
 
         result = RollDice();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.5f);
         StartCoroutine(MenuTransition(result));
     }
 

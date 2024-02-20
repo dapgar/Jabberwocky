@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,7 +11,9 @@ public class BoardManager : MonoBehaviour
     public List<StoneScript> players;
     public GameObject[] crowns;
 
-    public List<Camera> cameras;
+    public CinemachineVirtualCamera cam;
+    private Vector3 camDefaultPos;
+    private Quaternion camDefaultRot;
 
     public RouteScript route;
 
@@ -39,16 +42,14 @@ public class BoardManager : MonoBehaviour
             p.LookAtCamera();
         }
 
+        camDefaultPos = new Vector3(0.7f, 4.5f, 4.5f);
+        camDefaultRot = Quaternion.Euler(50f, 244, 0);
+
         StartCoroutine(UpdateBoard());
     }
 
     IEnumerator UpdateBoard()
     {
-        if (GameManager.instance)
-        {
-            TurnOffCamerasBut(cameras[0]);
-        }
-
         yield return new WaitForSeconds(3f);
         Debug.Log("Updating Player Positions...");
 
@@ -58,9 +59,9 @@ public class BoardManager : MonoBehaviour
             if ((GameManager.instance.moveData[player.stoneID - 1] > 0))
             {
                 StartCoroutine(player.Move(GameManager.instance.moveData[player.stoneID - 1]));
-                TurnOffCamerasBut(cameras[player.stoneID]);
+                PointCam(player.transform);
                 while (player.isMoving) { yield return null; }
-                TurnOffCamerasBut(cameras[0]);
+                ResetCam();
                 yield return new WaitForSeconds(1f);
             }
             GameManager.instance.routeData[player.stoneID - 1] = player.routePos;
@@ -89,14 +90,18 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void TurnOffCamerasBut(Camera camToKeep)
+    private void PointCam(Transform target)
     {
-        foreach (Camera c in cameras)
-        {
-            c.enabled = false;
-        }
+        cam.LookAt = target;
+        cam.m_Lens.FieldOfView = 30;
+    }
 
-        camToKeep.enabled = true;
-
+    private void ResetCam()
+    {
+        cam.LookAt = null;
+        cam.transform.SetPositionAndRotation(camDefaultPos, camDefaultRot);
+        cam.m_Lens.FieldOfView = 70;
     }
 }
+
+

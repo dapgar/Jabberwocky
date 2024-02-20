@@ -51,7 +51,7 @@ public class StoneScript : MonoBehaviour
     }
 
     public void LookAtCamera() {
-        transform.LookAt(BoardManager.instance.cameras[0].transform);
+        transform.LookAt(BoardManager.instance.cam.transform);
     }
 
     private bool MoveToNextNode(Vector3 target)
