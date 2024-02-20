@@ -9,8 +9,13 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ReactionTime : MonoBehaviour
 {
-    float currentTimer;
-    float timeGoal;
+    enum GameState {
+        roundStart,
+        red,
+        green,
+        roundEnd
+    }
+    GameState gameState;
 
     [SerializeField]
     private GameObject bigCenterButton;
@@ -37,14 +42,23 @@ public class ReactionTime : MonoBehaviour
     private int playersLeft;
     private int score;
 
-    bool playerScored;
+    GameObject playerScored;
+
+    public CountdownTimer roundStartTimer;
+    public RandomReactionTimer ongoingTimer;
+    public CountdownTimer roundEndTimer;
 
     public int round;
-    private float roundTimer;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameState = GameState.roundStart;
+
+        roundStartTimer.onTimerEnd += () => OnRoundStart();
+        ongoingTimer.onTimerEnd += () => OnLightGreen();
+        roundEndTimer.onTimerEnd += () => OnRoundEnd();
+
         playerScore = new int[players.Length];
         buttonPressed = new bool[players.Length];
         pbScript = new Button[playerButtons.Length];
@@ -59,7 +73,6 @@ public class ReactionTime : MonoBehaviour
 
         playersLeft = 0;
         score = 0;
-        roundTimer = -1;
 
         bcbScript = bigCenterButton.GetComponent<Button>();
     }
@@ -67,38 +80,55 @@ public class ReactionTime : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playersLeft <= 0)
+        switch (gameState)
         {
-            OnRoundEnd();
+            case GameState.roundStart:
+                roundStartTimer.Countdown();
+                timerText.text = (Mathf.Ceil(roundStartTimer.time)).ToString("F0");
+                break;
+            case GameState.red:
+                if (playersLeft <= 0)
+                {
+                    OnRoundScored();
+                }
+
+                PlayerInput(0, Key.Q);
+                PlayerInput(1, Key.R);
+                PlayerInput(2, Key.U);
+                PlayerInput(3, Key.P);
+
+                ongoingTimer.Countdown();
+                break;
+            case GameState.green:
+                if (playersLeft <= 0 || playerScored != null)
+                {
+                    OnRoundScored();
+                }
+
+                PlayerInput(0, Key.Q);
+                PlayerInput(1, Key.R);
+                PlayerInput(2, Key.U);
+                PlayerInput(3, Key.P);
+                break;
+            case GameState.roundEnd:
+                if (playerScored != null)
+                {
+                    playerScored.transform.Rotate(new Vector3(Time.deltaTime * 240, 0, 0), Space.Self);
+                    //playerScored.transform.position += new Vector3(0, Time.deltaTime, 0);
+                }
+                roundEndTimer.Countdown();
+                break;
         }
 
-        if (roundTimer > 0)
-        {
-            roundTimer -= Time.deltaTime;
-            timerText.text = (Mathf.Ceil(roundTimer)).ToString("F0");
-            return;
-        }
 
-        if (currentTimer < 0)
-        {
-            bcbScript.SetReady();
-        }
-        else
-        {
-            bcbScript.SetPressed();
-        }
+        //if (roundTimer > 0)
+        //{
+        //    roundTimer -= Time.deltaTime;
+        //    timerText.text = (Mathf.Ceil(roundTimer)).ToString("F0");
+        //    return;
+        //}
 
-        PlayerInput(0, Key.Q);
-        PlayerInput(1, Key.R);
-        PlayerInput(2, Key.U);
-        PlayerInput(3, Key.P);
-
-        currentTimer += Time.deltaTime;
-        if (currentTimer >= 5)
-        {
-            playersLeft = 0;
-            bcbScript.SetInactive();
-        }
+        
     }
 
     private void PlayerInput(int index, Key key)
@@ -115,25 +145,20 @@ public class ReactionTime : MonoBehaviour
             }
             else
             {
-                playerScored = true;
+                playerScored = players[index];
                 pbScript[index].SetPressed();
                 score--;
             }
             scoreTexts[index].text = playerScore[index].ToString("F0");
             playersLeft--;
             buttonPressed[index] = true;
-
-            if (playersLeft <= 0)
-            {
-                currentTimer = 5;
-            }
         }
     }
 
     private int GetScore()
     {
         int scoreToReturn = 0;
-        if (currentTimer >= 0 && !playerScored)
+        if (gameState == GameState.green && playerScored == null)
         {
             scoreToReturn = 1;
         }
@@ -141,7 +166,45 @@ public class ReactionTime : MonoBehaviour
         return scoreToReturn;
     }
 
-    private void OnRoundEnd()
+    public void OnRoundStart()
+    {
+        playersLeft = players.Length;
+
+        gameState = GameState.red;
+        bcbScript.SetReady();
+        ongoingTimer.Reset();
+
+        timerText.gameObject.SetActive(false);
+
+        Debug.Log("Starting Round Now");
+    }
+
+    public void OnLightGreen()
+    {
+        bcbScript.SetPressed();
+
+        gameState = GameState.green;
+
+        Debug.Log("Green Button");
+    }
+
+    private void OnRoundScored()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (!buttonPressed[i])
+            {
+                buttonPressed[i] = true;
+                pbScript[i].SetReady();
+            }
+        }
+
+        roundEndTimer.Reset();
+
+        gameState = GameState.roundEnd;
+    }
+
+    public void OnRoundEnd()
     {
         int highestScore = -1;
         for (int i = 0; i < players.Length; i++)
@@ -154,19 +217,23 @@ public class ReactionTime : MonoBehaviour
 
         if (highestScore < 3)
         {
+            bcbScript.SetInactive();
             playersLeft = players.Length;
-            score = playersLeft;
-            currentTimer = -Random.Range(minTime, maxTime);
+
+            gameState = GameState.roundStart;
+            roundStartTimer.Reset();
+            round++;
+
+            playerScored = null;
             for (int i = 0; i < buttonPressed.Length; i++)
             {
                 buttonPressed[i] = false;
                 pbScript[i].SetInactive();
             }
-            playerScored = false;
-            roundTimer = 3;
-            round++;
-            Debug.Log("Round " +  round);
 
+            timerText.gameObject.SetActive(true);
+
+            Debug.Log("Round " + round);
             return;
         }
 

@@ -1284,8 +1284,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2160,6 +2160,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1625268451}
   - component: {fileID: 1625268450}
+  - component: {fileID: 1625268453}
+  - component: {fileID: 1625268454}
+  - component: {fileID: 1625268452}
   m_Layer: 0
   m_Name: ReactionTimeManager
   m_TagString: Untagged
@@ -2198,7 +2201,10 @@ MonoBehaviour:
   - {fileID: 791001453}
   minTime: 3
   maxTime: 6
-  round: 0
+  roundStartTimer: {fileID: 1625268453}
+  ongoingTimer: {fileID: 1625268454}
+  roundEndTimer: {fileID: 1625268452}
+  round: 1
 --- !u!4 &1625268451
 Transform:
   m_ObjectHideFlags: 0
@@ -2214,6 +2220,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1625268452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625268449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e52bc32dc7baa4893c094ec624e4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameInEditor: Round End
+  maxTime: 1.5
+  time: 0
+--- !u!114 &1625268453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625268449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e52bc32dc7baa4893c094ec624e4d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameInEditor: Round Start
+  maxTime: 3
+  time: 0
+--- !u!114 &1625268454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625268449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4730db216d49fef4ebcf714bdb55fc72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameInEditor: Ongoing
+  minRange: 3
+  maxRange: 6
+  time: 0
 --- !u!1 &1783671741
 GameObject:
   m_ObjectHideFlags: 0
