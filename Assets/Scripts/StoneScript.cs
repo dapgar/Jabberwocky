@@ -15,6 +15,8 @@ public class StoneScript : MonoBehaviour
     public int stoneID;
     public int steps;
 
+    public Animator playerAnim;
+
     // --- METHODS ---
     public IEnumerator Move(int moveAmount)
     {
@@ -25,6 +27,7 @@ public class StoneScript : MonoBehaviour
         }
 
         isMoving = true;
+        playerAnim.SetBool("isMoving", true);
         steps = moveAmount;
 
         // Target cams
@@ -42,8 +45,9 @@ public class StoneScript : MonoBehaviour
             routePos++;
         }
         isMoving = false;
+        playerAnim.SetBool("isMoving", false);
 
-         // BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[0]);
+        // BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[0]);
         LookAtCamera();
         yield return new WaitForSeconds(1f);
 
