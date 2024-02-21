@@ -231,7 +231,7 @@ public class ReactionTime : MonoBehaviour
                 pbScript[i].SetInactive();
             }
 
-            timerText.gameObject.SetActive(true);
+            timerText.gameObject.SetActive(false);
 
             Debug.Log("Round " + round);
             return;
