@@ -32,7 +32,7 @@ public class MiniLoadManager : MonoBehaviour
         int randomGame = Random.Range(0, numberOfGames);
 
         // Loads minigame scene accounting for menus.
-        SceneManager.LoadScene(randomGame + 4);
+        SceneChanger.Instance.ChangeScene(randomGame + 4);
     }
 
     IEnumerator WaitToLoad()
@@ -60,7 +60,7 @@ public class MiniLoadManager : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         hintShown = false;
     }
 }

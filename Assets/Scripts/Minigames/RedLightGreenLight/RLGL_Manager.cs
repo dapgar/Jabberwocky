@@ -224,7 +224,7 @@ public class RLGL_Manager : MonoBehaviour {
     private IEnumerator ReturnToBoardCoroutine() {
         yield return new WaitForSeconds(4);
 
-        SceneManager.LoadScene(1);
+        SceneChanger.Instance.ChangeScene(1);
     }
 
     private IEnumerator LightController() {

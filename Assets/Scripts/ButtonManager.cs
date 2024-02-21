@@ -8,6 +8,6 @@ public class ButtonManager : MonoBehaviour
     // Loads Loading Screen
     public void ToLoadScene()
     {
-        SceneManager.LoadScene(1);
+        SceneChanger.Instance.ChangeScene(1);
     }
 }

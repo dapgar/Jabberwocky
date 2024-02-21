@@ -26,6 +26,7 @@ public class LoadManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(2);
+        SceneChanger.Instance.ChangeScene(2);
     }
 
     IEnumerator GameHints()
