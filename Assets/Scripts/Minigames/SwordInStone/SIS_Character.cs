@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SIS_Character : MonoBehaviour {
+    [SerializeField]
+    private Animator animator;
+    
     private float clickCooldown;
     private float cooldownTimer = 0f;
     private bool bOnCooldown = false;
@@ -13,7 +16,6 @@ public class SIS_Character : MonoBehaviour {
     public void SetupPlayer(float clickCooldown, int playerIndex) {
         this.clickCooldown = clickCooldown;
         this.playerIndex = playerIndex;
-
 
         SetClickKey();
     }
@@ -48,6 +50,7 @@ public class SIS_Character : MonoBehaviour {
             if (keyboard[key].isPressed) {
                 // Click key here
                 bOnCooldown = true;
+                if (animator) animator.SetTrigger("PullSword");
                 return true;
             }
         }
