@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 90570395733951145}
   - component: {fileID: 5326287355507530548}
   - component: {fileID: -5264403710818021372}
+  - component: {fileID: 5076021212441154429}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -192,6 +193,7 @@ MonoBehaviour:
   isMoving: 0
   stoneID: 1
   steps: 0
+  playerAnim: {fileID: 0}
 --- !u!114 &-5264403710818021372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,12 +218,44 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 77f05210-71d8-4d9a-8663-96a74805c9ff
+    m_ActionName: Board/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5076021212441154429}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: ButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 446605fc-aa15-4f01-aa69-dd19168e72b9
+    m_ActionName: Minigame (1B)/New action[/USB Gamepad /stick/down]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Board
+  m_DefaultControlScheme: Controller scheme
+  m_DefaultActionMap: Minigame (1B)
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5076021212441154429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779533057904823070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cd51568541baf449996be11b61f983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4544657170373513743
 GameObject:
   m_ObjectHideFlags: 0

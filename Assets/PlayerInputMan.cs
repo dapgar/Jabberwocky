@@ -12,11 +12,17 @@ public class PlayerInputMan : MonoBehaviour
         
     }
 
+    private void Awake()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
     void OnPlayerJoined(PlayerInput player)
     {
         Debug.Log("Player Joined: " + player);

@@ -26,14 +26,47 @@
                     "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b60a8c1-1640-455e-9fa3-9c5067087602",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller Scheme",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Minigame",
+            "name": "Minigame (1B)",
             "id": "20645a21-6654-473c-be3d-36db525d5976",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "button",
+                    "type": "Button",
+                    "id": "446605fc-aa15-4f01-aa69-dd19168e72b9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "eda1de53-efe2-4c5c-827f-d0539227a55d",
+                    "path": "<HID::USB Gamepad >/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller Scheme",
+                    "action": "button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
@@ -44,6 +77,27 @@
                 {
                     "devicePath": "<Keyboard>",
                     "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Controller Scheme",
+            "bindingGroup": "Controller Scheme",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<HID::USB Gamepad >",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": true,
                     "isOR": false
                 }
             ]
