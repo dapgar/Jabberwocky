@@ -41,6 +41,11 @@ public class MiniLoadManager : MonoBehaviour
             StartCoroutine(GameHints());
             hintShown = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && playButton.activeSelf) {
+            OnPlayClicked();
+        }
+
     }
 
     public void OnPlayClicked()

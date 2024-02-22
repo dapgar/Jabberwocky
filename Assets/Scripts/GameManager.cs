@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public int diceRoll;
 
+    public bool playersMoving;
+
     private void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
         routeData = new int[numPlayers];
         playersPos = new Vector3[numPlayers];
         playerRots = new Quaternion[numPlayers];
+
+        playersMoving = false;
     }
 
     private void Start()

@@ -50,8 +50,11 @@ public class BoardManager : MonoBehaviour
 
     IEnumerator UpdateBoard()
     {
-        yield return new WaitForSeconds(3f);
+        /* Used to disable dice roll during player moves */
+        GameManager.instance.playersMoving = true;
 
+        yield return new WaitForSeconds(3f);
+       
         // Moves players after each game.
         foreach(StoneScript player in players)
         {
@@ -66,6 +69,7 @@ public class BoardManager : MonoBehaviour
             GameManager.instance.routeData[player.stoneID - 1] = player.routePos;
             //GameManager.instance.playersPos[player.stoneID - 1] = player.transform.position;
         }
+        GameManager.instance.playersMoving = false;
 
         /*// Handles crown logic.
         for (int i = 0; i < crowns.Length; i++)
