@@ -51,7 +51,6 @@ public class BoardManager : MonoBehaviour
     IEnumerator UpdateBoard()
     {
         yield return new WaitForSeconds(3f);
-        Debug.Log("Updating Player Positions...");
 
         // Moves players after each game.
         foreach(StoneScript player in players)
