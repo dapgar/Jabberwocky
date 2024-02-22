@@ -15,7 +15,7 @@ public class SIS_Character : MonoBehaviour {
     private bool staminaDepleted = false;
     private bool keyDownPrevFrame = false;
 
-    public bool Exhausted { get { return staminaDepleted; } }
+    public float Stamina { get { return stamina; } }
 
     public void SetupPlayer(int playerIndex, float maxStamina, float staminaRegenRate, float staminaClickDrain) {
         this.playerIndex = playerIndex;
@@ -45,7 +45,8 @@ public class SIS_Character : MonoBehaviour {
     }
 
     public bool CheckClick() {
-        stamina += staminaRegenRate * Time.deltaTime;
+        // If stamina is fully depleted, regen at 2x the rate
+        stamina += staminaDepleted ? staminaRegenRate * 2 * Time.deltaTime : staminaRegenRate * Time.deltaTime;
         if (stamina >= maxStamina) {
             staminaDepleted = false;
             stamina = maxStamina;
@@ -68,6 +69,8 @@ public class SIS_Character : MonoBehaviour {
             }
 
             keyDownPrevFrame = true;
+
+            if (animator) animator.SetTrigger("PullSword");
 
             // SIS_Manager handles actual pulling of the sword
             // Just return true here to let SIS_Manager know that this click pulled the sword
