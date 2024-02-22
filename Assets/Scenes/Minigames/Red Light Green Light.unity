@@ -2502,7 +2502,7 @@ MonoBehaviour:
   maxSpeed: 1
   pushBackAmount: 1.5
   pushBackSpeed: 2
-  gameTime: 45
+  gameTime: 30
   finishLineZ: 10.5
   players:
   - {fileID: 470103325448907667}

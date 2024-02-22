@@ -202,23 +202,21 @@ public class RLGL_Manager : MonoBehaviour {
         gameRunning = false;
         runLightCoroutine = false;
 
-        // COMMENT THIS OUT IF TESTING LOCALLY
-        
-        int[] moveData = new int[GameManager.instance.numPlayers];
-        int spacesToMove = GameManager.instance.diceRoll;
+        if (GameManager.instance) {
+            int[] moveData = new int[GameManager.instance.numPlayers];
+            int spacesToMove = GameManager.instance.diceRoll;
 
-        for (int i = 0; i < players.Length; i++) {
-            if (!players[i].IsFinished) players[i].DropModel();
-            moveData[i] = players[i].IsFinished ? spacesToMove : 0;
+            for (int i = 0; i < players.Length; i++) {
+                if (!players[i].IsFinished) players[i].DropModel();
+                moveData[i] = players[i].IsFinished ? spacesToMove : 0;
+            }
+            if (firstFinishIndex != -1) moveData[firstFinishIndex] += firstFinishBonus;
+
+            GameManager.instance.MoveData(moveData);
+
+            // back to board
+            StartCoroutine(ReturnToBoardCoroutine());
         }
-        if (firstFinishIndex != -1) moveData[firstFinishIndex] += firstFinishBonus;
-
-        GameManager.instance.MoveData(moveData);
-        
-        // END COMMENT REGION IF TESTING LOCALLY
-
-        // back to board
-        StartCoroutine(ReturnToBoardCoroutine());
     }
 
     private IEnumerator ReturnToBoardCoroutine() {
