@@ -5,17 +5,26 @@ public class SIS_Character : MonoBehaviour {
     [SerializeField]
     private Animator animator;
     
-    private float clickCooldown;
-    private float cooldownTimer = 0f;
-    private bool bOnCooldown = false;
     private int playerIndex;
     private Key key;
 
-    public bool OnCooldown { get { return bOnCooldown; } }
+    private float maxStamina;
+    private float stamina;
+    private float staminaRegenRate;
+    private float staminaClickDrain;
+    private bool staminaDepleted = false;
+    private bool keyDownPrevFrame = false;
 
-    public void SetupPlayer(float clickCooldown, int playerIndex) {
-        this.clickCooldown = clickCooldown;
+    public bool Exhausted { get { return staminaDepleted; } }
+
+    public void SetupPlayer(int playerIndex, float maxStamina, float staminaRegenRate, float staminaClickDrain) {
         this.playerIndex = playerIndex;
+        this.maxStamina = maxStamina;
+        this.staminaRegenRate = staminaRegenRate;
+        this.staminaClickDrain = staminaClickDrain;
+
+        stamina = maxStamina;
+        keyDownPrevFrame = false;
 
         SetClickKey();
     }
@@ -36,24 +45,38 @@ public class SIS_Character : MonoBehaviour {
     }
 
     public bool CheckClick() {
-        if (bOnCooldown) {
-            cooldownTimer += Time.deltaTime;
-            if (cooldownTimer >= clickCooldown) {
-                cooldownTimer = 0f;
-                bOnCooldown = false;
+        stamina += staminaRegenRate * Time.deltaTime;
+        if (stamina >= maxStamina) {
+            staminaDepleted = false;
+            stamina = maxStamina;
+        }
+        if (playerIndex == 0) Debug.Log("STAMINA: " + stamina);
+        if (staminaDepleted) {
+            return false;
+        }
+
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null) return false; // if no keyboard
+
+        if (keyboard[key].isPressed) {
+            if (keyDownPrevFrame) return false;
+
+            stamina -= staminaClickDrain;
+            if (stamina <= 0f) {
+                staminaDepleted = true;
+                stamina = 0f;
             }
+
+            keyDownPrevFrame = true;
+
+            // SIS_Manager handles actual pulling of the sword
+            // Just return true here to let SIS_Manager know that this click pulled the sword
+            return true;
         }
         else {
-            Keyboard keyboard = Keyboard.current;
-            if (keyboard == null) return false; // if no keyboard
-
-            if (keyboard[key].isPressed) {
-                // Click key here
-                bOnCooldown = true;
-                if (animator) animator.SetTrigger("PullSword");
-                return true;
-            }
+            keyDownPrevFrame = false;
         }
+
         return false;
     }
 }

@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234682d5f2672cb429d20909023cbc2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfGames: 2
+  numberOfGames: 3
   hintText: {fileID: 1569430360}
   playButton: {fileID: 666181702}
 --- !u!1660057539 &9223372036854775807

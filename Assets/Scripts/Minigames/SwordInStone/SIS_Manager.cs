@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,41 +8,50 @@ public class SIS_Manager : MonoBehaviour {
     [SerializeField]
     private int totalSwordPulls = 50;
     [SerializeField]
-    private float playerClickCooldown = 1f;
+    private float maxPlayerStamina = 1f;
     /* Max height to pull sword before it comes out of rock */
     [SerializeField]
-    private float maxPullLength = 0.8f;
+    private float maxPullLength = 0.6f;
     [SerializeField]
-    private float gameClickCooldown = 2f;
+    private float staminaRegenRate = 0.25f;
+    [SerializeField]
+    private float staminaClickDrain = 0.05f;
 
     [Header("GameObjects")]
     [SerializeField]
     private SIS_Character[] players;
     [SerializeField]
-    private GameObject Sword;
+    private GameObject[] Swords;
+    [SerializeField]
+    private Image[] PlayerIcons;
 
     /* Amount that each click raises the sword */
-    private float pullAmount;
+    private float clickPullAmount;
     private bool bGameRunning = true;
      
 
     private void Start() {
-        pullAmount = maxPullLength / totalSwordPulls;
+        clickPullAmount = maxPullLength / totalSwordPulls;
 
         for (int i = 0; i < players.Length; i++) {
-            players[i].SetupPlayer(playerClickCooldown, i);
+            players[i].SetupPlayer(i, maxPlayerStamina, staminaRegenRate, staminaClickDrain);
         }
 
     }
 
     private void Update() {
         if (bGameRunning) {
-
             for (int i = 0; i < players.Length; i++) {
+                if (players[i].Exhausted) {
+                    PlayerIcons[i].enabled = false;
+                }
+                else {
+                    PlayerIcons[i].enabled = true;
+                }
                 if (players[i].CheckClick()) {
-                    //StartCoroutine(GameClickCoroutine());
-
-                    StartCoroutine(SwordPullCoroutine());
+                    Vector3 newSwordPos = new Vector3(Swords[i].transform.position.x, Swords[i].transform.position.y, Swords[i].transform.position.z);
+                    newSwordPos.y += clickPullAmount;
+                    Swords[i].transform.position = newSwordPos;
 
                     CheckForWin(i);
 
@@ -51,14 +59,10 @@ public class SIS_Manager : MonoBehaviour {
                 }
             }
         }
-        else {
-            // Game is over, should play end anim & do that stuff
-        }
-        
     }
 
     private void CheckForWin(int playerIndex) {
-        if (Sword.transform.position.y >= maxPullLength) {
+        if (Swords[playerIndex].transform.position.y >= maxPullLength) {
             // Game is over, player {playerIndex} won
 
             // Debug.Log($"Winner is player {playerIndex + 1}");
@@ -81,22 +85,6 @@ public class SIS_Manager : MonoBehaviour {
             }
         }
     }
-
-    private IEnumerator SwordPullCoroutine() {
-        yield return new WaitForSeconds(1); // takes 1 sec for anim to get to sword pull state
-
-        Vector3 newSwordTransform = Sword.transform.position;
-        newSwordTransform.y += pullAmount;
-        Sword.transform.position = newSwordTransform;
-    }
-
-/*    private IEnumerator GameClickCoroutine() {
-        bClicksOnCooldown = true;
-
-        yield return new WaitForSeconds(gameClickCooldown);
-
-        bClicksOnCooldown = false;
-    }*/
 
     private IEnumerator ReturnToBoardCoroutine() {
         yield return new WaitForSeconds(3);
