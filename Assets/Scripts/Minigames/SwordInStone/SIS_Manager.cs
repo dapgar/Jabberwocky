@@ -7,9 +7,7 @@ using UnityEngine.UI;
 public class SIS_Manager : MonoBehaviour {
     [Header("Gameplay Stuff")]
     [SerializeField]
-    private int maxSwordPulls = 15;
-    [SerializeField]
-    private int minSwordPulls = 11;
+    private int totalSwordPulls = 50;
     [SerializeField]
     private float playerClickCooldown = 1f;
     /* Max height to pull sword before it comes out of rock */
@@ -25,14 +23,11 @@ public class SIS_Manager : MonoBehaviour {
     private GameObject Sword;
 
     /* Amount that each click raises the sword */
-    private int totalSwordPulls;
     private float pullAmount;
     private bool bGameRunning = true;
-    private bool bClicksOnCooldown = false;
      
 
     private void Start() {
-        totalSwordPulls = Random.Range(minSwordPulls, maxSwordPulls + 1);
         pullAmount = maxPullLength / totalSwordPulls;
 
         for (int i = 0; i < players.Length; i++) {
@@ -43,11 +38,10 @@ public class SIS_Manager : MonoBehaviour {
 
     private void Update() {
         if (bGameRunning) {
-            if (bClicksOnCooldown) return;
 
             for (int i = 0; i < players.Length; i++) {
                 if (players[i].CheckClick()) {
-                    StartCoroutine(GameClickCoroutine());
+                    //StartCoroutine(GameClickCoroutine());
 
                     StartCoroutine(SwordPullCoroutine());
 
@@ -96,13 +90,13 @@ public class SIS_Manager : MonoBehaviour {
         Sword.transform.position = newSwordTransform;
     }
 
-    private IEnumerator GameClickCoroutine() {
+/*    private IEnumerator GameClickCoroutine() {
         bClicksOnCooldown = true;
 
         yield return new WaitForSeconds(gameClickCooldown);
 
         bClicksOnCooldown = false;
-    }
+    }*/
 
     private IEnumerator ReturnToBoardCoroutine() {
         yield return new WaitForSeconds(3);
