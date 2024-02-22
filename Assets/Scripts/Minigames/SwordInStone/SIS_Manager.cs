@@ -17,6 +17,8 @@ public class SIS_Manager : MonoBehaviour {
     private float staminaRegenRate = 0.25f;
     [SerializeField]
     private float staminaClickDrain = 0.05f;
+    [SerializeField]
+    private float gameWinMoveTime = 2f;
 
     [Header("GameObjects")]
     [SerializeField]
@@ -77,12 +79,9 @@ public class SIS_Manager : MonoBehaviour {
 
     private void CheckForWin(int playerIndex) {
         if (Swords[playerIndex].transform.position.y >= maxPullLength) {
-            // Game is over, player {playerIndex} won
+            // If inside this IF check, a player has won, end game
 
-            // Debug.Log($"Winner is player {playerIndex + 1}");
             bGameRunning = false;
-
-            //Swords[playerIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
             StartCoroutine(MoveOnWinCoroutine(playerIndex));
 
@@ -105,28 +104,30 @@ public class SIS_Manager : MonoBehaviour {
     }
 
     private IEnumerator ReturnToBoardCoroutine() {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3 + gameWinMoveTime);
         SceneManager.LoadScene(1);
     }
 
     private IEnumerator MoveOnWinCoroutine(int playerIndex) {
         float t = 0f;
-        float moveTime = 3f;
 
         Vector3 startPosition = players[playerIndex].transform.position;
         Vector3 targetPosition = new Vector3(0, 0.85f, 0);
 
+        Quaternion startRotation = players[playerIndex].transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(-20f, 180f, 0);
+
         // TODO: Rotate also by slerping
 
-        while (t < moveTime) {
-            players[playerIndex].transform.position = Vector3.Slerp(startPosition, targetPosition, t / moveTime);
+        while (t < gameWinMoveTime) {
+            players[playerIndex].transform.position = Vector3.Slerp(startPosition, targetPosition, t / gameWinMoveTime);
+            players[playerIndex].transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t / gameWinMoveTime);
             t += Time.deltaTime;
             yield return null;
         }
 
         // Ensure player is in exact correct position
         players[playerIndex].transform.position = targetPosition;
-        players[playerIndex].transform.rotation = Quaternion.Euler(-20f, 180f, 0f);
+        players[playerIndex].transform.rotation = targetRotation;
     }
-
 }

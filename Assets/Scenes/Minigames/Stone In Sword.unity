@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43975514, g: 0.48817998, b: 0.5683994, a: 1}
+  m_IndirectSpecularColor: {r: 0.43975493, g: 0.4881794, b: 0.5683985, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -364,11 +364,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e5c94bed28d5c4dafc92c091f3a000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalSwordPulls: 50
+  totalSwordPulls: 2
   maxPlayerStamina: 1
   maxPullLength: 0.6
   staminaRegenRate: 0.1
   staminaClickDrain: 0.05
+  gameWinMoveTime: 2
   players:
   - {fileID: 1057343744}
   - {fileID: 1625941741}
