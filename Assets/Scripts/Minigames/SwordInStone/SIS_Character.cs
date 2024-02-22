@@ -45,8 +45,7 @@ public class SIS_Character : MonoBehaviour {
     }
 
     public bool CheckClick() {
-        // If stamina is fully depleted, regen at 2x the rate
-        stamina += staminaDepleted ? staminaRegenRate * 2 * Time.deltaTime : staminaRegenRate * Time.deltaTime;
+        stamina += staminaRegenRate * Time.deltaTime;
         if (stamina >= maxStamina) {
             staminaDepleted = false;
             stamina = maxStamina;
