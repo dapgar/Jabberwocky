@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEditor;
 
 public class MiniLoadManager : MonoBehaviour
 {
@@ -10,12 +12,26 @@ public class MiniLoadManager : MonoBehaviour
     public TextMeshProUGUI hintText;
     public GameObject playButton;
 
+    public TextMeshProUGUI controlText;
+    public TextMeshProUGUI titleText;
+    public Image minigameImage;
+
+    public GameObject loadIcon;
+
+    private int randomGame;
+
     private bool hintShown = false;
 
     private void Start()
     {
         playButton.SetActive(false);
+        loadIcon.SetActive(true);
+
+        randomGame = Random.Range(0, numberOfGames);
         StartCoroutine(WaitToLoad());
+
+        // Image/ Text Updating
+        UpdateScreenContent();
     }
 
     private void Update()
@@ -29,7 +45,6 @@ public class MiniLoadManager : MonoBehaviour
 
     public void OnPlayClicked()
     {
-        int randomGame = Random.Range(0, numberOfGames);
 
         // Loads minigame scene accounting for menus.
         SceneChanger.Instance.ChangeScene(randomGame + 4);
@@ -39,6 +54,7 @@ public class MiniLoadManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         playButton.SetActive(true);
+        loadIcon.SetActive(false);
     }
 
     IEnumerator GameHints()
@@ -62,5 +78,20 @@ public class MiniLoadManager : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
         hintShown = false;
+    }
+
+    private void UpdateScreenContent()
+    {
+        switch (randomGame)
+        {
+            case 0:
+                break;
+
+            case 1:
+                break;
+
+            case 2:
+                break;
+        }
     }
 }
