@@ -15,6 +15,7 @@ public class MiniLoadManager : MonoBehaviour
     public TextMeshProUGUI controlText;
     public TextMeshProUGUI titleText;
     public Image minigameImage;
+    public Texture2D[] images;
 
     public GameObject loadIcon;
 
@@ -90,12 +91,21 @@ public class MiniLoadManager : MonoBehaviour
         switch (randomGame)
         {
             case 0:
+                titleText.text = "Red Light, Green Light";
+                controlText.text = "Hold Q/R/U/P to move to the finish line before your opponents";
+                minigameImage.sprite = Sprite.Create(images[0], new Rect(0, 0, images[0].width, images[0].height), Vector2.zero);
                 break;
 
             case 1:
+                titleText.text = "Quick Reaction";
+                controlText.text = "Press Q/R/U/P when the center flashes green before your opponents";
+                minigameImage.sprite = Sprite.Create(images[1], new Rect(0, 0, images[1].width, images[1].height), Vector2.zero);
                 break;
 
             case 2:
+                titleText.text = "Swords in the Stone";
+                controlText.text = "Mash Q/R/U/P to wiggle the sword out of the stone";
+                minigameImage.sprite = Sprite.Create(images[2], new Rect(0, 0, images[2].width, images[2].height), Vector2.zero);
                 break;
         }
     }
