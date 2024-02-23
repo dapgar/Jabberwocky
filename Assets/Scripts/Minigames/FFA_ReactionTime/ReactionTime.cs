@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ReactionTime : MonoBehaviour
 {
