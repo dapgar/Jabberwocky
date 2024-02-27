@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputDemo : MonoBehaviour, IInputReceiver
+public class InputDemo : MonoBehaviour, IPlayerInputReceiver
 {
     public void OnButton()
     {

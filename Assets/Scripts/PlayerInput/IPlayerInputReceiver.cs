@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInputReceiver
+public interface IPlayerInputReceiver
 {
     public void OnButton();
 }

@@ -26,8 +26,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Minigames/Sword In Stone.unity
     guid: 489c3c6b0adb5d6488a56ab81fc05eaa
-  - enabled: 1
-    path: Assets/Scenes/InputTest.unity
-    guid: e4cdf3249a7d1a4458c2257e433a690f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c378c930b11584b4e81b8b31f40d433c, type: 2}

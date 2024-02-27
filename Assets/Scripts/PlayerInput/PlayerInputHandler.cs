@@ -13,13 +13,13 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerControls controls;
 
     [SerializeField]
-    private IInputReceiver playerInputReceiver;
+    private IPlayerInputReceiver playerInputReceiver;
 
     // Start is called before the first frame update
     public void Awake()
     {
         controls = new PlayerControls();
-        playerInputReceiver = GetComponent<IInputReceiver>();
+        playerInputReceiver = GetComponent<IPlayerInputReceiver>();
     }
 
     public void InitializePlayer(PlayerConfiguration pC)
