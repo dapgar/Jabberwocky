@@ -1,5 +1,5 @@
 {
-    "name": "New Controls",
+    "name": "Player Controls",
     "maps": [
         {
             "name": "Board",
@@ -32,8 +32,30 @@
         {
             "name": "Minigame",
             "id": "20645a21-6654-473c-be3d-36db525d5976",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "Button",
+                    "type": "Button",
+                    "id": "c092131a-04d5-45aa-b5af-07c9206315cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bbcd672d-e043-411d-a2d8-f21b72bcea53",
+                    "path": "<HID::USB Gamepad >/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
@@ -44,6 +66,22 @@
                 {
                     "devicePath": "<Keyboard>",
                     "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Controller",
+            "bindingGroup": "Controller",
+            "devices": [
+                {
+                    "devicePath": "<HID::USB Gamepad >",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": true,
                     "isOR": false
                 }
             ]
