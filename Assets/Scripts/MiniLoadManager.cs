@@ -23,12 +23,18 @@ public class MiniLoadManager : MonoBehaviour
 
     private bool hintShown = false;
 
-    private void Start()
-    {
+    private void Start() {
         playButton.SetActive(false);
         loadIcon.SetActive(true);
 
-        randomGame = Random.Range(0, numberOfGames);
+        if (GameManager.instance && GameManager.instance.devMinigameNumber != -1) {
+            // DEV TOOLS: Pick seleted minigame
+            randomGame = GameManager.instance.devMinigameNumber;
+            GameManager.instance.devMinigameNumber = -1;
+        }
+        else {
+            randomGame = Random.Range(0, numberOfGames);
+        }
         StartCoroutine(WaitToLoad());
 
         // Image/ Text Updating

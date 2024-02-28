@@ -44,6 +44,7 @@ public class TurnManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
         }
+        GameManager.instance.DevCheckGameSelection();
     }
 
     IEnumerator StartTurn()
@@ -79,7 +80,6 @@ public class TurnManager : MonoBehaviour
 
         dice.SetActive(true);
 
-        Debug.Log("Rolled a " + faceNumber);
         switch (faceNumber)
         {
             case 1:

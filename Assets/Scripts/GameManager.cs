@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
     public int numPlayers = 4;
-    public int[] moveData;
-    public int[] routeData;
-    public Vector3[] playersPos;
-    public Quaternion[] playerRots;
+    [HideInInspector] public int[] moveData;
+    [HideInInspector] public int[] routeData;
+    [HideInInspector] public Vector3[] playersPos;
+    [HideInInspector] public Quaternion[] playerRots;
 
-    public int diceRoll;
+    [HideInInspector] public int diceRoll;
 
-    public bool playersMoving;
+    [HideInInspector] public bool playersMoving;
 
-    private void Awake()
-    {
+    [HideInInspector] public int devMinigameNumber = -1;
+
+    private void Awake() {
         DontDestroyOnLoad(transform.gameObject);
         moveData = new int[numPlayers];
         routeData = new int[numPlayers];
@@ -27,20 +27,37 @@ public class GameManager : MonoBehaviour
         playersMoving = false;
     }
 
-    private void Start()
-    {
-        if (!instance)
-        {
+    private void Start() {
+        if (!instance) {
             instance = this;
         }
-        else
-        {
+        else {
             Destroy(this);
         }
     }
-    
-    public void MoveData(int[] moveData) 
-    {
+
+    public void MoveData(int[] moveData) {
         this.moveData = moveData;
+    }
+
+    public void DevCheckGameSelection() {
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) {
+                // Red Light Green Light
+                devMinigameNumber = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                // Reaction Time
+                devMinigameNumber = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                // Sword in Stone
+                devMinigameNumber = 2;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha0)) {
+                // No Minigame
+                devMinigameNumber = -1;
+            }
+        }
     }
 }

@@ -28,7 +28,6 @@ public class CountdownTimer : MonoBehaviour
 
         if (TimerDone())
         {
-            Debug.Log("Timer Done!");
             onTimerEnd?.Invoke();
         }
     }

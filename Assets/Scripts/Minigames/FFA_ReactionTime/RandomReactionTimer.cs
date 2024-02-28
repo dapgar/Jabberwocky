@@ -29,7 +29,6 @@ public class RandomReactionTimer : MonoBehaviour
 
         if (TimerDone())
         {
-            Debug.Log("Timer Done!");
             onTimerEnd?.Invoke();
         }
     }

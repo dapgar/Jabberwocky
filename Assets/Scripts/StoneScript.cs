@@ -20,7 +20,6 @@ public class StoneScript : MonoBehaviour
     // --- METHODS ---
     public IEnumerator Move(int moveAmount)
     {
-        Debug.Log("Player Moving...");
         if (isMoving)
         {
             yield break;

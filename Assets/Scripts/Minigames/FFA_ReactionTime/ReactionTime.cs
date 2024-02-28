@@ -174,7 +174,6 @@ public class ReactionTime : MonoBehaviour
 
         timerText.gameObject.SetActive(false);
 
-        Debug.Log("Starting Round Now");
     }
 
     public void OnLightGreen()
@@ -183,7 +182,6 @@ public class ReactionTime : MonoBehaviour
 
         gameState = GameState.green;
 
-        Debug.Log("Green Button");
     }
 
     private void OnRoundScored()
@@ -231,7 +229,6 @@ public class ReactionTime : MonoBehaviour
 
             timerText.gameObject.SetActive(false);
 
-            Debug.Log("Round " + round);
             return;
         }
 

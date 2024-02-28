@@ -50,7 +50,7 @@ public class SIS_Character : MonoBehaviour {
             staminaDepleted = false;
             stamina = maxStamina;
         }
-        if (playerIndex == 0) Debug.Log("STAMINA: " + stamina);
+        
         if (staminaDepleted) {
             return false;
         }
