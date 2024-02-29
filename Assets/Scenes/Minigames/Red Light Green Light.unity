@@ -2509,7 +2509,7 @@ MonoBehaviour:
   - {fileID: 450684436}
   - {fileID: 1424220876}
   - {fileID: 501881078}
-  finishTimerDecreaseAmount: 2
+  finishTimerDecreaseAmount: 0
   firstFinishBonus: 0
   followSpeed: 5
   minFollowDistance: 2
