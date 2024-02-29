@@ -45,18 +45,22 @@ public class GameManager : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 // Red Light Green Light
                 devMinigameNumber = 0;
+                Debug.Log("RLGL Set");
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2)) {
                 // Reaction Time
                 devMinigameNumber = 1;
+                Debug.Log("RT Set");
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3)) {
                 // Sword in Stone
                 devMinigameNumber = 2;
+                Debug.Log("Sword Set");
             }
             else if (Input.GetKeyDown(KeyCode.Alpha0)) {
                 // No Minigame
                 devMinigameNumber = -1;
+                Debug.Log("Random Set");
             }
         }
     }

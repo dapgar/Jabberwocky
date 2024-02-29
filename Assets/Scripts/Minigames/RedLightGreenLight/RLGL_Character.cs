@@ -1,8 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class RLGL_Character : MonoBehaviour {
     [Header("Win Stuff")]
@@ -21,7 +18,6 @@ public class RLGL_Character : MonoBehaviour {
     private bool bIsMoving = false;
     private bool bIsFinished = false;
     private int playerIndex;
-    private Key key;
 
     private float bobbingAmount = 2f;
     private float bobbingSpeed = 1f;
@@ -41,9 +37,20 @@ public class RLGL_Character : MonoBehaviour {
     private float totalDistance;
     private float startingZ;
 
+    private bool bButtonPressed = false;
+    public RLGL_Manager manager;
     public bool IsFinished { get { return bIsFinished; } }
     public bool IsMoving { get { return bIsMoving; } }
     public int PlayerIndex { get { return playerIndex; } }
+
+    public void OnButton(bool value) {
+        bButtonPressed = value;
+    }
+
+    private void Start() {
+        manager = GameObject.Find("RLGL_Manager").GetComponent<RLGL_Manager>();
+        manager.SetupPLayers(this);
+    }
 
     /// <summary>
     /// Sets up variables for the player.
@@ -60,7 +67,7 @@ public class RLGL_Character : MonoBehaviour {
         this.pushBackSpeed = pushBackSpeed;
         this.finishLineZ = finishLineZ;
 
-        SetMovementKey();
+       //SetMovementKey();
 
         // Split Screen Setup:  Splitscreen 
         // TODO: Only setup for 4 players ATM, need to support 2-4 after MVI
@@ -100,7 +107,7 @@ public class RLGL_Character : MonoBehaviour {
         }*/
     }
 
-    void SetMovementKey() {
+    /*void SetMovementKey() {
         if (playerIndex == 0) {
             key = Key.Q;
         }
@@ -113,14 +120,14 @@ public class RLGL_Character : MonoBehaviour {
         else {
             key = Key.P;
         }
-    }
+    }*/
 
     public void Move(bool bIsLightRed) {
         //if (bIsLightRed && !bCanGetPushedBack) return;  // Light is red and currently mid push-back, disable movement
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard == null) return; // if no keyboard
-
-        if (keyboard[key].isPressed) {
+        /*Keyboard keyboard = Keyboard.current;
+        if (keyboard == null) return;*/ // if no keyboard
+        Debug.Log("Move " + bButtonPressed);
+        if (bButtonPressed) {
             Accelerate();
             bIsMoving = true;
         }
@@ -129,13 +136,13 @@ public class RLGL_Character : MonoBehaviour {
         }
 
         // Bob character left & right
-        if (bIsMoving && model != null) {
+        /*if (bIsMoving && model != null) {
             float bobbingAngle = Mathf.Lerp(-bobbingAmount, bobbingAmount, Mathf.PingPong(Time.time * bobbingSpeed, 1f));
             model.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, bobbingAngle);
         }
         else {
             model.transform.rotation = Quaternion.Lerp(model.transform.rotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * bobbingResetSpeed);
-        }
+        }*/
 
         transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
     }

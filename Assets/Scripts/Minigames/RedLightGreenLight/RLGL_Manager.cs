@@ -1,8 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class RLGL_Manager : MonoBehaviour {
     [Header("UI Stuff")]
@@ -34,8 +34,6 @@ public class RLGL_Manager : MonoBehaviour {
     private float gameTime;
     [SerializeField]
     private float finishLineZ;
-    [SerializeField]
-    private RLGL_Character[] players;
     /* Time that the timer decreases by every time a player finishes */
     [SerializeField]
     private float finishTimerDecreaseAmount = 2f;
@@ -89,17 +87,37 @@ public class RLGL_Manager : MonoBehaviour {
 
     private bool gameStarting = true;
 
+    private RLGL_Character[] players;
+
+    [SerializeField]
+    private InitializeSpawns spawnInitializer;
+
+    private bool bWaitingForPlayers = true;
+    private List<RLGL_Character> playersList = new List<RLGL_Character>();
     private void Start() {
-        for (int i = 0; i < players.Length; i++) {
-            players[i].SetupPlayer(i, acceleration, deceleration, maxSpeed, pushBackAmount, pushBackSpeed, finishLineZ);
-        }
-        playingPlayers = players.Length;
+        /* for (int i = 0; i < players.Length; i++) {
+             players[i].SetupPlayer(i, acceleration, deceleration, maxSpeed, pushBackAmount, pushBackSpeed, finishLineZ);
+         }*/
+        //playingPlayers = players.Length;
 
         isLightRed = true;
         timer = gameTime;
         timerText.text = gameTime.ToString("F1");
 
-        UpdateRaceProgress();
+        //UpdateRaceProgress();
+        //bWaitingForPlayers = false;
+
+        // both temp
+        players = new RLGL_Character[2];
+        playingPlayers = 2;
+
+    }
+
+    public void SetupPLayers(RLGL_Character pla) {
+        Debug.Log("Players Setting Up");
+
+        playersList.Add(pla);
+        pla.SetupPlayer(playersList.IndexOf(pla), acceleration, deceleration, maxSpeed, pushBackAmount, pushBackSpeed, finishLineZ);
     }
 
     private void Update() {
@@ -118,7 +136,12 @@ public class RLGL_Manager : MonoBehaviour {
 
                 // Start light timer
                 StartCoroutine(LightController());
-                
+/*
+                for (int i = 0; i < playersList.Count; i++) {
+                    players[i] = playersList[i];
+                }*/
+                players[0] = playersList[0];
+                players[1] = playersList[1];
             }
         }
         else if (gameRunning) {
@@ -167,7 +190,7 @@ public class RLGL_Manager : MonoBehaviour {
                 }
             }
 
-           if (playingPlayers <= 0) {
+            if (playingPlayers <= 0) {
                 GameOver();
             }
         }
