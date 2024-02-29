@@ -2061,6 +2061,7 @@ MonoBehaviour:
   playerRots: []
   diceRoll: 0
   playersMoving: 0
+  devMinigameNumber: -1
 --- !u!4 &723298385
 Transform:
   m_ObjectHideFlags: 0

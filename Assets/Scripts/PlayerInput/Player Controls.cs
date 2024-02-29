@@ -29,12 +29,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""New action"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""77f05210-71d8-4d9a-8663-96a74805c9ff"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -57,12 +57,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Button"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""c092131a-04d5-45aa-b5af-07c9206315cd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [

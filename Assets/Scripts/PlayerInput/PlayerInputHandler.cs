@@ -12,14 +12,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     private PlayerControls controls;
 
-    [SerializeField]
-    private IPlayerInputReceiver playerInputReceiver;
+    public BoolEvent onButtonA;
+    public Vector2Event onDPad;
 
     // Start is called before the first frame update
     public void Awake()
     {
         controls = new PlayerControls();
-        playerInputReceiver = GetComponent<IPlayerInputReceiver>();
     }
 
     public void InitializePlayer(PlayerConfiguration pC)
@@ -33,7 +32,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.action.name == controls.Minigame.Button.name)
         {
-            playerInputReceiver.OnButton();
+            onButtonA?.Invoke(context.ReadValueAsButton());
         }
     }
 
