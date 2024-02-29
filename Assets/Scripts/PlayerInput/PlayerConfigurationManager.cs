@@ -40,6 +40,11 @@ public class PlayerConfigurationManager : MonoBehaviour
         playerConfigs[index].PlayerChar = charPrefab;
     }
 
+    public void SetPlayerHat(int index, GameObject hatPrefab)
+    {
+        
+    }
+
     public void ReadyPlayer(int index)
     {
         Debug.Log("Player Ready Index #" + index);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InitializeSpawns : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class InitializeSpawns : MonoBehaviour
     private Transform[] playerSpawns;
     [SerializeField]
     private GameObject playerPrefab;
+
+    public UnityEvent onPlayersSpawned;
 
     // Start is called before the first frame update
     void Start()
