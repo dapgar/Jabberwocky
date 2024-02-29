@@ -2491,7 +2491,7 @@ MonoBehaviour:
   timerText: {fileID: 359288972}
   gameTimer: {fileID: 2082147193}
   preGameTimerText: {fileID: 1376692858}
-  gameStartTimer: 2
+  gameStartTimer: 3
   playerIcons:
   - {fileID: 1437428221}
   - {fileID: 546355244}
@@ -2500,7 +2500,7 @@ MonoBehaviour:
   acceleration: 1.5
   deceleration: 3
   maxSpeed: 1
-  pushBackAmount: 1.5
+  pushBackAmount: 2
   pushBackSpeed: 2
   gameTime: 30
   finishLineZ: 10.5
@@ -2509,7 +2509,7 @@ MonoBehaviour:
   - {fileID: 450684436}
   - {fileID: 1424220876}
   - {fileID: 501881078}
-  finishTimerDecreaseAmount: 2
+  finishTimerDecreaseAmount: 0
   firstFinishBonus: 0
   followSpeed: 5
   minFollowDistance: 2

@@ -7,12 +7,12 @@
             "actions": [
                 {
                     "name": "New action",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "77f05210-71d8-4d9a-8663-96a74805c9ff",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -35,12 +35,21 @@
             "actions": [
                 {
                     "name": "Button",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "c092131a-04d5-45aa-b5af-07c9206315cd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "04cccf47-dc66-48f6-9e5e-28fda8381a51",
+                    "expectedControlType": "Dpad",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -54,6 +63,61 @@
                     "action": "Button",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "DPAD",
+                    "id": "58d37fd3-8917-449c-8ad1-50540b6225b2",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "a5e3c36c-02bd-411a-99dd-21c426f06d06",
+                    "path": "<HID::USB Gamepad >/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "090d00cc-a791-48f2-ad40-9bf3ce9e3ae3",
+                    "path": "<HID::USB Gamepad >/stick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "892f7f53-a999-444d-ad87-2499177aae0e",
+                    "path": "<HID::USB Gamepad >/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "769f22ed-e228-4840-bad7-cd35d5d0300a",
+                    "path": "<HID::USB Gamepad >/stick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

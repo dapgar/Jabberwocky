@@ -29,12 +29,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""New action"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""77f05210-71d8-4d9a-8663-96a74805c9ff"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -57,12 +57,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Button"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""c092131a-04d5-45aa-b5af-07c9206315cd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""04cccf47-dc66-48f6-9e5e-28fda8381a51"",
+                    ""expectedControlType"": ""Dpad"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -76,6 +85,61 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Button"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""DPAD"",
+                    ""id"": ""58d37fd3-8917-449c-8ad1-50540b6225b2"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""a5e3c36c-02bd-411a-99dd-21c426f06d06"",
+                    ""path"": ""<HID::USB Gamepad >/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""090d00cc-a791-48f2-ad40-9bf3ce9e3ae3"",
+                    ""path"": ""<HID::USB Gamepad >/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""892f7f53-a999-444d-ad87-2499177aae0e"",
+                    ""path"": ""<HID::USB Gamepad >/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""769f22ed-e228-4840-bad7-cd35d5d0300a"",
+                    ""path"": ""<HID::USB Gamepad >/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -116,6 +180,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Minigame
         m_Minigame = asset.FindActionMap("Minigame", throwIfNotFound: true);
         m_Minigame_Button = m_Minigame.FindAction("Button", throwIfNotFound: true);
+        m_Minigame_Move = m_Minigame.FindAction("Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -224,11 +289,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Minigame;
     private List<IMinigameActions> m_MinigameActionsCallbackInterfaces = new List<IMinigameActions>();
     private readonly InputAction m_Minigame_Button;
+    private readonly InputAction m_Minigame_Move;
     public struct MinigameActions
     {
         private @PlayerControls m_Wrapper;
         public MinigameActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Button => m_Wrapper.m_Minigame_Button;
+        public InputAction @Move => m_Wrapper.m_Minigame_Move;
         public InputActionMap Get() { return m_Wrapper.m_Minigame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -241,6 +308,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Button.started += instance.OnButton;
             @Button.performed += instance.OnButton;
             @Button.canceled += instance.OnButton;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         private void UnregisterCallbacks(IMinigameActions instance)
@@ -248,6 +318,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Button.started -= instance.OnButton;
             @Button.performed -= instance.OnButton;
             @Button.canceled -= instance.OnButton;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         public void RemoveCallbacks(IMinigameActions instance)
@@ -290,5 +363,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IMinigameActions
     {
         void OnButton(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }
