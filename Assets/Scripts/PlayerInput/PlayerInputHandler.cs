@@ -34,6 +34,12 @@ public class PlayerInputHandler : MonoBehaviour
         {
             onButtonA?.Invoke(context.ReadValueAsButton());
         }
+
+        if (context.action.name == controls.Minigame.Move.name)
+        {
+            onDPad?.Invoke(context.ReadValue<Vector2>());
+            Debug.Log(context.ReadValue<Vector2>());
+        }
     }
 
 
