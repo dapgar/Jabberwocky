@@ -15,6 +15,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     private GameObject playerChar;
 
+    private GameObject playerHat;
+
     private PlayerControls controls;
 
     public BoolEvent onButtonA;
@@ -30,6 +32,10 @@ public class PlayerInputHandler : MonoBehaviour
     {
         playerConfig = pC;
         playerChar = Instantiate(pC.PlayerChar, transform.position, transform.rotation, gameObject.transform);
+        if (pC.PlayerHat != null)
+        {
+            playerHat = Instantiate(pC.PlayerHat, transform.position, transform.rotation, playerChar.transform);
+        }
         playerConfig.Input.onActionTriggered += Input_onActionTriggered;
     }
 
@@ -43,7 +49,6 @@ public class PlayerInputHandler : MonoBehaviour
         if (context.action.name == controls.Minigame.Move.name)
         {
             onDPad?.Invoke(context.ReadValue<Vector2>());
-            Debug.Log(context.ReadValue<Vector2>());
         }
     }
 

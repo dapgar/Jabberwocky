@@ -14,6 +14,9 @@ public class PlayerConfigurationManager : MonoBehaviour
     [SerializeField]
     private GameObject[] playerCharacters;
 
+    [SerializeField]
+    private GameObject[] playerHats;
+
     public static PlayerConfigurationManager Instance { get; private set; }
 
     private void Awake()
@@ -42,7 +45,7 @@ public class PlayerConfigurationManager : MonoBehaviour
 
     public void SetPlayerHat(int index, GameObject hatPrefab)
     {
-        
+        playerConfigs[index].PlayerHat = hatPrefab;
     }
 
     public void ReadyPlayer(int index)
@@ -71,6 +74,7 @@ public class PlayerConfigurationManager : MonoBehaviour
 
             // TEMP CHANGE LATER
             SetPlayerChar(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
+            SetPlayerHat(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
             ReadyPlayer(playerInput.playerIndex);
         }
     }
@@ -87,4 +91,5 @@ public class PlayerConfiguration
     public int PlayerIndex { get; set; }
     public bool IsReady { get; set; }
     public GameObject PlayerChar { get; set; }
+    public GameObject PlayerHat { get; set; }
 }
