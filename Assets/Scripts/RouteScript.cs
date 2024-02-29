@@ -11,7 +11,7 @@ public class RouteScript : MonoBehaviour
     // --- METHODS ---
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         FillNodes();
 
         for (int i = 0; i < childNodeList.Count; i++)
