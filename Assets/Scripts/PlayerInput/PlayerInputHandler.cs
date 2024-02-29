@@ -8,6 +8,11 @@ public class PlayerInputHandler : MonoBehaviour
 {
     private PlayerConfiguration playerConfig;
 
+    public int GetIndex()
+    {
+        return playerConfig.PlayerIndex;
+    }
+
     private GameObject playerChar;
 
     private PlayerControls controls;

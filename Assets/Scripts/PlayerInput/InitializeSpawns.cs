@@ -10,13 +10,6 @@ public class InitializeSpawns : MonoBehaviour
     [SerializeField]
     private GameObject playerPrefab;
 
-    private List<GameObject> players;
-
-    public List<GameObject> GetPlayers()
-    {
-        return players;
-    }
-
     public UnityEvent onPlayersSpawned;
 
     // Start is called before the first frame update
@@ -27,12 +20,7 @@ public class InitializeSpawns : MonoBehaviour
         {
             var player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation, gameObject.transform);
             player.GetComponent<PlayerInputHandler>().InitializePlayer(playerConfigs[i]);
-
-            players.Add(player);
         }
-
-        // once all the players have spawned
-        onPlayersSpawned?.Invoke();
     }
 
     // Update is called once per frame
