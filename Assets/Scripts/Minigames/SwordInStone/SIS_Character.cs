@@ -1,12 +1,10 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SIS_Character : MonoBehaviour {
     [SerializeField]
     private Animator animator;
-    
+
     private int playerIndex;
-    private Key key;
 
     private float maxStamina;
     private float stamina;
@@ -15,7 +13,14 @@ public class SIS_Character : MonoBehaviour {
     private bool staminaDepleted = false;
     private bool keyDownPrevFrame = false;
 
+    private bool bButtonPressed = false;
     public float Stamina { get { return stamina; } }
+
+    private SIS_Manager manager;
+    private void Start() {
+        manager = GameObject.Find("SIS_Manager").GetComponent<SIS_Manager>();
+        manager.SetupPlayer(this);
+    }
 
     public void SetupPlayer(int playerIndex, float maxStamina, float staminaRegenRate, float staminaClickDrain) {
         this.playerIndex = playerIndex;
@@ -26,22 +31,10 @@ public class SIS_Character : MonoBehaviour {
         stamina = maxStamina;
         keyDownPrevFrame = false;
 
-        SetClickKey();
     }
 
-    private void SetClickKey() {
-        if (playerIndex == 0) {
-            key = Key.Q;
-        }
-        else if (playerIndex == 1) {
-            key = Key.R;
-        }
-        else if (playerIndex == 2) {
-            key = Key.U;
-        }
-        else {
-            key = Key.P;
-        }
+    public void OnButtonA(bool value) {
+        bButtonPressed = value;
     }
 
     public bool CheckClick() {
@@ -55,10 +48,10 @@ public class SIS_Character : MonoBehaviour {
             return false;
         }
 
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard == null) return false; // if no keyboard
+        /*Keyboard keyboard = Keyboard.current;
+        if (keyboard == null) return false; // if no keyboard*/
 
-        if (keyboard[key].isPressed) {
+        if (bButtonPressed) {
             if (keyDownPrevFrame) return false;
 
             stamina -= staminaClickDrain;

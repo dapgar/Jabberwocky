@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,11 +23,11 @@ public class SIS_Manager : MonoBehaviour {
 
     [Header("GameObjects")]
     [SerializeField]
-    private SIS_Character[] players;
-    [SerializeField]
     private GameObject[] Swords;
     [SerializeField]
     private Image[] PlayerIcons;
+    [SerializeField]
+    private GameObject[] playerIconObjects;
 
     [Header("Pre Game Stuff")]
     [SerializeField]
@@ -40,15 +41,22 @@ public class SIS_Manager : MonoBehaviour {
     /* Amount that each click raises the sword */
     private float clickPullAmount;
     private bool bGameRunning = true;
-     
+
+    private List<SIS_Character> players;
+    private int numPlayers;
 
     private void Start() {
         clickPullAmount = maxPullLength / totalSwordPulls;
 
-        for (int i = 0; i < players.Length; i++) {
-            players[i].SetupPlayer(i, maxPlayerStamina, staminaRegenRate, staminaClickDrain);
-        }
+        numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 4;
+        players = new List<SIS_Character>(numPlayers);
+    }
 
+    public void SetupPlayer(SIS_Character playa) {
+        players.Add(playa);
+        int playaIndex = players.IndexOf(playa);
+        playa.SetupPlayer(playaIndex, maxPlayerStamina, staminaRegenRate, staminaClickDrain);
+        playerIconObjects[playaIndex].SetActive(true);
     }
 
     private void Update() {
@@ -62,7 +70,7 @@ public class SIS_Manager : MonoBehaviour {
             }
         }
         else if (bGameRunning) {
-            for (int i = 0; i < players.Length; i++) {
+            for (int i = 0; i < players.Count; i++) {
                 PlayerIcons[i].fillAmount = players[i].Stamina;
                 if (players[i].CheckClick()) {
                     Vector3 newSwordPos = new Vector3(Swords[i].transform.position.x, Swords[i].transform.position.y, Swords[i].transform.position.z);
@@ -88,7 +96,7 @@ public class SIS_Manager : MonoBehaviour {
             // This logic is wrapped in if check so we can test locally in this scene without getting error at end of game
             if (GameManager.instance) {
                 int[] moveData = new int[GameManager.instance.numPlayers];
-                for (int i = 0; i < players.Length; i++) {
+                for (int i = 0; i < players.Count; i++) {
                     moveData[i] = 0;
                 }
                 moveData[playerIndex] = GameManager.instance.diceRoll;

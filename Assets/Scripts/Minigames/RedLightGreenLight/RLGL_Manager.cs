@@ -87,12 +87,7 @@ public class RLGL_Manager : MonoBehaviour {
 
     private bool gameStarting = true;
 
-    private RLGL_Character[] players;
-
-    [SerializeField]
-    private InitializeSpawns spawnInitializer;
-
-    private List<RLGL_Character> playersList = new List<RLGL_Character>();
+    private List<RLGL_Character> players;
 
     private int numPlayers;
 
@@ -102,14 +97,14 @@ public class RLGL_Manager : MonoBehaviour {
         timerText.text = gameTime.ToString("F1");
 
         numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 4;
-        players = new RLGL_Character[numPlayers];
+        players = new List<RLGL_Character>(numPlayers);
         playingPlayers = numPlayers;
 
     }
 
-    public void SetupPLayers(RLGL_Character playa) {
-        playersList.Add(playa);
-        int playaIndex = playersList.IndexOf(playa);
+    public void SetupPlayer(RLGL_Character playa) {
+        players.Add(playa);
+        int playaIndex = players.IndexOf(playa);
         playa.SetupPlayer(playaIndex, acceleration, deceleration, maxSpeed, pushBackAmount, pushBackSpeed, finishLineZ);
         playerIcons[playaIndex].enabled = true;
     }
@@ -131,9 +126,6 @@ public class RLGL_Manager : MonoBehaviour {
                 // Start light timer
                 StartCoroutine(LightController());
   
-                for (int i = 0; i < playersList.Count; i++) {
-                    players[i] = playersList[i];
-                }
                 UpdateRaceProgress();
             }
         }
@@ -145,7 +137,7 @@ public class RLGL_Manager : MonoBehaviour {
                 GameOver();
             }
             float lastPlaceZ = players[0].transform.position.z; // Variable for camera follow
-            for (int i = 0; i < players.Length; i++) {
+            for (int i = 0; i < players.Count; i++) {
                 if (!players[i].IsFinished) {
                     players[i].Move();
                     if (players[i].CheckFinish()) {
@@ -190,7 +182,7 @@ public class RLGL_Manager : MonoBehaviour {
     }
 
     private void UpdateRaceProgress() {
-        for (int i = 0; i < players.Length; i++) {
+        for (int i = 0; i < players.Count; i++) {
             float distanceRatio = players[i].DistanceRatio();
             distanceRatio = Mathf.Clamp01(distanceRatio);
             float targetX = Mathf.Lerp(progressMinX, progressMaxX, distanceRatio);
@@ -203,7 +195,7 @@ public class RLGL_Manager : MonoBehaviour {
 
         // Bring their image to top by setting transform.SetAsLastSibling();
         int farthestForwardIndex = -1;
-        for (int i = 0; i < players.Length; i++) {
+        for (int i = 0; i < players.Count; i++) {
             if (!playerIcons[i].enabled) continue;
             float distanceRatio = players[i].DistanceRatio();
             if (farthestForwardIndex == -1 || distanceRatio > players[farthestForwardIndex].DistanceRatio()) {
@@ -222,7 +214,7 @@ public class RLGL_Manager : MonoBehaviour {
             int[] moveData = new int[GameManager.instance.numPlayers];
             int spacesToMove = GameManager.instance.diceRoll;
 
-            for (int i = 0; i < players.Length; i++) {
+            for (int i = 0; i < players.Count; i++) {
                 if (!players[i].IsFinished) players[i].DropModel();
                 moveData[i] = players[i].IsFinished ? spacesToMove : 0;
             }
