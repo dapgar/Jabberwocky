@@ -14,6 +14,9 @@ public class PlayerConfigurationManager : MonoBehaviour
     [SerializeField]
     private GameObject[] playerCharacters;
 
+    [SerializeField]
+    private GameObject[] playerHats;
+
     public static PlayerConfigurationManager Instance { get; private set; }
 
     private void Awake()
@@ -42,17 +45,18 @@ public class PlayerConfigurationManager : MonoBehaviour
 
     public void SetPlayerHat(int index, GameObject hatPrefab)
     {
-        
+        playerConfigs[index].PlayerHat = hatPrefab;
     }
 
     public void ReadyPlayer(int index)
     {
-        Debug.Log("Player Ready Index #" + index);
+        //Debug.Log("Player Ready Index #" + index);
         playerConfigs[index].IsReady = true;
 
         // check to see if all the players have joined the game and if they are ready
         if (playerConfigs.Count == maxPlayers && playerConfigs.All(p => p.IsReady == true))
         {
+            if (GameManager.instance) GameManager.instance.SetNumPlayers(maxPlayers);
             // TEMP CHANGE LATER
             Debug.Log("All Players Are Ready!");
             //SceneChanger.Instance.ChangeScene(7);
@@ -71,6 +75,7 @@ public class PlayerConfigurationManager : MonoBehaviour
 
             // TEMP CHANGE LATER
             SetPlayerChar(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
+            SetPlayerHat(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
             ReadyPlayer(playerInput.playerIndex);
         }
     }
@@ -87,4 +92,5 @@ public class PlayerConfiguration
     public int PlayerIndex { get; set; }
     public bool IsReady { get; set; }
     public GameObject PlayerChar { get; set; }
+    public GameObject PlayerHat { get; set; }
 }
