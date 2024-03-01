@@ -50,12 +50,13 @@ public class PlayerConfigurationManager : MonoBehaviour
 
     public void ReadyPlayer(int index)
     {
-        Debug.Log("Player Ready Index #" + index);
+        //Debug.Log("Player Ready Index #" + index);
         playerConfigs[index].IsReady = true;
 
         // check to see if all the players have joined the game and if they are ready
         if (playerConfigs.Count == maxPlayers && playerConfigs.All(p => p.IsReady == true))
         {
+            if (GameManager.instance) GameManager.instance.SetNumPlayers(maxPlayers);
             // TEMP CHANGE LATER
             Debug.Log("All Players Are Ready!");
             //SceneChanger.Instance.ChangeScene(7);
