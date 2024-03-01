@@ -49,7 +49,7 @@ public class RLGL_Character : MonoBehaviour {
 
     private void Start() {
         manager = GameObject.Find("RLGL_Manager").GetComponent<RLGL_Manager>();
-        manager.SetupPLayers(this);
+        manager.SetupPlayer(this);
     }
 
     /// <summary>
