@@ -19,12 +19,20 @@ public class GameManager : MonoBehaviour {
 
     private void Awake() {
         DontDestroyOnLoad(transform.gameObject);
+        
+        playersMoving = false;
+        
+        // Must be called to initialize (for now), but in future we will need to have gamemanger be on mainmenu scene so it's valid early on
+        SetNumPlayers(4);
+    }
+
+    public void SetNumPlayers(int num) {
+        numPlayers = num;
+        Debug.Log("PLAYERS: " + num);
         moveData = new int[numPlayers];
         routeData = new int[numPlayers];
         playersPos = new Vector3[numPlayers];
         playerRots = new Quaternion[numPlayers];
-
-        playersMoving = false;
     }
 
     private void Start() {
@@ -44,17 +52,20 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftShift)) {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 // Red Light Green Light
-                devMinigameNumber = 0;
+                //devMinigameNumber = 0;
+                SetDevMinigame(0);
                 Debug.Log("RLGL Set");
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2)) {
                 // Reaction Time
-                devMinigameNumber = 1;
+                //devMinigameNumber = 1;
+                SetDevMinigame(1);
                 Debug.Log("RT Set");
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3)) {
                 // Sword in Stone
-                devMinigameNumber = 2;
+                //devMinigameNumber = 2;
+                SetDevMinigame(2);
                 Debug.Log("Sword Set");
             }
             else if (Input.GetKeyDown(KeyCode.Alpha0)) {
@@ -62,6 +73,14 @@ public class GameManager : MonoBehaviour {
                 devMinigameNumber = -1;
                 Debug.Log("Random Set");
             }
+        }
+        //1ceneChanger.Instance.ChangeScene(devMinigameNumber + 4);
+    }
+
+    private void SetDevMinigame(int minigameNumber) {
+        if (Input.GetKey(KeyCode.CapsLock)) {
+            devMinigameNumber = -1;
+            SceneChanger.Instance.ChangeScene(minigameNumber + 4);
         }
     }
 }

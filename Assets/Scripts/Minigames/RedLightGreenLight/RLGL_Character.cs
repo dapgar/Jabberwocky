@@ -19,9 +19,9 @@ public class RLGL_Character : MonoBehaviour {
     private bool bIsFinished = false;
     private int playerIndex;
 
-    private float bobbingAmount = 2f;
+   /* private float bobbingAmount = 2f;
     private float bobbingSpeed = 1f;
-    private float bobbingResetSpeed = 3f;
+    private float bobbingResetSpeed = 3f;*/
 
     private float acceleration = 2f;
     private float deceleration = 4f;
@@ -67,8 +67,6 @@ public class RLGL_Character : MonoBehaviour {
         this.pushBackSpeed = pushBackSpeed;
         this.finishLineZ = finishLineZ;
 
-       //SetMovementKey();
-
         // Split Screen Setup:  Splitscreen 
         // TODO: Only setup for 4 players ATM, need to support 2-4 after MVI
         /*if (totalPlayers == 4) {
@@ -107,26 +105,7 @@ public class RLGL_Character : MonoBehaviour {
         }*/
     }
 
-    /*void SetMovementKey() {
-        if (playerIndex == 0) {
-            key = Key.Q;
-        }
-        else if (playerIndex == 1) {
-            key = Key.R;
-        }
-        else if (playerIndex == 2) {
-            key = Key.U;
-        }
-        else {
-            key = Key.P;
-        }
-    }*/
-
-    public void Move(bool bIsLightRed) {
-        //if (bIsLightRed && !bCanGetPushedBack) return;  // Light is red and currently mid push-back, disable movement
-        /*Keyboard keyboard = Keyboard.current;
-        if (keyboard == null) return;*/ // if no keyboard
-        Debug.Log("Move " + bButtonPressed);
+    public void Move() {
         if (bButtonPressed) {
             Accelerate();
             bIsMoving = true;
@@ -135,6 +114,8 @@ public class RLGL_Character : MonoBehaviour {
             Decelerate();
         }
 
+        // COMMENTED OUT BECAUSE NO LONGER WORKS WITH INPUT SYSTEM BECAUSE CAN'T DRAG MODEL IN
+        // SHOULD PROB USE ANIMATION ANYWAYS NOT LIKE THIS
         // Bob character left & right
         /*if (bIsMoving && model != null) {
             float bobbingAngle = Mathf.Lerp(-bobbingAmount, bobbingAmount, Mathf.PingPong(Time.time * bobbingSpeed, 1f));
