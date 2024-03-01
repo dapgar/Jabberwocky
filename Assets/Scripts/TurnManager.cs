@@ -47,6 +47,15 @@ public class TurnManager : MonoBehaviour
         GameManager.instance.DevCheckGameSelection();
     }
 
+    // called by player input scripts
+    public void TryStartTurn()
+    {
+        if (!isRolling && canStartNextTurn && !GameManager.instance.playersMoving)
+        {
+            StartCoroutine (StartTurn());
+        }
+    }
+
     IEnumerator StartTurn()
     {
         canStartNextTurn = false;

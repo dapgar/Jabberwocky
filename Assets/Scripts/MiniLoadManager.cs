@@ -55,6 +55,15 @@ public class MiniLoadManager : MonoBehaviour
 
     }
 
+    // called by player input scripts
+    public void TryClickPlay()
+    {
+        if (playButton.activeSelf)
+        {
+            OnPlayClicked();
+        }
+    }
+
     public void OnPlayClicked()
     {
 
