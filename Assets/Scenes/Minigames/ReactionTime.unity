@@ -705,6 +705,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 3928501369372768759, guid: 61321d9158caf6642857d583a456218f, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 5333021625522075044, guid: 4ed1ae15dada90947b89f35403f24d2b, type: 3}
     - target: {fileID: 6278331090713907772, guid: 61321d9158caf6642857d583a456218f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -1555,6 +1559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 5499367966702217158, guid: 8f8923e45f887c540963aaa801a7f101, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1519328372443604201, guid: 8f8923e45f887c540963aaa801a7f101, type: 3}
     m_RemovedGameObjects:
@@ -1900,6 +1908,10 @@ PrefabInstance:
     - target: {fileID: 5499367966702217158, guid: 1160ec13773a9d54592d01728426d558, type: 3}
       propertyPath: m_Name
       value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499367966702217158, guid: 1160ec13773a9d54592d01728426d558, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1519328372443604201, guid: 1160ec13773a9d54592d01728426d558, type: 3}
@@ -2303,6 +2315,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player4
       objectReference: {fileID: 0}
+    - target: {fileID: 5499367966702217158, guid: 2968e0602d4a2774dac6520a33a7f236, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1519328372443604201, guid: 2968e0602d4a2774dac6520a33a7f236, type: 3}
     m_RemovedGameObjects:
@@ -2607,6 +2623,10 @@ PrefabInstance:
     - target: {fileID: 5499367966702217158, guid: d7b77c4e224f457479eafa21287c3a56, type: 3}
       propertyPath: m_Name
       value: Player3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499367966702217158, guid: d7b77c4e224f457479eafa21287c3a56, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1519328372443604201, guid: d7b77c4e224f457479eafa21287c3a56, type: 3}

@@ -271,4 +271,25 @@ public class ReactionTime : MonoBehaviour
 
         SceneChanger.Instance.ChangeScene(1);
     }
+
+    public void HandlePlayerInput(int index)
+    {
+        if (gameState == GameState.red || gameState == GameState.green)
+        {
+            playerScore[index] += GetScore();
+            if (GetScore() == 0)
+            {
+                pbScript[index].SetReady();
+            }
+            else
+            {
+                playerScored = players[index];
+                pbScript[index].SetPressed();
+                score--;
+            }
+            scoreTexts[index].text = playerScore[index].ToString("F0");
+            playersLeft--;
+            buttonPressed[index] = true;
+        }
+    }
 }
