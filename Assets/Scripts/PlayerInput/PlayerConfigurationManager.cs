@@ -77,6 +77,8 @@ public class PlayerConfigurationManager : MonoBehaviour
             SetPlayerChar(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
             SetPlayerHat(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
             ReadyPlayer(playerInput.playerIndex);
+
+            GameObject.FindAnyObjectByType<InitializeSpawns>()?.InitializePlayer(playerConfigs[playerInput.playerIndex], playerInput.playerIndex);
         }
     }
 }
