@@ -15,6 +15,7 @@ public class SIS_Character : MonoBehaviour {
 
     private bool bButtonPressed = false;
     public float Stamina { get { return stamina; } }
+    public bool IsButtonPressed {  get { return bButtonPressed; } }
 
     private SIS_Manager manager;
     private void Start() {

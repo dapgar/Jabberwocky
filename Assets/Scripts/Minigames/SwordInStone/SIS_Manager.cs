@@ -56,7 +56,7 @@ public class SIS_Manager : MonoBehaviour {
         players.Add(playa);
         int playaIndex = players.IndexOf(playa);
         playa.SetupPlayer(playaIndex, maxPlayerStamina, staminaRegenRate, staminaClickDrain);
-        playerIconObjects[playaIndex].SetActive(true);
+        playerIconObjects[playaIndex].SetActive(true); // not using stamina temp, just keep stamina icons hidden
     }
 
     private void Update() {
@@ -71,7 +71,8 @@ public class SIS_Manager : MonoBehaviour {
         }
         else if (bGameRunning) {
             for (int i = 0; i < players.Count; i++) {
-                PlayerIcons[i].fillAmount = players[i].Stamina;
+                //PlayerIcons[i].fillAmount = players[i].Stamina; // if we go back to stamina
+                PlayerIcons[i].fillAmount = players[i].IsButtonPressed ? 1 : 0;
                 if (players[i].CheckClick()) {
                     Vector3 newSwordPos = new Vector3(Swords[i].transform.position.x, Swords[i].transform.position.y, Swords[i].transform.position.z);
                     newSwordPos.y += clickPullAmount;
