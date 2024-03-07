@@ -48,6 +48,8 @@ public class ReactionTime : MonoBehaviour
 
     public int round;
 
+    IState currentState;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -270,6 +272,13 @@ public class ReactionTime : MonoBehaviour
         yield return new WaitForSeconds(4);
 
         SceneChanger.Instance.ChangeScene(1);
+    }
+
+    public void ChangeState(IState newState)
+    {
+        currentState?.OnExit();
+        currentState = newState;
+        currentState.OnEnter();
     }
 
     public void HandlePlayerInput(int index)
