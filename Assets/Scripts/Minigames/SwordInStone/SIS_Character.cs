@@ -1,10 +1,7 @@
 using UnityEngine;
 
 public class SIS_Character : MonoBehaviour {
-    [SerializeField]
     private Animator animator;
-
-    private int playerIndex;
 
     private float maxStamina;
     private float stamina;
@@ -24,7 +21,6 @@ public class SIS_Character : MonoBehaviour {
     }
 
     public void SetupPlayer(int playerIndex, float maxStamina, float staminaRegenRate, float staminaClickDrain) {
-        this.playerIndex = playerIndex;
         this.maxStamina = maxStamina;
         this.staminaRegenRate = staminaRegenRate;
         this.staminaClickDrain = staminaClickDrain;
@@ -32,6 +28,8 @@ public class SIS_Character : MonoBehaviour {
         stamina = maxStamina;
         keyDownPrevFrame = false;
 
+        Transform playerTransform = transform.Find($"Player{playerIndex + 1}(Clone)");
+        animator = playerTransform.GetComponent<Animator>();
     }
 
     public void OnButtonA(bool value) {
@@ -63,7 +61,7 @@ public class SIS_Character : MonoBehaviour {
 
             keyDownPrevFrame = true;
 
-            if (animator) animator.SetTrigger("PullSword");
+            if (animator) animator.SetTrigger("SwordPull");
 
             // SIS_Manager handles actual pulling of the sword
             // Just return true here to let SIS_Manager know that this click pulled the sword
