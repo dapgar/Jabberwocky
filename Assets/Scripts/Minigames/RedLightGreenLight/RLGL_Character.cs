@@ -39,10 +39,11 @@ public class RLGL_Character : MonoBehaviour {
 
     private bool bButtonPressed = false;
     public RLGL_Manager manager;
+    private Animator animator;
     public bool IsFinished { get { return bIsFinished; } }
     public bool IsMoving { get { return bIsMoving; } }
     public int PlayerIndex { get { return playerIndex; } }
-
+    
     public void OnButton(bool value) {
         bButtonPressed = value;
     }
@@ -66,6 +67,9 @@ public class RLGL_Character : MonoBehaviour {
         this.pushBackAmount = pushBackAmount;
         this.pushBackSpeed = pushBackSpeed;
         this.finishLineZ = finishLineZ;
+
+        Transform playerTransform = transform.Find($"Player{playerIndex + 1}(Clone)");
+        animator = playerTransform.GetComponent<Animator>();
 
         // Split Screen Setup:  Splitscreen 
         // TODO: Only setup for 4 players ATM, need to support 2-4 after MVI
@@ -106,6 +110,7 @@ public class RLGL_Character : MonoBehaviour {
     }
 
     public void Move() {
+
         if (bButtonPressed) {
             Accelerate();
             bIsMoving = true;
@@ -114,16 +119,7 @@ public class RLGL_Character : MonoBehaviour {
             Decelerate();
         }
 
-        // COMMENTED OUT BECAUSE NO LONGER WORKS WITH INPUT SYSTEM BECAUSE CAN'T DRAG MODEL IN
-        // SHOULD PROB USE ANIMATION ANYWAYS NOT LIKE THIS
-        // Bob character left & right
-        /*if (bIsMoving && model != null) {
-            float bobbingAngle = Mathf.Lerp(-bobbingAmount, bobbingAmount, Mathf.PingPong(Time.time * bobbingSpeed, 1f));
-            model.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, bobbingAngle);
-        }
-        else {
-            model.transform.rotation = Quaternion.Lerp(model.transform.rotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * bobbingResetSpeed);
-        }*/
+        if (animator) animator.SetBool("RLGL_Move", bIsMoving);
 
         transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
     }
