@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
         playersMoving = false;
         
         // Must be called to initialize (for now), but in future we will need to have gamemanger be on mainmenu scene so it's valid early on
-        SetNumPlayers(4);
+        SetNumPlayers(numPlayers);
     }
 
     public void SetNumPlayers(int num) {
@@ -74,10 +74,11 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Random Set");
             }
         }
-        //1ceneChanger.Instance.ChangeScene(devMinigameNumber + 4);
+        //SceneChanger.Instance.ChangeScene(devMinigameNumber + 4);
     }
 
     private void SetDevMinigame(int minigameNumber) {
+        devMinigameNumber = minigameNumber;
         if (Input.GetKey(KeyCode.CapsLock)) {
             devMinigameNumber = -1;
             SceneChanger.Instance.ChangeScene(minigameNumber + 4);
