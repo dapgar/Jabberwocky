@@ -283,7 +283,7 @@ public class ReactionTime : MonoBehaviour
 
     public void HandlePlayerInput(int index)
     {
-        if (gameState == GameState.red || gameState == GameState.green)
+        if ((gameState == GameState.red || gameState == GameState.green) && !buttonPressed[index])
         {
             playerScore[index] += GetScore();
             if (GetScore() == 0)
