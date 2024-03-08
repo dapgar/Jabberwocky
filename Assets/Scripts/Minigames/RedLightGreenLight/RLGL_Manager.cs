@@ -99,7 +99,9 @@ public class RLGL_Manager : MonoBehaviour {
         numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 4;
         players = new List<RLGL_Character>(numPlayers);
         playingPlayers = numPlayers;
-
+        foreach (Image img in playerIcons) {
+            img.enabled = false;
+        }
     }
 
     public void SetupPlayer(RLGL_Character playa) {

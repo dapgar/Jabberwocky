@@ -140,6 +140,7 @@ public class RLGL_Character : MonoBehaviour {
         if (gameObject.transform.position.z >= finishLineZ) {
             bIsFinished = true;
             bIsMoving = false;
+            if (animator) animator.SetBool("RLGL_Move", bIsMoving);
 
             StartCoroutine(MoveAndRotateOnFinish());
             return true;

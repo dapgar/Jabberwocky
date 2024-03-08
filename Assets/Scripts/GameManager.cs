@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
-    public int numPlayers = 4;
+    public int numPlayers;
     [HideInInspector] public int[] moveData;
     [HideInInspector] public int[] routeData;
     [HideInInspector] public Vector3[] playersPos;
