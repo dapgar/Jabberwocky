@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class ReactionTimePlayer : MonoBehaviour
 {
+    public int playerIndex;
+    private Animator animator;
+
+    ReactionTime manager;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        playerIndex = GetComponent<PlayerInputHandler>().GetIndex();
+
+        manager = GameObject.FindAnyObjectByType<ReactionTime>();
+        manager.SetupPlayer(this);
+    }
+
+    public void Setup()
+    {
+        Transform playerTransform = transform.Find($"Player{playerIndex + 1}(Clone)");
+        animator = playerTransform.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -16,7 +30,17 @@ public class ReactionTimePlayer : MonoBehaviour
         // PRESS
         if (value)
         {
-            GameObject.FindAnyObjectByType<ReactionTime>()?.HandlePlayerInput(GetComponent<PlayerInputHandler>().GetIndex());
+            manager.HandlePlayerInput(this);
         }
+    }
+
+    public void Backflip()
+    {
+        if (animator) animator.SetTrigger("Backflip");
+    }
+
+    public void Die()
+    {
+        if (animator) animator.SetTrigger("Dead");
     }
 }

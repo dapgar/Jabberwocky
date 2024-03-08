@@ -281,17 +281,20 @@ public class ReactionTime : MonoBehaviour
         currentState.OnEnter();
     }
 
-    public void HandlePlayerInput(int index)
+    public void HandlePlayerInput(ReactionTimePlayer player)
     {
+        int index = player.playerIndex;
         if ((gameState == GameState.red || gameState == GameState.green) && !buttonPressed[index])
         {
             playerScore[index] += GetScore();
             if (GetScore() == 0)
             {
+                player.Die();
                 pbScript[index].SetReady();
             }
             else
             {
+                player.Backflip();
                 playerScored = players[index];
                 pbScript[index].SetPressed();
                 score--;
@@ -300,5 +303,10 @@ public class ReactionTime : MonoBehaviour
             playersLeft--;
             buttonPressed[index] = true;
         }
+    }
+
+    public void SetupPlayer(ReactionTimePlayer player)
+    {
+        player.Setup();
     }
 }
