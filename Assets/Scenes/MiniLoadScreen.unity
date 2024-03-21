@@ -1503,9 +1503,9 @@ MonoBehaviour:
   titleText: {fileID: 1164178916}
   minigameImage: {fileID: 434855587}
   images:
-  - {fileID: 2800000, guid: 7e668f3f0de9f0247a036d261eba337e, type: 3}
-  - {fileID: 2800000, guid: 3bcb3ec2692ee1e4fbdec25c594db5dc, type: 3}
-  - {fileID: 2800000, guid: 59cf851e39feaa349b0a0c73cc7a6a4b, type: 3}
+  - {fileID: 2800000, guid: f8c9f4946fac5694fbde5017db25fc8d, type: 3}
+  - {fileID: 2800000, guid: 9ad2071726f3dc84ca4dc8ca0c16d78c, type: 3}
+  - {fileID: 2800000, guid: de890cb4c1164ed438dbcee39077921b, type: 3}
   loadIcon: {fileID: 2057585698}
 --- !u!1001 &2057585696
 PrefabInstance:

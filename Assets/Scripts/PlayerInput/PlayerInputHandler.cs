@@ -41,6 +41,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Input_onActionTriggered(CallbackContext context)
     {
+        if (context.performed)
+        {
+            return;
+        }
+
         if (context.action.name == controls.Minigame.Button.name)
         {
             onButtonA?.Invoke(context.ReadValueAsButton());
