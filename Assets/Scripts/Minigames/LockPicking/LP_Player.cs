@@ -71,7 +71,7 @@ public class LP_Player : MonoBehaviour
 
     public void OnInputMove(Vector2 direction)
     {
-        Debug.Log(direction);
+        
         //if (inputVector.x != 0)
         //{
 
