@@ -356,7 +356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6292847f1de2ec429178ab4a6f16dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 5
+  turnSpeed: 125
 --- !u!4 &813949820
 Transform:
   m_ObjectHideFlags: 0
@@ -417,7 +418,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2275578385278697031, guid: 6545fae3d7e983c4c90cb053cab715a8, type: 3}
       propertyPath: m_Name
-      value: PlayerConfigManager
+      value: delete this when done
       objectReference: {fileID: 0}
     - target: {fileID: 4673299101382076102, guid: 6545fae3d7e983c4c90cb053cab715a8, type: 3}
       propertyPath: m_MaxPlayerCount

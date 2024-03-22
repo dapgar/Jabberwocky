@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class JoustingCharacter : MonoBehaviour {
     private int playerIndex;
     private float speed;
+    private float turnSpeed;
 
     private bool bButtonAPressed = false;
 
@@ -21,9 +23,10 @@ public class JoustingCharacter : MonoBehaviour {
         manager.SetupPlayer(this);
     }
 
-    public void SetupPlayer(int playerIndex, float speed) {
+    public void SetupPlayer(int playerIndex, float speed, float turnSpeed) {
         this.playerIndex = playerIndex;
         this.speed = speed;
+        this.turnSpeed = turnSpeed;
     }
 
     public void OnButtonA(bool value) {
@@ -31,30 +34,19 @@ public class JoustingCharacter : MonoBehaviour {
     }
 
     public void OnInputMove(Vector2 direction) {
+        if (direction.x < 0) direction.x = -1;
+        if (direction.x > 0) direction.x = 1;
+        if (direction.y < 0) direction.y = -1;
+        if (direction.y > 0) direction.y = 1;
         this.direction = direction;
     }
 
     private void Update() {
-        Vector3 newPos = this.transform.localPosition;
-        if (direction.y > 0) {
-            // move forward
-            newPos.z += speed * Time.deltaTime;
-        }
-        if (direction.y < 0) {
-            // move back
-            newPos.z -= speed * Time.deltaTime;
-        }
-        if (direction.x > 0) {
-            // Turn right
-        }
-        if (direction.x < 0) {
-            // Turn left
-        }
-        
-        /*
-        newPos.x += direction.x * Time.deltaTime * speed;
-        newPos.z += direction.y * Time.deltaTime * speed;*/
-        this.transform.localPosition = newPos;
+        MovePlayer();
     }
 
+    private void MovePlayer() {
+        gameObject.transform.Rotate(0f, direction.x * turnSpeed * Time.deltaTime, 0f);
+        gameObject.transform.Translate(0f, 0f, direction.y * speed * Time.deltaTime);
+    }
 }

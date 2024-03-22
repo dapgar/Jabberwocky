@@ -9,6 +9,9 @@ public class JoustingManager : MonoBehaviour {
     [SerializeField]
     private float speed = 3.0f;
 
+    [SerializeField]
+    private float turnSpeed = 2.0f;
+
     private void Start() {
         numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 4;
         players = new List<JoustingCharacter>(numPlayers);
@@ -17,7 +20,7 @@ public class JoustingManager : MonoBehaviour {
     public void SetupPlayer(JoustingCharacter playa) {
         players.Add(playa);
         int playaIndex = players.IndexOf(playa);
-        playa.SetupPlayer(playaIndex, speed);
+        playa.SetupPlayer(playaIndex, speed, turnSpeed);
     }
 
 }
