@@ -10,14 +10,23 @@ public class LP_Player : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private Vector2 inputVector = Vector2.zero;
 
+    private Vector2 testVector = Vector2.zero;
+
+    private void Start()
+    {
+        testVector = new Vector2(Random.Range(-1,2), Random.Range(-1,2));
+        testVector = testVector.normalized;
+        Debug.Log(testVector);
+    }
+
     private void Update()
     {
         // --- DPAD ---
-        moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
-        moveDirection = transform.TransformDirection(moveDirection);
-        moveDirection *= 5f; // movespeed
+        //moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
+        //moveDirection = transform.TransformDirection(moveDirection);
+        //moveDirection *= 5f; // movespeed
 
-        transform.Translate(moveDirection * Time.deltaTime);
+        //transform.Translate(moveDirection * Time.deltaTime);
 
 
 
@@ -30,6 +39,13 @@ public class LP_Player : MonoBehaviour
         if (buttonPressed)
         {
             transform.Translate(new Vector3(0, 2 * Time.deltaTime, 0));
+        }
+
+        if (inputVector == testVector)
+        {
+            testVector = new Vector2(Random.Range(-1, 2), Random.Range(-1, 2));
+            testVector = testVector.normalized;
+            Debug.Log(testVector);
         }
 
         //// HOLD AND RELEASE
@@ -71,14 +87,14 @@ public class LP_Player : MonoBehaviour
 
     public void OnInputMove(Vector2 direction)
     {
-        
-        //if (inputVector.x != 0)
-        //{
+        inputVector = direction;
+        if (inputVector.x != 0)
+        {
 
-        //}
-        //else if (inputVector.y != 0)
-        //{
+        }
+        else if (inputVector.y != 0)
+        {
 
-        //}
+        }
     }
 }
