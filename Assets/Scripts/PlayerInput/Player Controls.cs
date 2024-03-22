@@ -56,9 +56,108 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""20645a21-6654-473c-be3d-36db525d5976"",
             ""actions"": [
                 {
-                    ""name"": ""Button"",
+                    ""name"": ""X"",
+                    ""type"": ""Value"",
+                    ""id"": ""a8b72444-c523-4c59-bab7-cd6ab8b2801f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Y"",
+                    ""type"": ""Value"",
+                    ""id"": ""a11f8932-4d2d-41ea-8b7c-eb06cd29f67e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""A"",
                     ""type"": ""Value"",
                     ""id"": ""c092131a-04d5-45aa-b5af-07c9206315cd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""B"",
+                    ""type"": ""Button"",
+                    ""id"": ""47a5da4d-358c-41e1-a76f-63fa18971bc9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftTrigger"",
+                    ""type"": ""Value"",
+                    ""id"": ""17fc4bc0-39aa-4715-ad7f-d37c9c22ee4d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RightTrigger"",
+                    ""type"": ""Value"",
+                    ""id"": ""59a2325f-3356-48d5-98ff-9604fcc12724"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Value"",
+                    ""id"": ""66f20258-4681-4c12-843e-f4606816dfce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Start"",
+                    ""type"": ""Value"",
+                    ""id"": ""ddf8c095-558c-44f1-92e3-61ad5cc29e82"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Value"",
+                    ""id"": ""16b096bb-5a71-4a1e-9205-97f05dd62031"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Value"",
+                    ""id"": ""c3cdae65-7219-4656-9035-f747c1f8bd30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Value"",
+                    ""id"": ""8ad65875-7840-492c-bc62-f51f138e6158"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Value"",
+                    ""id"": ""58e701c9-6a8b-4134-b70b-c8b1f948fca3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -82,7 +181,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Button"",
+                    ""action"": ""A"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -93,7 +192,95 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Button"",
+                    ""action"": ""A"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e88f3c0d-0eaa-44f4-93ee-916382a09f1b"",
+                    ""path"": ""<HID::USB Gamepad >/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""B"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e98e511-6491-49f8-a370-7323fc76724a"",
+                    ""path"": ""<HID::USB Gamepad >/button5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28c8b9bd-732d-43e7-b5fa-daaf25abc1c2"",
+                    ""path"": ""<HID::USB Gamepad >/button9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2cee035-4e99-40e2-a880-3def3c270f95"",
+                    ""path"": ""<HID::USB Gamepad >/button10"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b806f63e-18e5-4373-9ab4-39b59aca9ee4"",
+                    ""path"": ""<HID::USB Gamepad >/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""137ef7b1-816f-4d51-9ff8-15d579ae3f03"",
+                    ""path"": ""<HID::USB Gamepad >/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1c47505-2ef4-4f5a-8a87-01599b8e55c6"",
+                    ""path"": ""<HID::USB Gamepad >/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3732218-45e2-46b5-9e23-69cd5832aa12"",
+                    ""path"": ""<HID::USB Gamepad >/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -206,6 +393,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""539efa52-d4e1-43d6-a98b-d267e03ed075"",
+                    ""path"": ""<HID::USB Gamepad >/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d42c613-e1c6-4ec9-a84c-244de5dff633"",
+                    ""path"": ""<HID::USB Gamepad >/button4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39475c18-7cc8-4220-aee9-cb0acde5aa3f"",
+                    ""path"": ""<HID::USB Gamepad >/button6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -245,7 +465,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Board_Newaction = m_Board.FindAction("New action", throwIfNotFound: true);
         // Minigame
         m_Minigame = asset.FindActionMap("Minigame", throwIfNotFound: true);
-        m_Minigame_Button = m_Minigame.FindAction("Button", throwIfNotFound: true);
+        m_Minigame_X = m_Minigame.FindAction("X", throwIfNotFound: true);
+        m_Minigame_Y = m_Minigame.FindAction("Y", throwIfNotFound: true);
+        m_Minigame_A = m_Minigame.FindAction("A", throwIfNotFound: true);
+        m_Minigame_B = m_Minigame.FindAction("B", throwIfNotFound: true);
+        m_Minigame_LeftTrigger = m_Minigame.FindAction("LeftTrigger", throwIfNotFound: true);
+        m_Minigame_RightTrigger = m_Minigame.FindAction("RightTrigger", throwIfNotFound: true);
+        m_Minigame_Select = m_Minigame.FindAction("Select", throwIfNotFound: true);
+        m_Minigame_Start = m_Minigame.FindAction("Start", throwIfNotFound: true);
+        m_Minigame_Up = m_Minigame.FindAction("Up", throwIfNotFound: true);
+        m_Minigame_Down = m_Minigame.FindAction("Down", throwIfNotFound: true);
+        m_Minigame_Left = m_Minigame.FindAction("Left", throwIfNotFound: true);
+        m_Minigame_Right = m_Minigame.FindAction("Right", throwIfNotFound: true);
         m_Minigame_Move = m_Minigame.FindAction("Move", throwIfNotFound: true);
     }
 
@@ -354,13 +585,35 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Minigame
     private readonly InputActionMap m_Minigame;
     private List<IMinigameActions> m_MinigameActionsCallbackInterfaces = new List<IMinigameActions>();
-    private readonly InputAction m_Minigame_Button;
+    private readonly InputAction m_Minigame_X;
+    private readonly InputAction m_Minigame_Y;
+    private readonly InputAction m_Minigame_A;
+    private readonly InputAction m_Minigame_B;
+    private readonly InputAction m_Minigame_LeftTrigger;
+    private readonly InputAction m_Minigame_RightTrigger;
+    private readonly InputAction m_Minigame_Select;
+    private readonly InputAction m_Minigame_Start;
+    private readonly InputAction m_Minigame_Up;
+    private readonly InputAction m_Minigame_Down;
+    private readonly InputAction m_Minigame_Left;
+    private readonly InputAction m_Minigame_Right;
     private readonly InputAction m_Minigame_Move;
     public struct MinigameActions
     {
         private @PlayerControls m_Wrapper;
         public MinigameActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Button => m_Wrapper.m_Minigame_Button;
+        public InputAction @X => m_Wrapper.m_Minigame_X;
+        public InputAction @Y => m_Wrapper.m_Minigame_Y;
+        public InputAction @A => m_Wrapper.m_Minigame_A;
+        public InputAction @B => m_Wrapper.m_Minigame_B;
+        public InputAction @LeftTrigger => m_Wrapper.m_Minigame_LeftTrigger;
+        public InputAction @RightTrigger => m_Wrapper.m_Minigame_RightTrigger;
+        public InputAction @Select => m_Wrapper.m_Minigame_Select;
+        public InputAction @Start => m_Wrapper.m_Minigame_Start;
+        public InputAction @Up => m_Wrapper.m_Minigame_Up;
+        public InputAction @Down => m_Wrapper.m_Minigame_Down;
+        public InputAction @Left => m_Wrapper.m_Minigame_Left;
+        public InputAction @Right => m_Wrapper.m_Minigame_Right;
         public InputAction @Move => m_Wrapper.m_Minigame_Move;
         public InputActionMap Get() { return m_Wrapper.m_Minigame; }
         public void Enable() { Get().Enable(); }
@@ -371,9 +624,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MinigameActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MinigameActionsCallbackInterfaces.Add(instance);
-            @Button.started += instance.OnButton;
-            @Button.performed += instance.OnButton;
-            @Button.canceled += instance.OnButton;
+            @X.started += instance.OnX;
+            @X.performed += instance.OnX;
+            @X.canceled += instance.OnX;
+            @Y.started += instance.OnY;
+            @Y.performed += instance.OnY;
+            @Y.canceled += instance.OnY;
+            @A.started += instance.OnA;
+            @A.performed += instance.OnA;
+            @A.canceled += instance.OnA;
+            @B.started += instance.OnB;
+            @B.performed += instance.OnB;
+            @B.canceled += instance.OnB;
+            @LeftTrigger.started += instance.OnLeftTrigger;
+            @LeftTrigger.performed += instance.OnLeftTrigger;
+            @LeftTrigger.canceled += instance.OnLeftTrigger;
+            @RightTrigger.started += instance.OnRightTrigger;
+            @RightTrigger.performed += instance.OnRightTrigger;
+            @RightTrigger.canceled += instance.OnRightTrigger;
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
+            @Start.started += instance.OnStart;
+            @Start.performed += instance.OnStart;
+            @Start.canceled += instance.OnStart;
+            @Up.started += instance.OnUp;
+            @Up.performed += instance.OnUp;
+            @Up.canceled += instance.OnUp;
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
+            @Left.started += instance.OnLeft;
+            @Left.performed += instance.OnLeft;
+            @Left.canceled += instance.OnLeft;
+            @Right.started += instance.OnRight;
+            @Right.performed += instance.OnRight;
+            @Right.canceled += instance.OnRight;
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -381,9 +667,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IMinigameActions instance)
         {
-            @Button.started -= instance.OnButton;
-            @Button.performed -= instance.OnButton;
-            @Button.canceled -= instance.OnButton;
+            @X.started -= instance.OnX;
+            @X.performed -= instance.OnX;
+            @X.canceled -= instance.OnX;
+            @Y.started -= instance.OnY;
+            @Y.performed -= instance.OnY;
+            @Y.canceled -= instance.OnY;
+            @A.started -= instance.OnA;
+            @A.performed -= instance.OnA;
+            @A.canceled -= instance.OnA;
+            @B.started -= instance.OnB;
+            @B.performed -= instance.OnB;
+            @B.canceled -= instance.OnB;
+            @LeftTrigger.started -= instance.OnLeftTrigger;
+            @LeftTrigger.performed -= instance.OnLeftTrigger;
+            @LeftTrigger.canceled -= instance.OnLeftTrigger;
+            @RightTrigger.started -= instance.OnRightTrigger;
+            @RightTrigger.performed -= instance.OnRightTrigger;
+            @RightTrigger.canceled -= instance.OnRightTrigger;
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
+            @Start.started -= instance.OnStart;
+            @Start.performed -= instance.OnStart;
+            @Start.canceled -= instance.OnStart;
+            @Up.started -= instance.OnUp;
+            @Up.performed -= instance.OnUp;
+            @Up.canceled -= instance.OnUp;
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
+            @Left.started -= instance.OnLeft;
+            @Left.performed -= instance.OnLeft;
+            @Left.canceled -= instance.OnLeft;
+            @Right.started -= instance.OnRight;
+            @Right.performed -= instance.OnRight;
+            @Right.canceled -= instance.OnRight;
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
@@ -428,7 +747,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public interface IMinigameActions
     {
-        void OnButton(InputAction.CallbackContext context);
+        void OnX(InputAction.CallbackContext context);
+        void OnY(InputAction.CallbackContext context);
+        void OnA(InputAction.CallbackContext context);
+        void OnB(InputAction.CallbackContext context);
+        void OnLeftTrigger(InputAction.CallbackContext context);
+        void OnRightTrigger(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
+        void OnStart(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
     }
 }

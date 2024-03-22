@@ -19,7 +19,18 @@ public class PlayerInputHandler : MonoBehaviour
 
     private PlayerControls controls;
 
+    public BoolEvent onButtonX;
+    public BoolEvent onButtonY;
     public BoolEvent onButtonA;
+    public BoolEvent onButtonB;
+    public BoolEvent onTriggerL;
+    public BoolEvent onTriggerR;
+    public BoolEvent onSelect;
+    public BoolEvent onStart;
+    public BoolEvent onUp;
+    public BoolEvent onDown;
+    public BoolEvent onLeft;
+    public BoolEvent onRight;
     public Vector2Event onDPad;
 
     // Start is called before the first frame update
@@ -46,9 +57,64 @@ public class PlayerInputHandler : MonoBehaviour
             return;
         }
 
-        if (context.action.name == controls.Minigame.Button.name)
+        if (context.action.name == controls.Minigame.X.name)
+        {
+            onButtonX?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.Y.name)
+        {
+            onButtonY?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.A.name)
         {
             onButtonA?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.B.name)
+        {
+            onButtonB?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.LeftTrigger.name)
+        {
+            onTriggerL?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.RightTrigger.name)
+        {
+            onTriggerR?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.Select.name)
+        {
+            onSelect?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.Start.name)
+        {
+            onStart?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.Up.name)
+        {
+            onUp?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.Down.name)
+        {
+            onDown?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.Left.name)
+        {
+            onLeft?.Invoke(context.ReadValueAsButton());
+        }
+
+        if (context.action.name == controls.Minigame.Right.name)
+        {
+            onRight?.Invoke(context.ReadValueAsButton());
         }
 
         if (context.action.name == controls.Minigame.Move.name)
