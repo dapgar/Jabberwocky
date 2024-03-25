@@ -19,7 +19,6 @@ public class BoardManager : MonoBehaviour
 
     public RouteScript route;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (instance == null) instance = this;
@@ -53,6 +52,28 @@ public class BoardManager : MonoBehaviour
     private void Update()
     {
         playerRankings = players.OrderByDescending(player => player.routePos).ToList();
+    
+        // Dev Tools for moving players
+        if (Input.GetKey(KeyCode.A)) {
+            bool updateBoard = false;
+            if (Input.GetKeyDown(KeyCode.Alpha1)) {
+                GameManager.instance.moveData[0] = 1;
+                updateBoard = true;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                GameManager.instance.moveData[1] = 1;
+                updateBoard = true;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                GameManager.instance.moveData[2] = 1;
+                updateBoard = true;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4)) {
+                GameManager.instance.moveData[3] = 1;
+                updateBoard = true;
+            }
+            if (updateBoard) StartCoroutine(UpdateBoard());
+        }
     }
 
     IEnumerator UpdateBoard()
@@ -77,6 +98,7 @@ public class BoardManager : MonoBehaviour
             //GameManager.instance.playersPos[player.stoneID - 1] = player.transform.position;
         }
         GameManager.instance.playersMoving = false;
+        for (int i = 0; i < GameManager.instance.moveData.Length; i++) GameManager.instance.moveData[i] = 0;
 
         // Used for storing prev board pos / rot
         // Can clean this up AFTER MVI - don't wanna mess smth up rn lol
