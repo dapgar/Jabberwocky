@@ -19,6 +19,8 @@ public class BoardManager : MonoBehaviour
 
     public RouteScript route;
 
+    private bool isEnding;
+
     void Start()
     {
         if (instance == null) instance = this;
@@ -74,6 +76,21 @@ public class BoardManager : MonoBehaviour
             }
             if (updateBoard) StartCoroutine(UpdateBoard());
         }
+
+        // Win con
+        foreach (StoneScript player in players)
+        {
+            if (player.routePos == route.childNodeList.Count - 1 && !isEnding)
+            {
+                // This player won!
+                GameManager.instance.playerRankings.Add(playerRankings[0].stoneID);
+                GameManager.instance.playerRankings.Add(playerRankings[1].stoneID);
+                GameManager.instance.playerRankings.Add(playerRankings[2].stoneID);
+                GameManager.instance.playerRankings.Add(playerRankings[3].stoneID);
+                SceneChanger.Instance.ChangeScene(3);
+                isEnding = true;
+            }
+        }
     }
 
     IEnumerator UpdateBoard()
@@ -105,16 +122,6 @@ public class BoardManager : MonoBehaviour
         for (int i = 0; i < players.Count; i++) {
             GameManager.instance.playersPos[i] = players[i].transform.position;
             GameManager.instance.playerRots[i] = players[i].transform.rotation;
-        }
-
-        // Win con
-        foreach(StoneScript player in players) 
-        {
-            if (player.routePos == route.childNodeList.Count)
-            {
-                // This player won!
-                GameManager.instance.playerRankings = playerRankings;
-            }
         }
     }
 

@@ -18330,6 +18330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a518793b7367f42a1eaebd17c0d4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPaused: 0
 --- !u!1 &1604491597
 GameObject:
   m_ObjectHideFlags: 0
@@ -18871,7 +18872,11 @@ MonoBehaviour:
   - {fileID: 30380427}
   - {fileID: 1576457509}
   - {fileID: 24770531}
-  playerRankings: []
+  playerRankings:
+  - {fileID: 1923250295}
+  - {fileID: 30380427}
+  - {fileID: 1576457509}
+  - {fileID: 24770531}
   crowns: []
   cam: {fileID: 1604491598}
   route: {fileID: 507141048}

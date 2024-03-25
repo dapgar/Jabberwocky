@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public Quaternion[] playerRots;
 
     // Win con
-    [HideInInspector] public List<StoneScript> playerRankings;
+    public List<int> playerRankings;
 
     [HideInInspector] public int diceRoll;
 

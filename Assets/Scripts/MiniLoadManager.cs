@@ -8,7 +8,7 @@ using UnityEditor;
 
 public class MiniLoadManager : MonoBehaviour
 {
-    public int numberOfGames = 2;
+    public int numberOfGames = 3;
     public TextMeshProUGUI hintText;
     public GameObject playButton;
 
@@ -68,7 +68,7 @@ public class MiniLoadManager : MonoBehaviour
     {
 
         // Loads minigame scene accounting for menus.
-        SceneChanger.Instance.ChangeScene(randomGame + 4);
+        SceneChanger.Instance.ChangeScene(randomGame + 5);
     }
 
     IEnumerator WaitToLoad()

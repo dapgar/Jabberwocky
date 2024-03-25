@@ -125,7 +125,7 @@ public class TurnManager : MonoBehaviour
         GameManager.instance.diceRoll = result;
 
         // Loads Load Scene
-        SceneChanger.Instance.ChangeScene(3);
+        SceneChanger.Instance.ChangeScene(4);
     }
 
 
