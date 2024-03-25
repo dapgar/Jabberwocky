@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public Vector3[] playersPos;
     [HideInInspector] public Quaternion[] playerRots;
 
+    // Win con
+    [HideInInspector] public List<StoneScript> playerRankings;
+
     [HideInInspector] public int diceRoll;
 
     [HideInInspector] public bool playersMoving;

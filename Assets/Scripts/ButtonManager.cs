@@ -10,4 +10,15 @@ public class ButtonManager : MonoBehaviour
     {
         SceneChanger.Instance.ChangeScene(1);
     }
+
+    public void RestartBoardButton()
+    {
+        // CALL RESET HERE
+        SceneChanger.Instance.ChangeScene(1);
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
 }

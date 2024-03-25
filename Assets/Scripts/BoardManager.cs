@@ -1,6 +1,8 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
@@ -8,6 +10,7 @@ public class BoardManager : MonoBehaviour
     public static BoardManager instance;
 
     public List<StoneScript> players;
+    public List<StoneScript> playerRankings;
     public GameObject[] crowns;
 
     public CinemachineVirtualCamera cam;
@@ -47,6 +50,11 @@ public class BoardManager : MonoBehaviour
         StartCoroutine(UpdateBoard());
     }
 
+    private void Update()
+    {
+        playerRankings = players.OrderByDescending(player => player.routePos).ToList();
+    }
+
     IEnumerator UpdateBoard()
     {
         /* Used to disable dice roll during player moves */
@@ -70,25 +78,21 @@ public class BoardManager : MonoBehaviour
         }
         GameManager.instance.playersMoving = false;
 
-        /*// Handles crown logic.
-        for (int i = 0; i < crowns.Length; i++)
-        {
-            if (players[i].routePos > furthestPlayer)
-            {
-                furthestPlayer = i;
-                crowns[furthestPlayer].SetActive(true);
-            }
-            else
-            {
-                crowns[i].SetActive(false);
-            }
-        }*/
-
         // Used for storing prev board pos / rot
         // Can clean this up AFTER MVI - don't wanna mess smth up rn lol
         for (int i = 0; i < players.Count; i++) {
             GameManager.instance.playersPos[i] = players[i].transform.position;
             GameManager.instance.playerRots[i] = players[i].transform.rotation;
+        }
+
+        // Win con
+        foreach(StoneScript player in players) 
+        {
+            if (player.routePos == route.childNodeList.Count)
+            {
+                // This player won!
+                GameManager.instance.playerRankings = playerRankings;
+            }
         }
     }
 
