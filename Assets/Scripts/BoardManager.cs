@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class BoardManager : MonoBehaviour
 
     public List<StoneScript> players;
     public List<StoneScript> playerRankings;
-    public GameObject[] crowns;
+    public List<Image> playerIcons;
+    //public GameObject[] crowns;
 
     public CinemachineVirtualCamera cam;
     private Vector3 camDefaultPos;
