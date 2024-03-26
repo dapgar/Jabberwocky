@@ -8949,7 +8949,7 @@ MonoBehaviour:
   routeData: 
   playersPos: []
   playerRots: []
-  playerRankings: []
+  playerRankings: 
   diceRoll: 0
   playersMoving: 0
   devMinigameNumber: -1
@@ -19232,7 +19232,16 @@ MonoBehaviour:
   - {fileID: 30380427}
   - {fileID: 1576457509}
   - {fileID: 24770531}
-  crowns: []
+  playerIcons:
+  - {fileID: 1959211196}
+  - {fileID: 1825235398}
+  - {fileID: 1685459299}
+  - {fileID: 510593281}
+  playerSprites:
+  - {fileID: 21300000, guid: 0352cc8e08c2b5c4e870fc33dde4c779, type: 3}
+  - {fileID: 21300000, guid: 61005c3c3cab70442bf54243f69de238, type: 3}
+  - {fileID: 21300000, guid: 422508136fb208d46a6140604ac0a8ef, type: 3}
+  - {fileID: 21300000, guid: 541727a53215a014384d5482362c930c, type: 3}
   cam: {fileID: 1604491598}
   route: {fileID: 507141048}
 --- !u!1001 &1651457668

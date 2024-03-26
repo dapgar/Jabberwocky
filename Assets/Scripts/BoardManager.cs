@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour
     public List<StoneScript> players;
     public List<StoneScript> playerRankings;
     public List<Image> playerIcons;
+    public List<Sprite> playerSprites;
     //public GameObject[] crowns;
 
     public CinemachineVirtualCamera cam;
@@ -93,6 +94,12 @@ public class BoardManager : MonoBehaviour
                 isEnding = true;
             }
         }
+
+        // Board UI
+        playerIcons[0].sprite = playerSprites[playerRankings[0].stoneID - 1];
+        playerIcons[1].sprite = playerSprites[playerRankings[1].stoneID - 1];
+        playerIcons[2].sprite = playerSprites[playerRankings[2].stoneID - 1];
+        playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
     }
 
     IEnumerator UpdateBoard()
