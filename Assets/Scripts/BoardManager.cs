@@ -56,12 +56,12 @@ public class BoardManager : MonoBehaviour
     private void Update()
     {
         playerRankings = players.OrderByDescending(player => player.routePos).ToList();
-    
+
         // Dev Tools for moving players
         if (Input.GetKey(KeyCode.A)) {
             bool updateBoard = false;
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
-                GameManager.instance.moveData[0] = 1;
+                GameManager.instance.moveData[0] = 30;
                 updateBoard = true;
             }
             if (Input.GetKeyDown(KeyCode.Alpha2)) {
@@ -78,7 +78,7 @@ public class BoardManager : MonoBehaviour
             }
             if (updateBoard) StartCoroutine(UpdateBoard());
         }
-
+        
         // Win con
         foreach (StoneScript player in players)
         {
