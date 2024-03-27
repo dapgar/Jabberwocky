@@ -133,7 +133,7 @@ public class LP_Player : MonoBehaviour
     void SetupLocks()
     {
         lockObject = new GameObject();
-        lockObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 1, this.transform.position.z + 1);
+        lockObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 1, this.transform.position.z + 1.0f);
 
         float spacing = .5f;
         for (int i = 0; i < codesToWin; i++)
@@ -150,9 +150,9 @@ public class LP_Player : MonoBehaviour
         ResetWeights();
         Destroy(codeObject);
         codeObject = new GameObject();
-        codeObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z + 1);
+        codeObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z + .8f);
 
-        float spacing = .75f;
+        float spacing = 1f;
         for (int i = 0; i < codeLength; i++)
         {
             float xPos = -((spacing * (codeLength - 1)) / 2) + spacing * i;
