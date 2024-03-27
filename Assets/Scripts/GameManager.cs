@@ -68,6 +68,13 @@ public class GameManager : MonoBehaviour {
                 SetDevMinigame(2);
                 Debug.Log("Sword Set");
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                // LockPick
+                //devMinigameNumber = 3;
+                SetDevMinigame(3);
+                Debug.Log("Lockpicking Set");
+            }
             else if (Input.GetKeyDown(KeyCode.Alpha0)) {
                 // No Minigame
                 devMinigameNumber = -1;

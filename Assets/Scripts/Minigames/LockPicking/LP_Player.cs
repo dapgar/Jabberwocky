@@ -18,7 +18,7 @@ public class LP_Player : MonoBehaviour
 
     State state;
 
-    int playerIndex;
+    public int playerIndex;
 
     [SerializeField]
     GameObject lockPrefab;
@@ -59,12 +59,7 @@ public class LP_Player : MonoBehaviour
     private void Start()
     {
         PlayerSetup();
-        //dir[0] = new Vector2(0, 1); //up
-        //dir[1] = new Vector2(0, -1); //down
-        //dir[2] = new Vector2(-1, 0); //left
-        //dir[3] = new Vector2(1, 0); //right
 
-        //testArrow = Instantiate(testArrowPrefab);
         SetupLocks();
         WaitForNewCode();
     }
@@ -248,7 +243,7 @@ public class LP_Player : MonoBehaviour
                 completedCodes++;
                 if (completedCodes >= codesToWin)
                 {
-                    if (animator) animator.SetTrigger("Backflip");
+                    Win();
                     return;
                 }
                 WaitForNewCode();
@@ -258,6 +253,26 @@ public class LP_Player : MonoBehaviour
         else if (direction != Vector2.zero)
         {
             WrongAnswer();
+        }
+    }
+
+    void Win()
+    {
+        if (animator) animator.SetTrigger("Backflip");
+        GameObject.FindAnyObjectByType<LP_Manager>().Winner(playerIndex);
+    }
+
+    public void Lose()
+    {
+        if (animator) animator.SetTrigger("Dead");
+        state = State.wrong;
+        timer = 999;
+
+        List<LP_CodeChar> arrows = lockCode.ToList();
+
+        for (int i = 0; i < arrows.Count; i++)
+        {
+            arrows[i].Wrong();
         }
     }
 }
