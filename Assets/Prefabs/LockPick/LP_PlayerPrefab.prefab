@@ -45,21 +45,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2493d0f046b6f4498e5f1b5e75928b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onButtonX:
+    m_PersistentCalls:
+      m_Calls: []
+  onButtonY:
+    m_PersistentCalls:
+      m_Calls: []
   onButtonA:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -5977524438339997724}
-        m_TargetAssemblyTypeName: LP_Player, Assembly-CSharp
-        m_MethodName: OnButton
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  onButtonB:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerL:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerR:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  onRight:
+    m_PersistentCalls:
+      m_Calls: []
   onDPad:
     m_PersistentCalls:
       m_Calls:
@@ -87,3 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fa3023db475cb4d9e87613f3bea130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockPrefab: {fileID: 4850938241084395942, guid: a2b13b2d956d279409b3757991c98e78, type: 3}
+  testArrowPrefab: {fileID: 5022820134401654005, guid: 5cb918d05249e4e4089b2893123fa067, type: 3}

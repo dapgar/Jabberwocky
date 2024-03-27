@@ -227,6 +227,7 @@ public class ReactionTime : MonoBehaviour
             {
                 buttonPressed[i] = false;
                 pbScript[i].SetInactive();
+                players[i].GetComponent<ReactionTimePlayer>().Die();
             }
 
             timerText.gameObject.SetActive(false);
@@ -307,6 +308,7 @@ public class ReactionTime : MonoBehaviour
 
     public void SetupPlayer(ReactionTimePlayer player)
     {
+        players[player.playerIndex] = player.gameObject;
         player.Setup();
     }
 }
