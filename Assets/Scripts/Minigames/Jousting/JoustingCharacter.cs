@@ -2,9 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 public class JoustingCharacter : MonoBehaviour {
+    /*[SerializeField]
+    private BoxCollider frontCollider;
+    [SerializeField]
+    private BoxCollider backCollider;
+    [SerializeField]
+    private BoxCollider sideCollider;*/
+
     private int playerIndex;
     private float speed;
     private float turnSpeed;
@@ -48,5 +54,22 @@ public class JoustingCharacter : MonoBehaviour {
     private void MovePlayer() {
         gameObject.transform.Rotate(0f, direction.x * turnSpeed * Time.deltaTime, 0f);
         gameObject.transform.Translate(0f, 0f, direction.y * speed * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        foreach (ContactPoint contact in collision.contacts) {
+            string colName = contact.thisCollider.name;
+            switch (colName) {
+                case "FrontCollider":
+                    // Block attack
+                    break;
+                case "BackCollider":
+                    // Do full damage
+                    break;
+                case "SideCollider":
+                    // Do half damage
+                    break;
+            }
+        }
     }
 }
