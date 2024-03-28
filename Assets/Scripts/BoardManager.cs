@@ -7,6 +7,7 @@ public class BoardManager : MonoBehaviour
 {
     public static BoardManager instance;
 
+    private List<GameObject> playerSpawns = new List<GameObject>();
     public List<StoneScript> players;
     public GameObject[] crowns;
 
@@ -20,11 +21,11 @@ public class BoardManager : MonoBehaviour
     {
         if (instance == null) instance = this;
 
-        for (int i = 0; i < GameManager.instance.playersPos.Length; i++) {
-            players[i].routePos = GameManager.instance.routeData[i];
-            if (GameManager.instance.playersPos[i] != Vector3.zero) players[i].transform.position = GameManager.instance.playersPos[i];
-            if (GameManager.instance.playerRots[i] != Quaternion.identity)  players[i].transform.rotation = GameManager.instance.playerRots[i];
-        }
+        //for (int i = 0; i < GameManager.instance.playersPos.Length; i++) {
+        //    players[i].routePos = GameManager.instance.routeData[i];
+        //    if (GameManager.instance.playersPos[i] != Vector3.zero) players[i].transform.position = GameManager.instance.playersPos[i];
+        //    if (GameManager.instance.playerRots[i] != Quaternion.identity)  players[i].transform.rotation = GameManager.instance.playerRots[i];
+        //}
 
         // Old using routes instead of Vector & Quaternion
         /*for (int i = 0; i < GameManager.instance.routeData.Length; i++)
@@ -36,14 +37,31 @@ public class BoardManager : MonoBehaviour
             }
         }*/
 
-        foreach (StoneScript p in players) {
-            p.LookAtCamera();
-        }
+        //foreach (StoneScript p in players) {
+        //    p.LookAtCamera();
+        //}
 
         camDefaultPos = new Vector3(-57.07f, 8.02f, 18.92f);
         camDefaultRot = Quaternion.Euler(38.687f, 180, 0);
 
         StartCoroutine(UpdateBoard());
+    }
+
+    public void SetupPlayer(GameObject player)
+    {
+        int index = player.GetComponent<PlayerInputHandler>().GetIndex();
+        StoneScript stoneScript = player.GetComponent<StoneScript>();
+
+        players[index] = stoneScript;
+        players[index].stoneID = index;
+        players[index].currentRoute = route;
+        players[index].routePos = GameManager.instance.routeData[index];
+        GameManager.instance.playersPos[index] = players[index].currentRoute.childNodeList[players[index].routePos].position;
+
+        /*if (GameManager.instance.playersPos[index] != Vector3.zero)*/ players[index].transform.position = GameManager.instance.playersPos[index];
+        /*if (GameManager.instance.playerRots[index] != Quaternion.identity)*/ players[index].transform.rotation = GameManager.instance.playerRots[index];
+
+        players[index].LookAtCamera();
     }
 
     private void Update() {

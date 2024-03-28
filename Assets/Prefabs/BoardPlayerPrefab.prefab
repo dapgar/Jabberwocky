@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8878744625439649785}
   - component: {fileID: 1079528098786638553}
   - component: {fileID: 6040168659417285120}
+  - component: {fileID: -2395830776033531877}
   m_Layer: 0
   m_Name: BoardPlayerPrefab
   m_TagString: Untagged
@@ -45,6 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2493d0f046b6f4498e5f1b5e75928b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onButtonX:
+    m_PersistentCalls:
+      m_Calls: []
+  onButtonY:
+    m_PersistentCalls:
+      m_Calls: []
   onButtonA:
     m_PersistentCalls:
       m_Calls:
@@ -60,6 +67,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onButtonB:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerL:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerR:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  onRight:
+    m_PersistentCalls:
+      m_Calls: []
   onDPad:
     m_PersistentCalls:
       m_Calls: []
@@ -75,3 +109,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f0d2b882204e04fa79c17f3b931566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2395830776033531877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353040733496270960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a78fbeca087c2c4099f2cd0869870aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRoute: {fileID: 0}
+  routePos: 0
+  isMoving: 0
+  stoneID: 0
+  steps: 0
+  playerAnim: {fileID: 0}

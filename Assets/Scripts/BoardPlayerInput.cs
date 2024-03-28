@@ -9,6 +9,12 @@ public class BoardPlayerInput : MonoBehaviour
     void Awake()
     {
         turnManager = GameObject.Find("_TurnManager").GetComponent<TurnManager>();
+
+    }
+
+    private void Start()
+    {
+        BoardManager.instance.SetupPlayer(this.gameObject);
     }
 
     // Update is called once per frame
@@ -16,6 +22,7 @@ public class BoardPlayerInput : MonoBehaviour
     {
         
     }
+
     public void OnButton(bool value)
     {
         // PRESS
