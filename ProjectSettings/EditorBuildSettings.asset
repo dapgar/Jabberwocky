@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BoardScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/Scenes/EndingScene.unity
+    guid: cf17f1f0ccf3e8a428a6b12de95d29c5
+  - enabled: 1
     path: Assets/Scenes/MiniLoadScreen.unity
     guid: 09fa8f33ae14d3949aabee59ccc8e226
   - enabled: 1

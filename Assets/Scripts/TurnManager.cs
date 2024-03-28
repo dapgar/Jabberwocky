@@ -14,7 +14,7 @@ public class TurnManager : MonoBehaviour
 
     public bool isRolling;
 
-    public TextMeshProUGUI diceTutText;
+    public GameObject diceTutText;
     public TextMeshProUGUI rollText;
 
     public int result;
@@ -27,13 +27,13 @@ public class TurnManager : MonoBehaviour
         diceAnimObj.SetActive(false);
         dice.SetActive(false);
         rollText.enabled = false;
-        diceTutText.enabled = true;
+        diceTutText.SetActive(true);
     }
 
     private void Update()
     {
-        if (GameManager.instance.playersMoving) diceTutText.enabled = false;
-        else diceTutText.enabled = true;
+        if (GameManager.instance.playersMoving || isRolling) diceTutText.SetActive(false);
+        else diceTutText.SetActive(true);
 
         // Rolls Dice
         if (Input.GetKeyDown(KeyCode.Space) && !isRolling && canStartNextTurn && !GameManager.instance.playersMoving)
@@ -60,7 +60,7 @@ public class TurnManager : MonoBehaviour
         canStartNextTurn = false;
 
         // UI
-        diceTutText.enabled = false;
+        diceTutText.SetActive(false);
 
         // Dice Logic
         diceAnimObj.SetActive(true);
@@ -124,7 +124,7 @@ public class TurnManager : MonoBehaviour
         GameManager.instance.diceRoll = result;
 
         // Loads Load Scene
-        SceneChanger.Instance.ChangeScene(3);
+        SceneChanger.Instance.ChangeScene(4);
     }
 
 

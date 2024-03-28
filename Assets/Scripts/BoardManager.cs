@@ -1,20 +1,28 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
     public static BoardManager instance;
 
     public List<StoneScript> players;
-    public GameObject[] crowns;
+    public List<StoneScript> playerRankings;
+    public List<Image> playerIcons;
+    public List<Sprite> playerSprites;
+    //public GameObject[] crowns;
 
     public CinemachineVirtualCamera cam;
     private Vector3 camDefaultPos;
     private Quaternion camDefaultRot;
 
     public RouteScript route;
+
+    private bool isEnding;
 
     void Start()
     {
@@ -55,6 +63,32 @@ public class BoardManager : MonoBehaviour
         StartCoroutine(players[playerNum - 1].Move(spaces, true));
         GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
     }
+    
+    private void Update()
+    {
+        playerRankings = players.OrderByDescending(player => player.routePos).ToList();
+        
+        // Win con
+        foreach (StoneScript player in players)
+        {
+            if (player.routePos == route.childNodeList.Count - 1 && !isEnding)
+            {
+                // This player won!
+                GameManager.instance.playerRankings.Add(playerRankings[0].stoneID);
+                GameManager.instance.playerRankings.Add(playerRankings[1].stoneID);
+                GameManager.instance.playerRankings.Add(playerRankings[2].stoneID);
+                GameManager.instance.playerRankings.Add(playerRankings[3].stoneID);
+                SceneChanger.Instance.ChangeScene(3);
+                isEnding = true;
+            }
+        }
+
+        // Board UI
+        playerIcons[0].sprite = playerSprites[playerRankings[0].stoneID - 1];
+        playerIcons[1].sprite = playerSprites[playerRankings[1].stoneID - 1];
+        playerIcons[2].sprite = playerSprites[playerRankings[2].stoneID - 1];
+        playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
+    }
 
     IEnumerator UpdateBoard()
     {
@@ -79,20 +113,6 @@ public class BoardManager : MonoBehaviour
         }
         GameManager.instance.playersMoving = false;
         for (int i = 0; i < GameManager.instance.moveData.Length; i++) GameManager.instance.moveData[i] = 0;
-
-        /*// Handles crown logic.
-        for (int i = 0; i < crowns.Length; i++)
-        {
-            if (players[i].routePos > furthestPlayer)
-            {
-                furthestPlayer = i;
-                crowns[furthestPlayer].SetActive(true);
-            }
-            else
-            {
-                crowns[i].SetActive(false);
-            }
-        }*/
 
         // Used for storing prev board pos / rot
         // Can clean this up AFTER MVI - don't wanna mess smth up rn lol
