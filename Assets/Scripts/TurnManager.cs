@@ -44,7 +44,6 @@ public class TurnManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
         }
-        GameManager.instance.DevCheckGameSelection();
     }
 
     // called by player input scripts

@@ -46,28 +46,14 @@ public class BoardManager : MonoBehaviour
         StartCoroutine(UpdateBoard());
     }
 
-    private void Update() {
-        // Dev Tools for moving players
-        if (Input.GetKey(KeyCode.A)) {
-            bool updateBoard = false;
-            if (Input.GetKeyDown(KeyCode.Alpha1)) {
-                GameManager.instance.moveData[0] = 1;
-                updateBoard = true;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2)) {
-                GameManager.instance.moveData[1] = 1;
-                updateBoard = true;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3)) {
-                GameManager.instance.moveData[2] = 1;
-                updateBoard = true;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4)) {
-                GameManager.instance.moveData[3] = 1;
-                updateBoard = true;
-            }
-            if (updateBoard) StartCoroutine(UpdateBoard());
+    public void DevMovePlayer(int playerNum, int spaces) {
+        if (playerNum > players.Count) {
+            Debug.Log($"Player num {playerNum} doesn't exist");
+            return;
         }
+        Debug.Log($"Moving player {playerNum} {spaces} spaces");
+        StartCoroutine(players[playerNum - 1].Move(spaces, true));
+        GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
     }
 
     IEnumerator UpdateBoard()

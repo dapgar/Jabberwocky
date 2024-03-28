@@ -20,7 +20,6 @@ public class LoadManager : MonoBehaviour
         {
             StartCoroutine(GameHints());
         }
-        if (GameManager.instance) GameManager.instance.DevCheckGameSelection();
     }
 
     IEnumerator WaitToLoad()
