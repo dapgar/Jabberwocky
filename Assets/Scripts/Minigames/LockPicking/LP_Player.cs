@@ -147,7 +147,7 @@ public class LP_Player : MonoBehaviour
         codeObject = new GameObject();
         codeObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z + .8f);
 
-        float spacing = 1f;
+        float spacing = .75f;
         for (int i = 0; i < codeLength; i++)
         {
             float xPos = -((spacing * (codeLength - 1)) / 2) + spacing * i;
