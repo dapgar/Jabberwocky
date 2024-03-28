@@ -122,6 +122,12 @@ public class MiniLoadManager : MonoBehaviour
                 controlText.text = "Mash A to wiggle the sword out of the stone";
                 minigameImage.sprite = Sprite.Create(images[2], new Rect(0, 0, images[2].width, images[2].height), Vector2.zero);
                 break;
+
+            case 3:
+                titleText.text = "Lockpicking";
+                controlText.text = "Press the arrow keys to pick the locks";
+                //minigameImage.sprite = Sprite.Create(images[2], new Rect(0, 0, images[2].width, images[2].height), Vector2.zero);
+                break;
         }
     }
 }
