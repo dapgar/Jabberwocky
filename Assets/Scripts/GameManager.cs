@@ -47,48 +47,4 @@ public class GameManager : MonoBehaviour {
     public void MoveData(int[] moveData) {
         this.moveData = moveData;
     }
-
-    public void DevCheckGameSelection() {
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) {
-                // Red Light Green Light
-                //devMinigameNumber = 0;
-                SetDevMinigame(0);
-                Debug.Log("RLGL Set");
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-                // Reaction Time
-                //devMinigameNumber = 1;
-                SetDevMinigame(1);
-                Debug.Log("RT Set");
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-                // Sword in Stone
-                //devMinigameNumber = 2;
-                SetDevMinigame(2);
-                Debug.Log("Sword Set");
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                // LockPick
-                //devMinigameNumber = 3;
-                SetDevMinigame(3);
-                Debug.Log("Lockpicking Set");
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha0)) {
-                // No Minigame
-                devMinigameNumber = -1;
-                Debug.Log("Random Set");
-            }
-        }
-        //SceneChanger.Instance.ChangeScene(devMinigameNumber + 4);
-    }
-
-    private void SetDevMinigame(int minigameNumber) {
-        devMinigameNumber = minigameNumber;
-        if (Input.GetKey(KeyCode.CapsLock)) {
-            devMinigameNumber = -1;
-            SceneChanger.Instance.ChangeScene(minigameNumber + 4);
-        }
-    }
 }
