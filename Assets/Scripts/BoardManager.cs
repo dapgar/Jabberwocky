@@ -40,7 +40,7 @@ public class BoardManager : MonoBehaviour
             p.LookAtCamera();
         }
 
-        camDefaultPos = new Vector3(-57.07f, 8.02f, 18.92f);
+        camDefaultPos = new Vector3(2.7f, 8.02f, 26.3f);
         camDefaultRot = Quaternion.Euler(38.687f, 180, 0);
 
         StartCoroutine(UpdateBoard());
