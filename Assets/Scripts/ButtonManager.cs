@@ -14,6 +14,7 @@ public class ButtonManager : MonoBehaviour
     public void RestartBoardButton()
     {
         // CALL RESET HERE
+        GameManager.instance.ResetGame();
         SceneChanger.Instance.ChangeScene(1);
     }
 
