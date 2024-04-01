@@ -50,4 +50,9 @@ public class GameManager : MonoBehaviour {
     public void MoveData(int[] moveData) {
         this.moveData = moveData;
     }
+
+    public void ResetGame()
+    {
+        SetNumPlayers(numPlayers);
+    }
 }

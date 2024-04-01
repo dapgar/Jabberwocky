@@ -40,10 +40,6 @@ public class TurnManager : MonoBehaviour
         {
             StartCoroutine(StartTurn());
         }
-        // TEMP QUIT GAME
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Application.Quit();
-        }
     }
 
     // called by player input scripts

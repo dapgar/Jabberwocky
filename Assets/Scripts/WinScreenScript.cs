@@ -14,6 +14,7 @@ public class WinScreenScript : MonoBehaviour
     {
         if (GameManager.instance && !playersPlaced)
         {
+            Debug.Log("Players Positioned");
             players[GameManager.instance.playerRankings[0] - 1].transform.SetPositionAndRotation(playerPosePos[0].position, playerPosePos[0].rotation);
             players[GameManager.instance.playerRankings[0] - 1].transform.localScale = playerPosePos[0].localScale;
 
