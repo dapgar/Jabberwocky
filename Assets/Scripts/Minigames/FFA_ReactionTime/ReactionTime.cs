@@ -42,6 +42,7 @@ public class ReactionTime : MonoBehaviour
 
     GameObject playerScored;
 
+
     public CountdownTimer roundStartTimer;
     public RandomReactionTimer ongoingTimer;
     public CountdownTimer roundEndTimer;
@@ -62,14 +63,14 @@ public class ReactionTime : MonoBehaviour
         playerScore = new int[players.Length];
         buttonPressed = new bool[players.Length];
         pbScript = new Button[playerButtons.Length];
-        for (int i = 0; i < players.Length; i++)
-        {
-            buttonPressed[i] = false;
-            playerScore[i] = 0;
-            players[i].gameObject.transform.LookAt(bigCenterButton.transform);
+        //for (int i = 0; i < players.Length; i++)
+        //{
+        //    buttonPressed[i] = false;
+        //    playerScore[i] = 0;
+        //    players[i].gameObject.transform.LookAt(bigCenterButton.transform);
 
-            pbScript[i] = playerButtons[i].GetComponent<Button>();
-        }
+        //    pbScript[i] = playerButtons[i].GetComponent<Button>();
+        //}
 
         playersLeft = 0;
         score = 0;
@@ -113,7 +114,7 @@ public class ReactionTime : MonoBehaviour
             case GameState.roundEnd:
                 if (playerScored != null)
                 {
-                    playerScored.transform.Rotate(new Vector3(Time.deltaTime * 240, 0, 0), Space.Self);
+                    //playerScored.transform.Rotate(new Vector3(Time.deltaTime * 240, 0, 0), Space.Self);
                     //playerScored.transform.position += new Vector3(0, Time.deltaTime, 0);
                 }
                 roundEndTimer.Countdown();
@@ -190,8 +191,12 @@ public class ReactionTime : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            if (!buttonPressed[i])
+            if (!buttonPressed[i] && players[i] != null)
             {
+                if (players[i] != playerScored)
+                {
+                    players[i].GetComponent<ReactionTimePlayer>().Die();
+                }
                 buttonPressed[i] = true;
                 pbScript[i].SetReady();
             }
@@ -222,14 +227,24 @@ public class ReactionTime : MonoBehaviour
             roundStartTimer.Reset();
             round++;
 
-            playerScored = null;
             for (int i = 0; i < buttonPressed.Length; i++)
             {
-                buttonPressed[i] = false;
-                pbScript[i].SetInactive();
-                players[i].GetComponent<ReactionTimePlayer>().Die();
+                if (players[i] != null)
+                {
+                    pbScript[i].SetInactive();
+
+                    if (buttonPressed[i] && i != playerScored.GetComponent<ReactionTimePlayer>().playerIndex)
+                    {
+                        players[i].GetComponent<ReactionTimePlayer>().Die();
+                    }
+
+                    buttonPressed[i] = false;
+                    //players[i].GetComponent<ReactionTimePlayer>().Die();
+                }
+
             }
 
+            playerScored = null;
             timerText.gameObject.SetActive(false);
 
             return;
@@ -299,6 +314,14 @@ public class ReactionTime : MonoBehaviour
                 playerScored = players[index];
                 pbScript[index].SetPressed();
                 score--;
+
+                //for (int i = 0; i < buttonPressed.Length; i++)
+                //{
+                //    if (buttonPressed[i] && i != playerScored.GetComponent<ReactionTimePlayer>().playerIndex)
+                //    {
+                //        players[i].GetComponent<ReactionTimePlayer>().Die();
+                //    }
+                //}
             }
             scoreTexts[index].text = playerScore[index].ToString("F0");
             playersLeft--;
@@ -308,7 +331,15 @@ public class ReactionTime : MonoBehaviour
 
     public void SetupPlayer(ReactionTimePlayer player)
     {
-        players[player.playerIndex] = player.gameObject;
+        int index = player.playerIndex;
+        players[index] = player.gameObject;
+        buttonPressed[index] = false;
+        playerScore[index] = 0;
+        players[index].gameObject.transform.LookAt(bigCenterButton.transform);
+
+        pbScript[index] = playerButtons[index].GetComponent<Button>();
+
         player.Setup();
+        Debug.Log("Setting up player #" + player.playerIndex);
     }
 }

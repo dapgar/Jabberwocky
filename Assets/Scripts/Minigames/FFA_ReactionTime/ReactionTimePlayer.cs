@@ -13,8 +13,9 @@ public class ReactionTimePlayer : MonoBehaviour
     private void Start()
     {
         playerIndex = GetComponent<PlayerInputHandler>().GetIndex();
+        Debug.Log(playerIndex);
 
-        manager = GameObject.FindAnyObjectByType<ReactionTime>();
+        manager = FindAnyObjectByType<ReactionTime>();
         manager.SetupPlayer(this);
     }
 
