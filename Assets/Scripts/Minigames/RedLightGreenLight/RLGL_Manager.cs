@@ -69,7 +69,7 @@ public class RLGL_Manager : MonoBehaviour {
     [SerializeField]
     private float reactionTimeBuffer = 0.75f;
 
-    private float timer = 0f;
+    [SerializeField] private float playerFinishTimer = 5f;
 
     private float progressMinX = -225;
     private float progressMaxX = 225;
@@ -91,11 +91,10 @@ public class RLGL_Manager : MonoBehaviour {
 
     private int numPlayers;
 
+    private bool anyPlayerFinished = false;
+
     private void Start() {
         isLightRed = true;
-        timer = gameTime;
-        timerText.text = gameTime.ToString("F1");
-
         numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 4;
         players = new List<RLGL_Character>(numPlayers);
         playingPlayers = numPlayers;
@@ -119,7 +118,7 @@ public class RLGL_Manager : MonoBehaviour {
                 gameStarting = false;
                 gameRunning = true;
                 preGameTimer.gameObject.SetActive(false);
-                gameTimer.gameObject.SetActive(true);
+                //gameTimer.gameObject.SetActive(true);
 
                 // Turn light green
                 StartCoroutine(RotateCoroutine(180));
@@ -133,10 +132,13 @@ public class RLGL_Manager : MonoBehaviour {
         }
         else if (gameRunning) {
             UpdateRaceProgress();
-            timer -= Time.deltaTime;
-            timerText.text = timer.ToString("F1");
-            if (timer <= 0.0f) {
-                GameOver();
+           if (anyPlayerFinished) {
+                gameTimer.gameObject.SetActive(true);
+                playerFinishTimer -= Time.deltaTime;
+                timerText.text = playerFinishTimer.ToString("F1");
+                if (playerFinishTimer <= 0f) {
+                    GameOver();
+                }
             }
             float lastPlaceZ = players[0].transform.position.z; // Variable for camera follow
             for (int i = 0; i < players.Count; i++) {
@@ -144,7 +146,7 @@ public class RLGL_Manager : MonoBehaviour {
                     players[i].Move();
                     if (players[i].CheckFinish()) {
                         playingPlayers--;
-                        timer -= finishTimerDecreaseAmount;
+                        anyPlayerFinished = true;
                         playerIcons[i].enabled = false;
                         if (firstFinishIndex == -1) firstFinishIndex = i;
                     }
@@ -230,7 +232,7 @@ public class RLGL_Manager : MonoBehaviour {
     }
 
     private IEnumerator ReturnToBoardCoroutine() {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
 
         SceneChanger.Instance.ChangeScene(1);
     }
