@@ -8,7 +8,7 @@ using UnityEditor;
 
 public class MiniLoadManager : MonoBehaviour
 {
-    public int numberOfGames = 3;
+    public int numberOfGames = 4;
     public TextMeshProUGUI hintText;
     public GameObject playButton;
 
