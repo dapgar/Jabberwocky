@@ -22,4 +22,9 @@ public class ButtonManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void ResumeButton()
+    {
+        PauseManager.instance.Unpause();
+    }
 }

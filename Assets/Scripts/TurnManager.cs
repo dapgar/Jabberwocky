@@ -36,7 +36,7 @@ public class TurnManager : MonoBehaviour
         else diceTutText.SetActive(true);
 
         // Rolls Dice
-        if (Input.GetKeyDown(KeyCode.Space) && !isRolling && canStartNextTurn && !GameManager.instance.playersMoving)
+        if (Input.GetKeyDown(KeyCode.Space) && !isRolling && canStartNextTurn && !GameManager.instance.playersMoving && !PauseManager.instance.isPaused)
         {
             StartCoroutine(StartTurn());
         }
