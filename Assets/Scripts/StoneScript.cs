@@ -17,11 +17,55 @@ public class StoneScript : MonoBehaviour
 
     public Animator playerAnim;
 
+    private bool moveFinished = false;
+    public bool MoveFinished { get { return moveFinished; }  }
+
     // --- METHODS ---
-    public void MovePlayer(int amount) {
-        
+    public IEnumerator MovePlayer(int amount, bool skipAnim = false) {
+        moveFinished = false;
+        isMoving = true;
+        if (!skipAnim) playerAnim.SetBool("isMoving", true);
+
+        if (amount > 0) {
+            while (amount > 0) {
+                Vector3 nextPos = currentRoute.childNodeList[routePos + 1].position;
+
+                // Moving to position
+                while (MoveToNextNode(nextPos, skipAnim)) { yield return null; }
+
+                yield return new WaitForSeconds(skipAnim ? 0.0001f : 0.2f);
+                amount--;
+                routePos++;
+            }
+
+            yield return new WaitForSeconds(skipAnim ? 0.0001f : 1f);
+        }
+        else if (amount < 0) {
+            while (amount < 0) {
+                if (routePos == 0) break;
+                Vector3 nextPos = currentRoute.childNodeList[routePos - 1].position;
+
+                // Move to position
+                while (MoveToNextNode(nextPos, skipAnim)) { yield return null; }
+
+                yield return new WaitForSeconds(skipAnim ? 0.0001f : 0.2f);
+                amount++;
+                routePos--;
+            }
+
+            yield return new WaitForSeconds(skipAnim ? 0.001f : 1f);
+        }
+        LookAtCamera();
+        isMoving = false;
+        if (!skipAnim) playerAnim.SetBool("isMoving", false);
+
+        yield return null;
+
+        // Player's movement is done, tell BoardManager that they're done moving
+        moveFinished = true;
     }
 
+    /* Deprecated */
     public IEnumerator Move(int moveAmount, bool skipAnim = false)
     {
         if (isMoving)
@@ -43,7 +87,7 @@ public class StoneScript : MonoBehaviour
             // Moving to position
             while (MoveToNextNode(nextPos, skipAnim)) { yield return null; }
 
-            yield return new WaitForSeconds(skipAnim ? 0.001f : 0.2f);
+            yield return new WaitForSeconds(skipAnim ? 0.0001f : 0.2f);
             steps--;
             routePos++;
         }
@@ -52,7 +96,7 @@ public class StoneScript : MonoBehaviour
 
         // BoardManager.instance.TurnOffCamerasBut(BoardManager.instance.cameras[0]);
         LookAtCamera();
-        yield return new WaitForSeconds(skipAnim ? 0.01f : 1f);
+        yield return new WaitForSeconds(skipAnim ? 0.0001f : 1f);
 
         // Return to main cams
     }
@@ -64,7 +108,7 @@ public class StoneScript : MonoBehaviour
     private bool MoveToNextNode(Vector3 target, bool skipAnim)
     {
         transform.LookAt(target);
-        float moveSpeed = skipAnim ? 200f : 2f;
+        float moveSpeed = skipAnim ? 300f : 2f;
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime));
     }
 }

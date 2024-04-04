@@ -35,10 +35,16 @@ public class BoardManager : MonoBehaviour
 
     private BoardState boardState = BoardState.Idle;
     private TurnState turnState = TurnState.Moving;
-    private int currentPlayer = -1;
+    private int currentPlayer = 0;
+    private bool[] moveTurnComplete = new bool[4];
 
     void Start()
     {
+        currentPlayer = 0;
+        for (int i = 0; i < moveTurnComplete.Length; i++) {
+            moveTurnComplete[i] = false;
+        }
+
         if (instance == null) instance = this;
 
         for (int i = 0; i < GameManager.instance.playersPos.Length; i++) {
@@ -64,7 +70,7 @@ public class BoardManager : MonoBehaviour
         camDefaultPos = new Vector3(2.7f, 8.02f, 26.3f);
         camDefaultRot = Quaternion.Euler(38.687f, 180, 0);
 
-        StartCoroutine(UpdateBoard());
+        //StartCoroutine(UpdateBoard());
     }
 
     public void DevMovePlayer(int playerNum, int spaces) {
@@ -73,7 +79,7 @@ public class BoardManager : MonoBehaviour
             return;
         }
         Debug.Log($"Moving player {playerNum} {spaces} spaces");
-        StartCoroutine(players[playerNum - 1].Move(spaces, true));
+        StartCoroutine(players[playerNum - 1].MovePlayer(spaces, true));
         GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
     }
     
@@ -82,31 +88,50 @@ public class BoardManager : MonoBehaviour
             case BoardState.Turn:
                 switch (turnState) {
                     case TurnState.Moving:
-                        // TODO: Move player until they hit end spot OR win
+                        // Moves player until they're done with their movement
                         StoneScript player = players[currentPlayer];
-                        player.MovePlayer(GameManager.instance.moveData[player.stoneID - 1]);
+                        if (!player.isMoving) StartCoroutine(player.MovePlayer(GameManager.instance.moveData[player.stoneID - 1]));
+                        if (player.MoveFinished) {
+                            turnState = TurnState.Item;
+                            GameManager.instance.routeData[currentPlayer] = players[currentPlayer].routePos;
+                        }
                         break;
                     case TurnState.Item:
-                        // TODO: ITEM DICE STUFF 
+                        // Movement is done, check if player is on an item space
+                        if (!moveTurnComplete[currentPlayer] && false) {
+                            // PLAYER ON ITEM SPACE, DO THAT
+                            // TODO: NEED ACTUAL CONDITION ABOVE
+                            // CHECK FOR IF PLAYER ON ITEM SPACE
+                        }
+                        else {
+                            currentPlayer++;
+                            boardState = BoardState.Idle;
+                        }
+                        moveTurnComplete[currentPlayer] = true;
                         break;
                 }
                 break;
             case BoardState.Idle:
-                if (currentPlayer == -1) {
-                    currentPlayer++;
+                if (currentPlayer < players.Count) {
                     boardState = BoardState.Turn;
+                    turnState = TurnState.Moving;
                     GameManager.instance.playersMoving = true;
                 }
                 else {
-                    // Ready to end Round
-                    // TODO: End Round
+                    // Clean up at end of round
+                    for (int i = 0; i < players.Count; i++) {
+                        GameManager.instance.playersPos[i] = players[i].transform.position;
+                        GameManager.instance.playerRots[i] = players[i].transform.rotation;
+                        GameManager.instance.moveData[i] = 0;
+                    }
                     GameManager.instance.playersMoving = false;
+                    // TODO: End Round
+                    // NOTE: I think setting playersMoving = false does end the round
                 }
                 break;
         }
 
         // BELOW CAN PROB GET MOVED INTO FSM AND ONLY CALLED AFTER EACH MOVE IN FUTURE
-
         playerRankings = players.OrderByDescending(player => player.routePos).ToList();
         
         // Win con
@@ -131,6 +156,7 @@ public class BoardManager : MonoBehaviour
         playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
     }
 
+    /* Deprecated */
     IEnumerator UpdateBoard()
     {
         /* Used to disable dice roll during player moves */
