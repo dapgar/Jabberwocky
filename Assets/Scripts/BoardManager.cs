@@ -81,6 +81,8 @@ public class BoardManager : MonoBehaviour
         Debug.Log($"Moving player {playerNum} {spaces} spaces");
         StartCoroutine(players[playerNum - 1].MovePlayer(spaces, true));
         GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
+        GameManager.instance.playersPos[playerNum - 1] = players[playerNum - 1].transform.position;
+        GameManager.instance.playerRots[playerNum - 1] = players[playerNum - 1].transform.rotation;
     }
     
     private void Update() {
