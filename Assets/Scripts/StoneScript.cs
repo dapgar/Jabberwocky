@@ -18,6 +18,10 @@ public class StoneScript : MonoBehaviour
     public Animator playerAnim;
 
     // --- METHODS ---
+    public void MovePlayer(int amount) {
+        
+    }
+
     public IEnumerator Move(int moveAmount, bool skipAnim = false)
     {
         if (isMoving)

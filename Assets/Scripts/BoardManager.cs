@@ -2,7 +2,6 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +22,20 @@ public class BoardManager : MonoBehaviour
     public RouteScript route;
 
     private bool isEnding;
+
+    enum BoardState {
+        Turn = 1,
+        Idle = 2,
+    }
+
+    enum TurnState {
+        Moving = 1,
+        Item = 2,
+    }
+
+    private BoardState boardState = BoardState.Idle;
+    private TurnState turnState = TurnState.Idle;
+    private int currentPlayer = -1;
 
     void Start()
     {
@@ -64,8 +77,36 @@ public class BoardManager : MonoBehaviour
         GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
     }
     
-    private void Update()
-    {
+    private void Update() {
+        switch (boardState) {
+            case BoardState.Turn:
+                switch (turnState) {
+                    case TurnState.Moving:
+                        // TODO: Move player until they hit end spot OR win
+                        StoneScript player = players[currentPlayer];
+                        player.MovePlayer(GameManager.instance.moveData[player.stoneID - 1]);
+                        break;
+                    case TurnState.Item:
+                        // TODO: ITEM DICE STUFF 
+                        break;
+                }
+                break;
+            case BoardState.Idle:
+                if (currentPlayer == -1) {
+                    currentPlayer++;
+                    boardState = BoardState.Turn;
+                    GameManager.instance.playersMoving = true;
+                }
+                else {
+                    // Ready to end Round
+                    // TODO: End Round
+                    GameManager.instance.playersMoving = false;
+                }
+                break;
+        }
+
+        // BELOW CAN PROB GET MOVED INTO FSM AND ONLY CALLED AFTER EACH MOVE IN FUTURE
+
         playerRankings = players.OrderByDescending(player => player.routePos).ToList();
         
         // Win con
