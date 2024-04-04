@@ -34,7 +34,7 @@ public class BoardManager : MonoBehaviour
     }
 
     private BoardState boardState = BoardState.Idle;
-    private TurnState turnState = TurnState.Idle;
+    private TurnState turnState = TurnState.Moving;
     private int currentPlayer = -1;
 
     void Start()
