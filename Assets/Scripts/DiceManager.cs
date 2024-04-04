@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TurnManager : MonoBehaviour
+public class DiceManager : MonoBehaviour
 {
     public GameObject dice;
     public Transform dicePivot;
@@ -19,7 +19,7 @@ public class TurnManager : MonoBehaviour
 
     public int result;
 
-    private bool canStartNextTurn = true;
+    private bool canStartNextRound = true;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +36,7 @@ public class TurnManager : MonoBehaviour
         else diceTutText.SetActive(true);
 
         // Rolls Dice
-        if (Input.GetKeyDown(KeyCode.Space) && !isRolling && canStartNextTurn && !GameManager.instance.playersMoving && !PauseManager.instance.isPaused)
+        if (Input.GetKeyDown(KeyCode.Space) && !isRolling && canStartNextRound && !GameManager.instance.playersMoving && !PauseManager.instance.isPaused)
         {
             StartCoroutine(StartTurn());
         }
@@ -45,7 +45,7 @@ public class TurnManager : MonoBehaviour
     // called by player input scripts
     public void TryStartTurn()
     {
-        if (!isRolling && canStartNextTurn && !GameManager.instance.playersMoving)
+        if (!isRolling && canStartNextRound && !GameManager.instance.playersMoving)
         {
             StartCoroutine (StartTurn());
         }
@@ -53,7 +53,7 @@ public class TurnManager : MonoBehaviour
 
     IEnumerator StartTurn()
     {
-        canStartNextTurn = false;
+        canStartNextRound = false;
 
         // UI
         diceTutText.SetActive(false);
