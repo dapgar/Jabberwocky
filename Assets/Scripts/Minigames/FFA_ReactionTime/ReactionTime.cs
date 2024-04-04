@@ -17,14 +17,14 @@ public class ReactionTime : MonoBehaviour
 
     [SerializeField]
     private GameObject bigCenterButton;
-    private Button bcbScript;
+    private RT_Button bcbScript;
 
     [SerializeField]
     private GameObject[] players;
 
     [SerializeField]
     private GameObject[] playerButtons;
-    private Button[] pbScript;
+    private RT_Button[] pbScript;
 
     [SerializeField]
     private TMP_Text timerText;
@@ -62,7 +62,7 @@ public class ReactionTime : MonoBehaviour
 
         playerScore = new int[players.Length];
         buttonPressed = new bool[players.Length];
-        pbScript = new Button[playerButtons.Length];
+        pbScript = new RT_Button[playerButtons.Length];
         //for (int i = 0; i < players.Length; i++)
         //{
         //    buttonPressed[i] = false;
@@ -75,7 +75,7 @@ public class ReactionTime : MonoBehaviour
         playersLeft = 0;
         score = 0;
 
-        bcbScript = bigCenterButton.GetComponent<Button>();
+        bcbScript = bigCenterButton.GetComponent<RT_Button>();
     }
 
     // Update is called once per frame
@@ -337,7 +337,7 @@ public class ReactionTime : MonoBehaviour
         playerScore[index] = 0;
         players[index].gameObject.transform.LookAt(bigCenterButton.transform);
 
-        pbScript[index] = playerButtons[index].GetComponent<Button>();
+        pbScript[index] = playerButtons[index].GetComponent<RT_Button>();
 
         player.Setup();
         Debug.Log("Setting up player #" + player.playerIndex);

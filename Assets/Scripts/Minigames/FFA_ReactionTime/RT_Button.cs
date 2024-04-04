@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button : MonoBehaviour
+public class RT_Button : MonoBehaviour
 {
     private Renderer btnRenderer;
 
