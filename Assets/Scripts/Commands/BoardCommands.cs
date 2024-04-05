@@ -16,7 +16,7 @@ public class BoardCommands : MonoBehaviour {
             new DevCommand("MP", "Move Player {#} {X} spaces", delegate (List<int> parameters) {
                 BoardManager.instance.DevMovePlayer(parameters[0], parameters[1]);
             }));
-
+       
         /* Set Next Minigame & Skip To Minigames */
         DeveloperConsole.Instance.AddCommand(
             new DevCommand("SetGame", "Next Game: RLGL | RT | SIS | LP", delegate (string parameter) {

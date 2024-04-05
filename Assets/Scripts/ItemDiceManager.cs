@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ItemDiceManager : MonoBehaviour
 {
+    public static ItemDiceManager Instance;
+
     public GameObject itemDice;
     public Transform itemDicePivot;
     public GameObject itemDiceAnimObj;
@@ -19,6 +21,8 @@ public class ItemDiceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Instance == null) Instance = this;
+
         itemDiceAnimObj.SetActive(false);
         itemDice.SetActive(false);
         itemDiceName.enabled = false;
@@ -29,10 +33,10 @@ public class ItemDiceManager : MonoBehaviour
         // Roll dice logic
         // if (player is on item node)
         // roll dice
-        StartCoroutine(RollDice());
+        //StartCoroutine(RollDice());
     }
 
-    private IEnumerator RollDice()
+    public IEnumerator RollDice()
     {
         itemDiceAnimObj.SetActive(true);
         itemDiceAnim.SetBool("isRolling", true);
@@ -79,9 +83,8 @@ public class ItemDiceManager : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
-        // Stores Dice Roll
-        GameManager.instance.diceRoll = result;
+        BoardManager.instance.ActivateItem(diceRoll);
     }
 }

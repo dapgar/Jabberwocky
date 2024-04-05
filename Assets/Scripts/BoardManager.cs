@@ -36,13 +36,11 @@ public class BoardManager : MonoBehaviour {
     private BoardState boardState = BoardState.Idle;
     private TurnState turnState = TurnState.Moving;
     private int currentPlayer = 0;
-    private bool[] moveTurnComplete = new bool[4];
     private bool[] gotItemAlready = new bool[4];
 
     void Start() {
         currentPlayer = 0;
-        for (int i = 0; i < moveTurnComplete.Length; i++) {
-            moveTurnComplete[i] = false;
+        for (int i = 0; i < gotItemAlready.Length; i++) {
             gotItemAlready[i] = false;
         }
 
@@ -80,10 +78,37 @@ public class BoardManager : MonoBehaviour {
             return;
         }
         Debug.Log($"Moving player {playerNum} {spaces} spaces");
+        currentPlayer = playerNum - 1;
         StartCoroutine(players[playerNum - 1].MovePlayer(spaces, true));
         GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
         GameManager.instance.playersPos[playerNum - 1] = players[playerNum - 1].transform.position;
         GameManager.instance.playerRots[playerNum - 1] = players[playerNum - 1].transform.rotation;
+    }
+
+    public void ActivateItem(int itemNum) {
+        Debug.Log("Activate item)");
+        switch (itemNum) {
+            case 1:
+                // Move Player Backwards (Targeted, Dynamic Amount)
+                break;
+            case 2:
+                // Move Everyone (but you) Backwards 2
+                break;
+            case 3:
+                // Move Ahead (Double Your Roll) (Yourself, Dynamic Amount)
+                break;
+            case 4:
+                // Swap Positions (Targeted or Random)
+                break;
+            case 5:
+                // Move Ahead (Double Your Roll) (Yourself, Dynamic Amount) (2nd chance)
+                break;
+            case 6:
+                // Move Player Backwards (Targeted, Dynamic Amount) (2nd chance)
+                break;
+            default:
+                break;
+        }
     }
 
     private void Update() {
@@ -99,19 +124,24 @@ public class BoardManager : MonoBehaviour {
                         }
                         break;
                     case TurnState.PostMove:
+                        Debug.Log("gotItemAlready[currentPlayer]: " + gotItemAlready[currentPlayer]);
+                        Debug.Log("NUM: " + players[currentPlayer].routePos);
+                        Debug.Log("gotother thing: " + route.childNodeList[players[currentPlayer].routePos - 1].GetComponent<Node>().isItemSpace);
                         GameManager.instance.routeData[currentPlayer] = players[currentPlayer].routePos;
-                        if (false) {    // TODO: if OnItemSpace
+                        // Checks if player is on an item node
+                        if (!gotItemAlready[currentPlayer] &&
+                            route.childNodeList[players[currentPlayer].routePos].GetComponent<Node>().isItemSpace) {
                             turnState = TurnState.Item;
                         }
                         else {
                             currentPlayer++;
                             boardState = BoardState.Idle;
-                            moveTurnComplete[currentPlayer] = true;
                         }
                         break;
                     case TurnState.Item:
+                        Debug.Log("On item space");
                         gotItemAlready[currentPlayer] = true;
-                        // TODO: item stuff
+                        StartCoroutine(ItemDiceManager.Instance.RollDice());
                         break;
                 }
                 break;
