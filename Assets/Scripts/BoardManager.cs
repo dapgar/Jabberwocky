@@ -5,8 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BoardManager : MonoBehaviour
-{
+public class BoardManager : MonoBehaviour {
     public static BoardManager instance;
 
     public List<StoneScript> players;
@@ -30,19 +29,21 @@ public class BoardManager : MonoBehaviour
 
     enum TurnState {
         Moving = 1,
-        Item = 2,
+        PostMove = 2,
+        Item = 3,
     }
 
     private BoardState boardState = BoardState.Idle;
     private TurnState turnState = TurnState.Moving;
     private int currentPlayer = 0;
     private bool[] moveTurnComplete = new bool[4];
+    private bool[] gotItemAlready = new bool[4];
 
-    void Start()
-    {
+    void Start() {
         currentPlayer = 0;
         for (int i = 0; i < moveTurnComplete.Length; i++) {
             moveTurnComplete[i] = false;
+            gotItemAlready[i] = false;
         }
 
         if (instance == null) instance = this;
@@ -50,7 +51,7 @@ public class BoardManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.playersPos.Length; i++) {
             players[i].routePos = GameManager.instance.routeData[i];
             if (GameManager.instance.playersPos[i] != Vector3.zero) players[i].transform.position = GameManager.instance.playersPos[i];
-            if (GameManager.instance.playerRots[i] != Quaternion.identity)  players[i].transform.rotation = GameManager.instance.playerRots[i];
+            if (GameManager.instance.playerRots[i] != Quaternion.identity) players[i].transform.rotation = GameManager.instance.playerRots[i];
         }
 
         // Old using routes instead of Vector & Quaternion
@@ -84,7 +85,7 @@ public class BoardManager : MonoBehaviour
         GameManager.instance.playersPos[playerNum - 1] = players[playerNum - 1].transform.position;
         GameManager.instance.playerRots[playerNum - 1] = players[playerNum - 1].transform.rotation;
     }
-    
+
     private void Update() {
         switch (boardState) {
             case BoardState.Turn:
@@ -94,22 +95,23 @@ public class BoardManager : MonoBehaviour
                         StoneScript player = players[currentPlayer];
                         if (!player.isMoving) StartCoroutine(player.MovePlayer(GameManager.instance.moveData[player.stoneID - 1]));
                         if (player.MoveFinished) {
-                            turnState = TurnState.Item;
-                            GameManager.instance.routeData[currentPlayer] = players[currentPlayer].routePos;
+                            turnState = TurnState.PostMove;
                         }
                         break;
-                    case TurnState.Item:
-                        // Movement is done, check if player is on an item space
-                        if (!moveTurnComplete[currentPlayer] && false) {
-                            // PLAYER ON ITEM SPACE, DO THAT
-                            // TODO: NEED ACTUAL CONDITION ABOVE
-                            // CHECK FOR IF PLAYER ON ITEM SPACE
+                    case TurnState.PostMove:
+                        GameManager.instance.routeData[currentPlayer] = players[currentPlayer].routePos;
+                        if (false) {    // TODO: if OnItemSpace
+                            turnState = TurnState.Item;
                         }
                         else {
                             currentPlayer++;
                             boardState = BoardState.Idle;
+                            moveTurnComplete[currentPlayer] = true;
                         }
-                        moveTurnComplete[currentPlayer] = true;
+                        break;
+                    case TurnState.Item:
+                        gotItemAlready[currentPlayer] = true;
+                        // TODO: item stuff
                         break;
                 }
                 break;
@@ -135,12 +137,10 @@ public class BoardManager : MonoBehaviour
 
         // BELOW CAN PROB GET MOVED INTO FSM AND ONLY CALLED AFTER EACH MOVE IN FUTURE
         playerRankings = players.OrderByDescending(player => player.routePos).ToList();
-        
+
         // Win con
-        foreach (StoneScript player in players)
-        {
-            if (player.routePos == route.childNodeList.Count - 1 && !isEnding)
-            {
+        foreach (StoneScript player in players) {
+            if (player.routePos == route.childNodeList.Count - 1 && !isEnding) {
                 // This player won!
                 GameManager.instance.playerRankings.Add(playerRankings[0].stoneID);
                 GameManager.instance.playerRankings.Add(playerRankings[1].stoneID);
@@ -159,18 +159,15 @@ public class BoardManager : MonoBehaviour
     }
 
     /* Deprecated */
-    IEnumerator UpdateBoard()
-    {
+    IEnumerator UpdateBoard() {
         /* Used to disable dice roll during player moves */
         GameManager.instance.playersMoving = true;
 
         yield return new WaitForSeconds(3f);
-       
+
         // Moves players after each game.
-        foreach(StoneScript player in players)
-        {
-            if ((GameManager.instance.moveData[player.stoneID - 1] > 0))
-            {
+        foreach (StoneScript player in players) {
+            if ((GameManager.instance.moveData[player.stoneID - 1] > 0)) {
                 StartCoroutine(player.Move(GameManager.instance.moveData[player.stoneID - 1]));
                 PointCam(player.transform);
                 while (player.isMoving) { yield return null; }
@@ -191,14 +188,12 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    private void PointCam(Transform target)
-    {
+    private void PointCam(Transform target) {
         cam.LookAt = target;
         cam.m_Lens.FieldOfView = 30;
     }
 
-    private void ResetCam()
-    {
+    private void ResetCam() {
         cam.LookAt = null;
         cam.transform.SetPositionAndRotation(camDefaultPos, camDefaultRot);
         cam.m_Lens.FieldOfView = 70;
