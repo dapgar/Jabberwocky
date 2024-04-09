@@ -26,7 +26,7 @@ public class InitializeSpawns : MonoBehaviour
 
     public void InitializePlayer(PlayerConfiguration pConfig, int index)
     {
-        var player = Instantiate(playerPrefab, playerSpawns[index].position, playerSpawns[index].rotation, gameObject.transform);
+        GameObject player = Instantiate(playerPrefab, playerSpawns[index].position, playerSpawns[index].rotation, gameObject.transform);
         player.GetComponent<PlayerInputHandler>().InitializePlayer(pConfig);
     }
 

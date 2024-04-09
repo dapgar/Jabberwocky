@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerSetupMenuController : MonoBehaviour
+public class PlayerSetupMenuController : MonoBehaviour, ICancelHandler
 {
     private int playerIndex;
+    private PlayerInput playerInput;
 
     [SerializeField]
     private TextMeshProUGUI titleText;
@@ -17,14 +20,23 @@ public class PlayerSetupMenuController : MonoBehaviour
     [SerializeField]
     private Button readyButton;
 
-    private float ignoreInputTime = .5f;
+    [SerializeField]
+    private Display charDisplay;
+
+    private float baseIgnoreTime = .5f;
+    private float ignoreInputTime;
     private bool inputEnabled;
 
     public void SetPlayerIndex(int pi)
     {
         playerIndex = pi;
-        titleText.SetText("Player " + (pi + 1).ToString());
-        ignoreInputTime = Time.time + ignoreInputTime;
+        titleText.SetText("P" + (pi + 1).ToString());
+        ignoreInputTime = Time.time + baseIgnoreTime;
+        charDisplay.SetDisplayIndex(pi);
+    }
+    public void SetInputHandler()
+    {
+
     }
 
     // Update is called once per frame
@@ -36,14 +48,21 @@ public class PlayerSetupMenuController : MonoBehaviour
         }
     }
 
-    public void SetChar(GameObject charPrefab)
+    public void SetChar()
     {
         if (!inputEnabled)
         {
             return;
         }
 
-        PlayerConfigurationManager.Instance.SetPlayerChar(playerIndex, charPrefab);
+        if (PlayerConfigurationManager.Instance.CheckCharPrefabUsed(charDisplay.GetDisplayIndex()))
+        {
+            charDisplay.DisplayNext();
+            return;
+        }
+
+        
+        PlayerConfigurationManager.Instance.SetPlayerChar(playerIndex, charDisplay.GetDisplayIndex());
         readyPanel.SetActive(true);
         readyButton.Select();
         menuPanel.SetActive(false);
@@ -57,6 +76,17 @@ public class PlayerSetupMenuController : MonoBehaviour
         }
 
         PlayerConfigurationManager.Instance.ReadyPlayer(playerIndex);
-        readyButton.gameObject.SetActive(false);
+        readyPanel.gameObject.SetActive(false);
+    }
+
+    public void OnCancel(BaseEventData eventData)
+    {
+        Debug.Log(eventData.currentInputModule);
+        Debug.Log(playerInput);
+        if (eventData.currentInputModule == playerInput)
+        {
+            menuPanel.SetActive(true);
+            readyPanel.SetActive(false);
+        }
     }
 }
