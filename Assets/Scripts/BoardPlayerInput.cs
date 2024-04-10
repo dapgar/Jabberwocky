@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BoardPlayerInput : MonoBehaviour
 {
-    DiceManager turnManager;
+    DiceManager diceManager;
     // Start is called before the first frame update
     void Awake()
     {
-        turnManager = GameObject.Find("_TurnManager").GetComponent<DiceManager>();
+        diceManager = GameObject.Find("_DiceManager").GetComponent<DiceManager>();
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class BoardPlayerInput : MonoBehaviour
         // PRESS
         if (value)
         {
-            turnManager.TryStartTurn();
+            diceManager.TryStartTurn();
         }
     }
 }

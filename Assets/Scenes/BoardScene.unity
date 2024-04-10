@@ -20374,8 +20374,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1781268579}
   - component: {fileID: 1781268580}
+  - component: {fileID: 1781268581}
   m_Layer: 0
-  m_Name: _TurnManager
+  m_Name: _DiceManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20406,6 +20407,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1eccb6aaeafad1c4288f3f2537375a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dice: {fileID: 504047643}
+  dicePivot: {fileID: 1085804703}
+  diceAnimObj: {fileID: 1969082154}
+  diceAnim: {fileID: 1969082156}
+  isRolling: 0
+  diceTutText: {fileID: 1386621041}
+  rollText: {fileID: 1016753279}
+  result: 0
+--- !u!114 &1781268581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781268578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661d5898d9331904da674e43445e5a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dice: {fileID: 504047643}
