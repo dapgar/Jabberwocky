@@ -28,14 +28,6 @@ public class ItemDiceManager : MonoBehaviour
         itemDiceName.enabled = false;
     }
 
-    private void Update()
-    {
-        // Roll dice logic
-        // if (player is on item node)
-        // roll dice
-        //StartCoroutine(RollDice());
-    }
-
     public IEnumerator RollDice()
     {
         itemDiceAnimObj.SetActive(true);

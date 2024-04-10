@@ -124,9 +124,6 @@ public class BoardManager : MonoBehaviour {
                         }
                         break;
                     case TurnState.PostMove:
-                        Debug.Log("gotItemAlready[currentPlayer]: " + gotItemAlready[currentPlayer]);
-                        Debug.Log("NUM: " + players[currentPlayer].routePos);
-                        Debug.Log("gotother thing: " + route.childNodeList[players[currentPlayer].routePos - 1].GetComponent<Node>().isItemSpace);
                         GameManager.instance.routeData[currentPlayer] = players[currentPlayer].routePos;
                         // Checks if player is on an item node
                         if (!gotItemAlready[currentPlayer] &&
@@ -149,7 +146,7 @@ public class BoardManager : MonoBehaviour {
                 if (currentPlayer < players.Count) {
                     boardState = BoardState.Turn;
                     turnState = TurnState.Moving;
-                    GameManager.instance.playersMoving = true;
+                    GameManager.instance.playersMoving = false;
                 }
                 else {
                     // Clean up at end of round
@@ -188,9 +185,9 @@ public class BoardManager : MonoBehaviour {
         playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
     }
 
-    /* Deprecated */
+    /* Deprecated
     IEnumerator UpdateBoard() {
-        /* Used to disable dice roll during player moves */
+         Used to disable dice roll during player moves
         GameManager.instance.playersMoving = true;
 
         yield return new WaitForSeconds(3f);
@@ -217,6 +214,7 @@ public class BoardManager : MonoBehaviour {
             GameManager.instance.playerRots[i] = players[i].transform.rotation;
         }
     }
+    */
 
     private void PointCam(Transform target) {
         cam.LookAt = target;

@@ -65,7 +65,7 @@ public class StoneScript : MonoBehaviour
         moveFinished = true;
     }
 
-    /* Deprecated */
+    /* Deprecated
     public IEnumerator Move(int moveAmount, bool skipAnim = false)
     {
         if (isMoving)
@@ -100,6 +100,7 @@ public class StoneScript : MonoBehaviour
 
         // Return to main cams
     }
+    */
 
     public void LookAtCamera() {
         transform.LookAt(BoardManager.instance.cam.transform);
