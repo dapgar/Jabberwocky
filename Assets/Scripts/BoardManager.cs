@@ -1,5 +1,4 @@
 using Cinemachine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -52,16 +51,6 @@ public class BoardManager : MonoBehaviour {
             if (GameManager.instance.playerRots[i] != Quaternion.identity) players[i].transform.rotation = GameManager.instance.playerRots[i];
         }
 
-        // Old using routes instead of Vector & Quaternion
-        /*for (int i = 0; i < GameManager.instance.routeData.Length; i++)
-        {
-            if (GameManager.instance.routeData[i] != 0)
-            {
-                players[i].routePos = GameManager.instance.routeData[i];
-                players[i].transform.position = route.childNodeList[i].position;
-            }
-        }*/
-
         foreach (StoneScript p in players) {
             p.LookAtCamera();
         }
@@ -69,7 +58,7 @@ public class BoardManager : MonoBehaviour {
         camDefaultPos = new Vector3(2.7f, 8.02f, 26.3f);
         camDefaultRot = Quaternion.Euler(38.687f, 180, 0);
 
-        //StartCoroutine(UpdateBoard());
+        GameManager.instance.playersMoving = true;
     }
 
     public void DevMovePlayer(int playerNum, int spaces) {
@@ -86,29 +75,38 @@ public class BoardManager : MonoBehaviour {
     }
 
     public void ActivateItem(int itemNum) {
-        Debug.Log("Activate item)");
+        Debug.Log("Activate item, itemNum = " + itemNum);
         switch (itemNum) {
             case 1:
                 // Move Player Backwards (Targeted, Dynamic Amount)
+                Debug.Log("Item Dice: Move Player Backwards (Targeted, Dynamic Amount)");
                 break;
             case 2:
                 // Move Everyone (but you) Backwards 2
+                Debug.Log("Item Dice: Move Everyone (but you) Backwards 2");
                 break;
             case 3:
                 // Move Ahead (Double Your Roll) (Yourself, Dynamic Amount)
+                Debug.Log("Item Dice: Move Ahead (Double Your Roll) (Yourself, Dynamic Amount)");
                 break;
             case 4:
                 // Swap Positions (Targeted or Random)
+                Debug.Log("Item Dice: Swap Positions (Targeted or Random)");
                 break;
             case 5:
                 // Move Ahead (Double Your Roll) (Yourself, Dynamic Amount) (2nd chance)
+                Debug.Log("Item Dice: Move Ahead (Double Your Roll) (Yourself, Dynamic Amount) (2nd chance)");
                 break;
             case 6:
                 // Move Player Backwards (Targeted, Dynamic Amount) (2nd chance)
+                Debug.Log("Item Dice: Move Player Backwards (Targeted, Dynamic Amount) (2nd chance)");
                 break;
             default:
                 break;
         }
+
+        currentPlayer++;
+        boardState = BoardState.Idle;
     }
 
     private void Update() {
@@ -118,16 +116,17 @@ public class BoardManager : MonoBehaviour {
                     case TurnState.Moving:
                         // Moves player until they're done with their movement
                         StoneScript player = players[currentPlayer];
-                        if (!player.isMoving) StartCoroutine(player.MovePlayer(GameManager.instance.moveData[player.stoneID - 1]));
                         if (player.MoveFinished) {
                             turnState = TurnState.PostMove;
+                        }
+                        else if (!player.isMoving) {
+                            StartCoroutine(player.MovePlayer(GameManager.instance.moveData[player.stoneID - 1]));
                         }
                         break;
                     case TurnState.PostMove:
                         GameManager.instance.routeData[currentPlayer] = players[currentPlayer].routePos;
                         // Checks if player is on an item node
-                        if (!gotItemAlready[currentPlayer] &&
-                            route.childNodeList[players[currentPlayer].routePos].GetComponent<Node>().isItemSpace) {
+                        if (!gotItemAlready[currentPlayer] && route.childNodeList[players[currentPlayer].routePos].GetComponent<Node>().isItemSpace) {
                             turnState = TurnState.Item;
                         }
                         else {
@@ -137,8 +136,8 @@ public class BoardManager : MonoBehaviour {
                         break;
                     case TurnState.Item:
                         Debug.Log("On item space");
+                        if (!gotItemAlready[currentPlayer]) StartCoroutine(ItemDiceManager.Instance.RollDice());
                         gotItemAlready[currentPlayer] = true;
-                        StartCoroutine(ItemDiceManager.Instance.RollDice());
                         break;
                 }
                 break;
@@ -146,18 +145,16 @@ public class BoardManager : MonoBehaviour {
                 if (currentPlayer < players.Count) {
                     boardState = BoardState.Turn;
                     turnState = TurnState.Moving;
-                    GameManager.instance.playersMoving = false;
                 }
                 else {
-                    // Clean up at end of round
+                    // Clean up & save info at end of round
                     for (int i = 0; i < players.Count; i++) {
                         GameManager.instance.playersPos[i] = players[i].transform.position;
                         GameManager.instance.playerRots[i] = players[i].transform.rotation;
                         GameManager.instance.moveData[i] = 0;
                     }
+                    // Setting playersMoving = false ends the round
                     GameManager.instance.playersMoving = false;
-                    // TODO: End Round
-                    // NOTE: I think setting playersMoving = false does end the round
                 }
                 break;
         }

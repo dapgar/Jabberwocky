@@ -56,13 +56,13 @@ public class StoneScript : MonoBehaviour
             yield return new WaitForSeconds(skipAnim ? 0.001f : 1f);
         }
         LookAtCamera();
-        isMoving = false;
         if (!skipAnim) playerAnim.SetBool("isMoving", false);
 
         yield return null;
 
         // Player's movement is done, tell BoardManager that they're done moving
         moveFinished = true;
+        isMoving = false;
     }
 
     /* Deprecated
