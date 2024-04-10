@@ -35,8 +35,8 @@ public class RLGL_Manager : MonoBehaviour {
     [SerializeField]
     private float finishLineZ;
     /* Time that the timer decreases by every time a player finishes */
-    [SerializeField]
-    private float finishTimerDecreaseAmount = 2f;
+    /*[SerializeField]
+    private float finishTimerDecreaseAmount = 2f;*/
     [SerializeField]
     private int firstFinishBonus = 1;
 
