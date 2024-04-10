@@ -59,7 +59,6 @@ public class BoardManager : MonoBehaviour
             Debug.Log($"Player num {playerNum} doesn't exist");
             return;
         }
-        Debug.Log($"Moving player {playerNum} {spaces} spaces");
         StartCoroutine(players[playerNum - 1].Move(spaces, true));
         GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
     }
