@@ -21,6 +21,7 @@ public class BoardManager : MonoBehaviour {
 
     private bool isEnding;
 
+    private int itemTargetedMoveBackAmount = 3;
     enum BoardState {
         Turn = 1,
         Idle = 2,
@@ -61,44 +62,94 @@ public class BoardManager : MonoBehaviour {
         GameManager.instance.playersMoving = true;
     }
 
+    private void MovePlayer(int playerIndex, int spaces, bool bSkipAnim) {
+        StartCoroutine(players[playerIndex ].MovePlayer(spaces, bSkipAnim));
+        GameManager.instance.routeData[playerIndex] = players[playerIndex].routePos;
+        GameManager.instance.playersPos[playerIndex] = players[playerIndex].transform.position;
+        GameManager.instance.playerRots[playerIndex] = players[playerIndex].transform.rotation;
+    }
+
     public void DevMovePlayer(int playerNum, int spaces) {
         if (playerNum > players.Count) {
             Debug.Log($"Player num {playerNum} doesn't exist");
             return;
         }
         currentPlayer = playerNum - 1;
-        StartCoroutine(players[playerNum - 1].MovePlayer(spaces, true));
-        GameManager.instance.routeData[playerNum - 1] = players[playerNum - 1].routePos;
-        GameManager.instance.playersPos[playerNum - 1] = players[playerNum - 1].transform.position;
-        GameManager.instance.playerRots[playerNum - 1] = players[playerNum - 1].transform.rotation;
+        MovePlayer(currentPlayer, spaces, true);
+    }
+
+    private void ItemMovePlayerBackwards(int playerNum) {
+        // Move Player Backwards (Targeted, Dynamic Amount)
+        MovePlayer(playerNum, -itemTargetedMoveBackAmount, false);
+    }
+
+    private void ItemMoveAllBack() {
+        for (int i = 0; i < players.Count; i++) {
+            if (i == currentPlayer) continue;
+            MovePlayer(i, -2, false);
+        }
+    }
+
+    private void ItemDoubleCurrentRoll() {
+        MovePlayer(currentPlayer, GameManager.instance.diceRoll, false);
+    }
+
+    private void ItemSwapWithPlayerTargeted(int playerNumToSwapWith) {
+        // Player num is NOT index, but rather player num,
+        // so values are 1-4
+        int newRoutePos = players[playerNumToSwapWith - 1].routePos;
+        Vector3 newPos = players[playerNumToSwapWith - 1].transform.position;
+        Quaternion newRot = players[playerNumToSwapWith - 1].transform.rotation;
+
+        players[playerNumToSwapWith - 1].routePos = players[currentPlayer].routePos;
+        players[playerNumToSwapWith - 1].transform.position = players[currentPlayer].transform.position;
+        players[playerNumToSwapWith - 1].transform.rotation = players[currentPlayer].transform.rotation;
+
+        players[currentPlayer].routePos = newRoutePos;
+        players[currentPlayer].transform.position = newPos;
+        players[currentPlayer].transform.rotation = newRot;
+
+        gotItemAlready[playerNumToSwapWith - 1] = true;
     }
 
     public void ActivateItem(int itemNum) {
         Debug.Log("Activate item, itemNum = " + itemNum);
+        return; // TEMP TEMP TEMP, disabling item dice stuff
         switch (itemNum) {
             case 1:
                 // Move Player Backwards (Targeted, Dynamic Amount)
                 Debug.Log("Item Dice: Move Player Backwards (Targeted, Dynamic Amount)");
+                // TODO: Open UI to pick a player
+                // Upon picking a player in UI (Button press), it'll call ItemMovePlayerBackwards
+                // with that player's index
+                // DO SAME LOGIC FOR #6 AS WELL
                 break;
             case 2:
                 // Move Everyone (but you) Backwards 2
                 Debug.Log("Item Dice: Move Everyone (but you) Backwards 2");
+                ItemMoveAllBack();
                 break;
             case 3:
                 // Move Ahead (Double Your Roll) (Yourself, Dynamic Amount)
                 Debug.Log("Item Dice: Move Ahead (Double Your Roll) (Yourself, Dynamic Amount)");
+                ItemDoubleCurrentRoll();
                 break;
             case 4:
                 // Swap Positions (Targeted or Random)
                 Debug.Log("Item Dice: Swap Positions (Targeted or Random)");
+                ItemSwapWithPlayerTargeted(2);
                 break;
             case 5:
                 // Move Ahead (Double Your Roll) (Yourself, Dynamic Amount) (2nd chance)
                 Debug.Log("Item Dice: Move Ahead (Double Your Roll) (Yourself, Dynamic Amount) (2nd chance)");
+                ItemDoubleCurrentRoll();
                 break;
             case 6:
                 // Move Player Backwards (Targeted, Dynamic Amount) (2nd chance)
                 Debug.Log("Item Dice: Move Player Backwards (Targeted, Dynamic Amount) (2nd chance)");
+                // TODO: Open UI to pick a player
+                // Upon picking a player in UI (Button press), it'll call ItemMovePlayerBackwards
+                // with that player's index
                 break;
             default:
                 break;
