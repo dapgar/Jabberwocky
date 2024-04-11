@@ -112,9 +112,12 @@ public class BoardManager : MonoBehaviour {
         gotItemAlready[playerNumToSwapWith - 1] = true;
     }
 
+    private void ItemOpenSelectionUI() {
+
+    }
+
     public void ActivateItem(int itemNum) {
         Debug.Log("Activate item, itemNum = " + itemNum);
-        return; // TEMP TEMP TEMP, disabling item dice stuff
         switch (itemNum) {
             case 1:
                 // Move Player Backwards (Targeted, Dynamic Amount)
