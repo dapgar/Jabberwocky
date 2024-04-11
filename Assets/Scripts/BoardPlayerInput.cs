@@ -10,12 +10,12 @@ public class BoardPlayerInput : MonoBehaviour
     void Awake()
     {
         diceManager = GameObject.Find("_DiceManager").GetComponent<DiceManager>();
-        boardManager = GameObject.Find("_BoardManager").GetComponent<BoardManager>();
     }
 
     private void Start()
     {
-        //boardManager.SetupPlayer(this.gameObject);
+        Debug.Log(this.gameObject);
+        BoardManager.instance.SetupPlayer(this.gameObject);
     }
 
     // Update is called once per frame

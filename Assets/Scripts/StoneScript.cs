@@ -8,6 +8,7 @@ public class StoneScript : MonoBehaviour
 {
     // --- VARIABLES ---
     public RouteScript currentRoute;
+    public Vector3 nodeOffset = Vector3.zero;
 
     public int routePos;
     public bool isMoving;

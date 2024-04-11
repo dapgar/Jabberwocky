@@ -9,6 +9,8 @@ using UnityEngine.InputSystem.UI;
 public class BoardManager : MonoBehaviour {
     public static BoardManager instance;
 
+    private List<GameObject> playerSpanws = new List<GameObject>();
+
     public List<StoneScript> players;
     public List<StoneScript> playerRankings;
     public List<Image> playerIcons;
@@ -271,6 +273,46 @@ public class BoardManager : MonoBehaviour {
         //playerIcons[1].sprite = playerSprites[playerRankings[1].stoneID - 1];
         //playerIcons[2].sprite = playerSprites[playerRankings[2].stoneID - 1];
         //playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
+    }
+
+    public void SetupPlayer(GameObject player)
+    {
+        int index = player.GetComponent<PlayerInputHandler>().GetIndex();
+        StoneScript stoneScript = player.GetComponent<StoneScript>();
+
+        players[index] = stoneScript;
+        players[index].playerAnim = player.GetComponentInChildren<Animator>();
+
+        switch (index)
+        {
+            case 0:
+                players[index].nodeOffset = new Vector3(-.3f, 0f, .3f);
+                break;
+            case 1:
+                players[index].nodeOffset = new Vector3(.3f, 0f, .3f);
+                break;
+            case 2:
+                players[index].nodeOffset = new Vector3(-.3f, 0f, -.3f);
+                break;
+            case 3:
+                players[index].nodeOffset = new Vector3(.3f, 0f, -.3f);
+                break;
+            default:
+                players[index].nodeOffset = Vector3.zero;
+                break;
+        }
+
+        players[index].stoneID = index + 1;
+        players[index].currentRoute = route;
+        players[index].routePos = GameManager.instance.routeData[index];
+        if (GameManager.instance.playersPos[index] == Vector3.zero)
+        {
+            GameManager.instance.playersPos[index] = players[index].currentRoute.childNodeList[players[index].routePos].position + players[index].nodeOffset;
+        }
+        players[index].transform.position = GameManager.instance.playersPos[index];
+        players[index].transform.rotation = GameManager.instance.playerRots[index];
+
+        players[index].LookAtCamera();
     }
 
     /* Deprecated
