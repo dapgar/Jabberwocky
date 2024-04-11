@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
     [HideInInspector] public int diceRoll;
 
-    [HideInInspector] public bool playersMoving;
+    public bool playersMoving;
 
     [HideInInspector] public int devMinigameNumber = -1;
 
