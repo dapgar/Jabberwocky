@@ -39,13 +39,13 @@ public class LP_Player : MonoBehaviour
     private GameObject testArrowPrefab;
     //private GameObject testArrow;
 
-    private bool buttonPressed = false;
+    //private bool buttonPressed = false;
     //private float jumpPower = 0.0f;
 
 
     private int weightBase = 2;
     private int weightIncrease = 1;
-    private int weightDecrease = -3;
+    //private int weightDecrease = -3;
     private int[] weights = new int[4];
 
     //private int[] dir = {0,1,2,3};

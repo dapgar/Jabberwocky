@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3983383256879441257}
   - component: {fileID: 9134722720266431968}
+  - component: {fileID: 1971543075722113335}
   m_Layer: 0
   m_Name: PlayerConfig
   m_TagString: Untagged
@@ -59,6 +60,20 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 20645a21-6654-473c-be3d-36db525d5976
+  m_DefaultActionMap: Minigame
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1971543075722113335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860941530991992930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5674b2b83da0aed41b8c0d78515dbdeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSetupMenuPrefab: {fileID: 870713982185521055, guid: 3d0d1ce9204b7cc46b49fbd00ae29e0c, type: 3}
+  input: {fileID: 9134722720266431968}

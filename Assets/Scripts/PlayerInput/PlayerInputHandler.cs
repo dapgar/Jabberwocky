@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,7 +43,9 @@ public class PlayerInputHandler : MonoBehaviour
     public void InitializePlayer(PlayerConfiguration pC)
     {
         playerConfig = pC;
+        
         playerChar = Instantiate(pC.PlayerChar, transform.position, transform.rotation, gameObject.transform);
+        playerChar.name = $"Player{pC.PlayerIndex + 1}(Clone)";
         if (pC.PlayerHat != null)
         {
             playerHat = Instantiate(pC.PlayerHat, transform.position, transform.rotation, playerChar.transform);
