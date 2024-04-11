@@ -68,6 +68,17 @@ public class BoardManager : MonoBehaviour {
         camDefaultRot = Quaternion.Euler(38.687f, 180, 0);
 
         GameManager.instance.playersMoving = true;
+
+        // Board UI
+        Sprite[] charIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+        for (int i = 0; i < playerIcons.Count; i++)
+        {
+            playerIcons[i].sprite = charIcons[i];
+        }
+        //playerIcons[0].sprite = playerSprites[playerRankings[0].stoneID - 1];
+        //playerIcons[1].sprite = playerSprites[playerRankings[1].stoneID - 1];
+        //playerIcons[2].sprite = playerSprites[playerRankings[2].stoneID - 1];
+        //playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
     }
 
     private void MovePlayer(int playerIndex, int spaces, bool bSkipAnim) {
@@ -255,11 +266,11 @@ public class BoardManager : MonoBehaviour {
             }
         }
 
-        // Board UI
-        playerIcons[0].sprite = playerSprites[playerRankings[0].stoneID - 1];
-        playerIcons[1].sprite = playerSprites[playerRankings[1].stoneID - 1];
-        playerIcons[2].sprite = playerSprites[playerRankings[2].stoneID - 1];
-        playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
+        //// Board UI
+        //playerIcons[0].sprite = playerSprites[playerRankings[0].stoneID - 1];
+        //playerIcons[1].sprite = playerSprites[playerRankings[1].stoneID - 1];
+        //playerIcons[2].sprite = playerSprites[playerRankings[2].stoneID - 1];
+        //playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
     }
 
     /* Deprecated
