@@ -52,6 +52,27 @@ public class PlayerConfigurationManager : MonoBehaviour
         return charPrefabUsed[index];
     }
 
+    public Sprite[] GetUsedPlayerIcons()
+    {
+        Sprite[] usedIcons = new Sprite[maxPlayers];
+        int currentPlayers = playerConfigs.Count;
+
+        for (int i = 0; i < currentPlayers; i++)
+        {
+            usedIcons[i] = charIcons[playerConfigs[i].CharPrefabIndex];
+        }
+
+        if (currentPlayers < maxPlayers)
+        {
+            for (int i = currentPlayers; i < maxPlayers; i++)
+            {
+                usedIcons[i] = charIcons[NextAvailableCharIndex()];
+            }
+        }
+
+        return usedIcons;
+    }
+
     public void SetPlayerChar(int index, int charPrefabIndex)
     {
         playerConfigs[index].PlayerChar = playerCharacters[charPrefabIndex];
