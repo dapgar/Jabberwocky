@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class BoardManager : MonoBehaviour {
     public static BoardManager instance;
@@ -38,6 +40,12 @@ public class BoardManager : MonoBehaviour {
     private int currentPlayer = 0;
     private bool[] gotItemAlready = new bool[4];
 
+    [SerializeField]
+    private GameObject itemSelectPlayerToMoveBackUI;
+
+    [SerializeField]
+    private GameObject itemSelectPlayerToSwapWithUI;
+
     void Start() {
         currentPlayer = 0;
         for (int i = 0; i < gotItemAlready.Length; i++) {
@@ -63,7 +71,7 @@ public class BoardManager : MonoBehaviour {
     }
 
     private void MovePlayer(int playerIndex, int spaces, bool bSkipAnim) {
-        StartCoroutine(players[playerIndex ].MovePlayer(spaces, bSkipAnim));
+        StartCoroutine(players[playerIndex].MovePlayer(spaces, bSkipAnim));
         GameManager.instance.routeData[playerIndex] = players[playerIndex].routePos;
         GameManager.instance.playersPos[playerIndex] = players[playerIndex].transform.position;
         GameManager.instance.playerRots[playerIndex] = players[playerIndex].transform.rotation;
@@ -79,8 +87,9 @@ public class BoardManager : MonoBehaviour {
     }
 
     private void ItemMovePlayerBackwards(int playerNum) {
+        // Player num is NOT INDEX, its player num, values 1-4
         // Move Player Backwards (Targeted, Dynamic Amount)
-        MovePlayer(playerNum, -itemTargetedMoveBackAmount, false);
+        MovePlayer(playerNum - 1, -itemTargetedMoveBackAmount, false);
     }
 
     private void ItemMoveAllBack() {
@@ -112,8 +121,24 @@ public class BoardManager : MonoBehaviour {
         gotItemAlready[playerNumToSwapWith - 1] = true;
     }
 
-    private void ItemOpenSelectionUI() {
+    private void ItemOpenMoveBackPlayerUI() {
+        PlayerInput input = PlayerConfigurationManager.Instance.GetPlayerConfigs()[currentPlayer].Input;
+        input.uiInputModule = itemSelectPlayerToMoveBackUI.GetComponentInChildren<InputSystemUIInputModule>();
+        itemSelectPlayerToMoveBackUI.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(input.playerIndex);
 
+        // TODO: sSTUFF
+        Sprite[] playerIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+
+        int playerNum = 1;
+        ItemMovePlayerBackwards(playerNum);
+    }
+
+    private void ItemOpenSwapPlayerUI() {
+        int playerNumToSwapWith = 1;
+
+        // TODO: THIS FUNCTION, base it off ItemOpenMoveBackPlayerUI
+
+        ItemSwapWithPlayerTargeted(playerNumToSwapWith);
     }
 
     public void ActivateItem(int itemNum) {
@@ -122,10 +147,7 @@ public class BoardManager : MonoBehaviour {
             case 1:
                 // Move Player Backwards (Targeted, Dynamic Amount)
                 Debug.Log("Item Dice: Move Player Backwards (Targeted, Dynamic Amount)");
-                // TODO: Open UI to pick a player
-                // Upon picking a player in UI (Button press), it'll call ItemMovePlayerBackwards
-                // with that player's index
-                // DO SAME LOGIC FOR #6 AS WELL
+                ItemOpenMoveBackPlayerUI();
                 break;
             case 2:
                 // Move Everyone (but you) Backwards 2
@@ -140,7 +162,7 @@ public class BoardManager : MonoBehaviour {
             case 4:
                 // Swap Positions (Targeted or Random)
                 Debug.Log("Item Dice: Swap Positions (Targeted or Random)");
-                ItemSwapWithPlayerTargeted(2);
+                ItemOpenSwapPlayerUI();
                 break;
             case 5:
                 // Move Ahead (Double Your Roll) (Yourself, Dynamic Amount) (2nd chance)
@@ -150,9 +172,7 @@ public class BoardManager : MonoBehaviour {
             case 6:
                 // Move Player Backwards (Targeted, Dynamic Amount) (2nd chance)
                 Debug.Log("Item Dice: Move Player Backwards (Targeted, Dynamic Amount) (2nd chance)");
-                // TODO: Open UI to pick a player
-                // Upon picking a player in UI (Button press), it'll call ItemMovePlayerBackwards
-                // with that player's index
+                ItemOpenMoveBackPlayerUI();
                 break;
             default:
                 break;
@@ -188,10 +208,17 @@ public class BoardManager : MonoBehaviour {
                         }
                         break;
                     case TurnState.Item:
-                        Debug.Log("On item space");
+                        // TEMP: Next 3 lines for playtest
+                        // they temp disable item dice (for this playtest(
+                        // remove after playtest TODO: remove next 3 lines
+                        currentPlayer++;
+                        boardState = BoardState.Idle;
+                        break;
+
+                        /*Debug.Log("On item space");
                         if (!gotItemAlready[currentPlayer]) StartCoroutine(ItemDiceManager.Instance.RollDice());
                         gotItemAlready[currentPlayer] = true;
-                        break;
+                        break;*/
                 }
                 break;
             case BoardState.Idle:
