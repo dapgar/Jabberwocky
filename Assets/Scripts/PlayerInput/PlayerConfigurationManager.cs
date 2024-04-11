@@ -15,6 +15,8 @@ public class PlayerConfigurationManager : MonoBehaviour
     [SerializeField]
     private GameObject[] playerCharacters;
     private bool[] charPrefabUsed;
+    [SerializeField]
+    private Sprite[] charIcons;
 
     [SerializeField]
     private GameObject[] playerHats;
@@ -115,13 +117,29 @@ public class PlayerConfigurationManager : MonoBehaviour
             // for testing purposes in other scenes
             if (SceneManager.GetActiveScene().name != "MainMenu")
             {
-                SetPlayerChar(playerInput.playerIndex, playerInput.playerIndex);
-                SetPlayerHat(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
+                int charIndex = NextAvailableCharIndex();
+                SetPlayerChar(playerInput.playerIndex, charIndex);
+                //SetPlayerHat(playerInput.playerIndex, playerCharacters[playerInput.playerIndex]);
                 ReadyPlayer(playerInput.playerIndex);
                 GameObject.FindAnyObjectByType<InitializeSpawns>()?.InitializePlayer(playerConfigs[playerInput.playerIndex], playerInput.playerIndex);
             }
             //GameObject.FindAnyObjectByType<InitializeSpawns>()?.InitializePlayer(playerConfigs[playerInput.playerIndex], playerInput.playerIndex);
         }
+    }
+
+    // THIS IS TEMP AND THIS CODE IS TECHNICALLY ELSEWHERE
+    private int NextAvailableCharIndex()
+    {
+        int i = 0;
+        for (i = 0; i < playerCharacters.Length; i++)
+        {
+            if (!charPrefabUsed[i])
+            {
+                break;
+            }
+        }
+
+        return i;
     }
 }
 

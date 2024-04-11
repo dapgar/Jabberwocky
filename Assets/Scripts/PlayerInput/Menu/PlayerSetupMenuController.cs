@@ -66,6 +66,8 @@ public class PlayerSetupMenuController : MonoBehaviour, ICancelHandler
         readyPanel.SetActive(true);
         readyButton.Select();
         menuPanel.SetActive(false);
+
+        ReadyPlayer();
     }
 
     public void ReadyPlayer()
