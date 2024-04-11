@@ -213,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &24770531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 507141048}
+  nodeOffset: {x: 0, y: 0, z: 0}
   routePos: 0
   isMoving: 0
   stoneID: 4
@@ -459,7 +460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &30380427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 507141048}
+  nodeOffset: {x: 0, y: 0, z: 0}
   routePos: 0
   isMoving: 0
   stoneID: 2
@@ -15483,7 +15485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1576457509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15497,6 +15499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 507141048}
+  nodeOffset: {x: 0, y: 0, z: 0}
   routePos: 0
   isMoving: 0
   stoneID: 3
@@ -23730,7 +23733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1923250294
 Transform:
   m_ObjectHideFlags: 0
@@ -23762,6 +23765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 507141048}
+  nodeOffset: {x: 0, y: 0, z: 0}
   routePos: 0
   isMoving: 0
   stoneID: 1
