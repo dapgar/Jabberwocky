@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -10,6 +11,11 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public int[] routeData;
     [HideInInspector] public Vector3[] playersPos;
     [HideInInspector] public Quaternion[] playerRots;
+
+    private int weightBase = 1;
+    private int weightIncrease = 1;
+    private int[] miniGameWeights = new int[4]; //MAKE THIS EQUAL TO THE MINILOAD MANAGER GAME NUMBER
+
 
     // Win con
     public List<int> playerRankings;
@@ -24,7 +30,11 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
         
         playersMoving = false;
-        
+
+        for (int i = 0; i < miniGameWeights.Length; i++)
+        {
+            miniGameWeights[i] = weightBase;
+        }
         // Must be called to initialize (for now), but in future we will need to have gamemanger be on mainmenu scene so it's valid early on
         SetNumPlayers(numPlayers);
     }
@@ -49,6 +59,37 @@ public class GameManager : MonoBehaviour {
 
     public void MoveData(int[] moveData) {
         this.moveData = moveData;
+    }
+
+    public int RandomGame()
+    {
+        int gameToReturn = 0;
+
+        int randomWeight = Random.Range(0, miniGameWeights.Sum());
+        for (int i = 0; i < miniGameWeights.Length; i++)
+        {
+            randomWeight -= miniGameWeights[i];
+            if (randomWeight < 0)
+            {
+                gameToReturn = i;
+                break;
+            }
+        }
+
+        for (int i = 0; i < miniGameWeights.Length; i++)
+        {
+            if (i == gameToReturn)
+            {
+                //weights[i] += weightDecrease;
+                miniGameWeights[i] = weightBase - weightIncrease;
+            }
+            else
+            {
+                miniGameWeights[i] += weightIncrease;
+            }
+        }
+
+        return gameToReturn;
     }
 
     public void ResetGame()

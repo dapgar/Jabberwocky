@@ -33,7 +33,9 @@ public class MiniLoadManager : MonoBehaviour
             GameManager.instance.devMinigameNumber = -1;
         }
         else {
-            randomGame = Random.Range(0, numberOfGames);
+            //randomGame = Random.Range(0, numberOfGames);
+
+            randomGame = GameManager.instance.RandomGame();
         }
         StartCoroutine(WaitToLoad());
 
