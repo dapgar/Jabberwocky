@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 483304490}
   - component: {fileID: 483304489}
   m_Layer: 5
-  m_Name: ButtonImage
+  m_Name: BeginButtonImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1013,6 +1013,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6083618926751078870, guid: 356557fb4f7a22e439368dc581575416, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7089723914870563296, guid: 356557fb4f7a22e439368dc581575416, type: 3}
       propertyPath: m_Name
       value: PlayerJoinScreen
@@ -1358,7 +1362,7 @@ GameObject:
   - component: {fileID: 1751818078}
   - component: {fileID: 1751818077}
   m_Layer: 5
-  m_Name: Text
+  m_Name: BeginText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
