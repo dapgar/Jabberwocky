@@ -1502,10 +1502,10 @@ MonoBehaviour:
   titleText: {fileID: 1164178916}
   minigameImage: {fileID: 434855587}
   images:
-  - {fileID: 2800000, guid: da845c960021e424c82820bf4f4fe38f, type: 3}
+  - {fileID: 2800000, guid: b986bdf45d096004f9818544d0c57747, type: 3}
   - {fileID: 2800000, guid: 9ad2071726f3dc84ca4dc8ca0c16d78c, type: 3}
-  - {fileID: 2800000, guid: de890cb4c1164ed438dbcee39077921b, type: 3}
-  - {fileID: 2800000, guid: 2d17561fc67e6994cb5bc0eb70911a21, type: 3}
+  - {fileID: 2800000, guid: ee1799c03d3d98f42876c67fef967d41, type: 3}
+  - {fileID: 2800000, guid: 2c3c3178ae12a3a45b664c34d42658b2, type: 3}
   loadIcon: {fileID: 2057585698}
 --- !u!1001 &2057585696
 PrefabInstance:
