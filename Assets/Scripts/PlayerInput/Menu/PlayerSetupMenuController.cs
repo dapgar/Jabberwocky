@@ -23,9 +23,19 @@ public class PlayerSetupMenuController : MonoBehaviour, ICancelHandler
     [SerializeField]
     private Display charDisplay;
 
+    [SerializeField]
+    private Sprite backgroundImage;
+
     private float baseIgnoreTime = .5f;
     private float ignoreInputTime;
     private bool inputEnabled;
+
+    public void Start()
+    {
+        GameObject.Find("Background").GetComponent<Image>().sprite = backgroundImage;
+        GameObject.Find("BeginText")?.SetActive(false);
+        GameObject.Find("BeginButtonImage")?.SetActive(false);
+    }
 
     public void SetPlayerIndex(int pi)
     {
