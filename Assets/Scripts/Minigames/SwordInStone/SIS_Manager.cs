@@ -48,6 +48,12 @@ public class SIS_Manager : MonoBehaviour {
     private void Start() {
         clickPullAmount = maxPullLength / totalSwordPulls;
 
+        //Sprite[] charIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+        //for (int i = 0; i < PlayerIcons.Length; i++)
+        //{
+        //    PlayerIcons[i].sprite = charIcons[i];
+        //}
+
         numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 4;
         players = new List<SIS_Character>(numPlayers);
     }

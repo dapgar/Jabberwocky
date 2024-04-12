@@ -128,7 +128,7 @@ public class MiniLoadManager : MonoBehaviour
             case 3:
                 titleText.text = "Lockpicking";
                 controlText.text = "Press the arrow keys to pick the locks";
-                //minigameImage.sprite = Sprite.Create(images[2], new Rect(0, 0, images[2].width, images[2].height), Vector2.zero);
+                minigameImage.sprite = Sprite.Create(images[3], new Rect(0, 0, images[3].width, images[3].height), Vector2.zero);
                 break;
         }
     }
