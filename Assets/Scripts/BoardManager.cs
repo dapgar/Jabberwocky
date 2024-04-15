@@ -15,6 +15,7 @@ public class BoardManager : MonoBehaviour {
     public List<StoneScript> playerRankings;
     public List<Image> playerIcons;
     public List<Sprite> playerSprites;
+    private Sprite[] charIcons; // icons that are used by the characters
     //public GameObject[] crowns;
 
     public CinemachineVirtualCamera cam;
@@ -72,7 +73,7 @@ public class BoardManager : MonoBehaviour {
         GameManager.instance.playersMoving = true;
 
         // Board UI
-        Sprite[] charIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+        charIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
         for (int i = 0; i < playerIcons.Count; i++)
         {
             playerIcons[i].sprite = charIcons[i];
@@ -268,6 +269,17 @@ public class BoardManager : MonoBehaviour {
             }
         }
 
+        for (int i = 0; i < playerIcons.Count; i++)
+        {
+            if (playerRankings[i] != null)
+            {
+                playerIcons[i].sprite = charIcons[playerRankings[i].stoneID-1];
+            }
+            else
+            {
+                playerIcons[i].sprite = charIcons[i];
+            }
+        }
         //// Board UI
         //playerIcons[0].sprite = playerSprites[playerRankings[0].stoneID - 1];
         //playerIcons[1].sprite = playerSprites[playerRankings[1].stoneID - 1];

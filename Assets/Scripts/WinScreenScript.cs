@@ -9,6 +9,13 @@ public class WinScreenScript : MonoBehaviour
 
     private bool playersPlaced;
 
+    PlayerConfiguration[] playerConfigurations;
+
+    private void Start()
+    {
+        //playerConfigurations = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray();
+    }
+
     // Start is called before the first frame update
     private void Update()
     {
