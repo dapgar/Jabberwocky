@@ -13,7 +13,15 @@ public class WinScreenScript : MonoBehaviour
 
     private void Start()
     {
-        //playerConfigurations = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray();
+        playerConfigurations = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray();
+        for (int i = 0; i < playerConfigurations.Length; i++)
+        {
+            Destroy(players[GameManager.instance.playerRankings[i] - 1]); // MAYBE CHANGE
+            GameObject obj = Instantiate(playerConfigurations[GameManager.instance.playerRankings[i] - 1].PlayerChar, playerPosePos[i].position, playerPosePos[i].rotation);
+            obj.GetComponent<Animator>().enabled = false;
+            obj.transform.localScale = playerPosePos[0].localScale;
+            players[GameManager.instance.playerRankings[i] - 1] = obj;
+        }
     }
 
     // Start is called before the first frame update
