@@ -62,6 +62,7 @@ public class LP_Player : MonoBehaviour
 
         SetupLocks();
         WaitForNewCode();
+        timer = 2f;
     }
 
     void WaitForNewCode()
