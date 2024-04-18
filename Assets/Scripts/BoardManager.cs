@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using CommandTerminal;
 
 public class BoardManager : MonoBehaviour {
     public static BoardManager instance;
@@ -44,7 +45,9 @@ public class BoardManager : MonoBehaviour {
     private bool[] gotItemAlready = new bool[4];
 
     [SerializeField]
-    private GameObject itemSelectPlayerToMoveBackUI;
+    private GameObject itemMovePlayerBackUI;
+    [SerializeField]
+    private Image[] itemPlayerImages;
 
     [SerializeField]
     private GameObject itemSelectPlayerToSwapWithUI;
@@ -135,16 +138,29 @@ public class BoardManager : MonoBehaviour {
         gotItemAlready[playerNumToSwapWith - 1] = true;
     }
 
-    private void ItemOpenMoveBackPlayerUI() {
-        PlayerInput input = PlayerConfigurationManager.Instance.GetPlayerConfigs()[currentPlayer].Input;
-        input.uiInputModule = itemSelectPlayerToMoveBackUI.GetComponentInChildren<InputSystemUIInputModule>();
-        itemSelectPlayerToMoveBackUI.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(input.playerIndex);
+    [RegisterCommand(Help = "for aj testing item UI stuff", MinArgCount = 0, MaxArgCount = 0)]
+    public static void TEST(CommandArg[] args) {
+        instance.ItemOpenMoveBackPlayerUI();
+    }
+
+    public void ItemOpenMoveBackPlayerUI() {
+        currentPlayer = 0;
+        PlayerInput input = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray()[currentPlayer].Input;
+        input.uiInputModule = itemMovePlayerBackUI.GetComponentInChildren<InputSystemUIInputModule>();
+        //itemMovePlayerBackUI.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(input.playerIndex);
 
         // TODO: sSTUFF
         Sprite[] playerIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+        for (int i = 0; i < playerIcons.Length; i++) {
+            if (i == currentPlayer) continue;
+            // OUT OF BOUNDS ERR:
+            itemPlayerImages[i].sprite = playerIcons[i];
+        }
 
-        int playerNum = 1;
-        ItemMovePlayerBackwards(playerNum);
+        itemMovePlayerBackUI.gameObject.SetActive(true);
+
+        // TODO: Clicking a button calls: 
+        // ItemMovePlayerBackwards(playerNum);
     }
 
     private void ItemOpenSwapPlayerUI() {
@@ -157,6 +173,7 @@ public class BoardManager : MonoBehaviour {
 
     public void ActivateItem(int itemNum) {
         Debug.Log("Activate item, itemNum = " + itemNum);
+        itemNum = 1;
         switch (itemNum) {
             case 1:
                 // Move Player Backwards (Targeted, Dynamic Amount)
@@ -222,17 +239,15 @@ public class BoardManager : MonoBehaviour {
                         }
                         break;
                     case TurnState.Item:
-                        // TEMP: Next 3 lines for playtest
-                        // they temp disable item dice (for this playtest(
-                        // remove after playtest TODO: remove next 3 lines
-                        currentPlayer++;
+                        // TO DISABLE ITEM DICE, UNCOMMENT THESE FOLLOWING 3 LINES
+                        /*currentPlayer++;
                         boardState = BoardState.Idle;
-                        break;
+                        break;*/
 
-                        /*Debug.Log("On item space");
+                        Debug.Log("On item space");
                         if (!gotItemAlready[currentPlayer]) StartCoroutine(ItemDiceManager.Instance.RollDice());
                         gotItemAlready[currentPlayer] = true;
-                        break;*/
+                        break;
                 }
                 break;
             case BoardState.Idle:
