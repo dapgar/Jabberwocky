@@ -74,4 +74,5 @@ public class Commands : MonoBehaviour {
     static void Board(CommandArg[] args) {
         SceneChanger.Instance.ChangeScene(1);
     }
+
 }

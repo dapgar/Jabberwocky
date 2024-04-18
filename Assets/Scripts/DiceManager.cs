@@ -36,7 +36,7 @@ public class DiceManager : MonoBehaviour
         else diceTutText.SetActive(true);
 
         // Rolls Dice
-        if (Input.GetKeyDown(KeyCode.Space) && !isRolling && canStartNextRound && !GameManager.instance.playersMoving && !PauseManager.instance.isPaused)
+        if (Input.GetKeyDown(KeyCode.Space) && !isRolling && canStartNextRound && !GameManager.instance.playersMoving && !PauseManager.instance.isPaused && !BoardManager.instance.itemUIOpen)
         {
             StartCoroutine(StartTurn());
         }
@@ -45,7 +45,7 @@ public class DiceManager : MonoBehaviour
     // called by player input scripts
     public void TryStartTurn()
     {
-        if (!isRolling && canStartNextRound && !GameManager.instance.playersMoving)
+        if (!isRolling && canStartNextRound && !GameManager.instance.playersMoving && !BoardManager.instance.itemUIOpen)
         {
             StartCoroutine (StartTurn());
         }

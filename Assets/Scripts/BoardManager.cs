@@ -46,11 +46,11 @@ public class BoardManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject itemMovePlayerBackUI;
-    [SerializeField]
-    private Image[] itemPlayerImages;
 
     [SerializeField]
     private GameObject itemSelectPlayerToSwapWithUI;
+
+    public bool itemUIOpen = false;
 
     void Start() {
         currentPlayer = 0;
@@ -103,10 +103,12 @@ public class BoardManager : MonoBehaviour {
         MovePlayer(currentPlayer, spaces, true);
     }
 
-    private void ItemMovePlayerBackwards(int playerNum) {
-        // Player num is NOT INDEX, its player num, values 1-4
+    private void ItemMovePlayerBackwards(int playerID) {
+        // Player num is INDEX, 0-3
         // Move Player Backwards (Targeted, Dynamic Amount)
-        MovePlayer(playerNum - 1, -itemTargetedMoveBackAmount, false);
+        MovePlayer(playerID, -itemTargetedMoveBackAmount, false);
+        itemMovePlayerBackUI.gameObject.SetActive(false);
+        itemUIOpen = false;
     }
 
     private void ItemMoveAllBack() {
@@ -121,59 +123,70 @@ public class BoardManager : MonoBehaviour {
     }
 
     private void ItemSwapWithPlayerTargeted(int playerNumToSwapWith) {
-        // Player num is NOT index, but rather player num,
-        // so values are 1-4
-        int newRoutePos = players[playerNumToSwapWith - 1].routePos;
-        Vector3 newPos = players[playerNumToSwapWith - 1].transform.position;
-        Quaternion newRot = players[playerNumToSwapWith - 1].transform.rotation;
+        Debug.Log("Current Player: " + currentPlayer);
+        // TODO: ERROR HERE WHERE CURRENT PLAYER IS 4 NEED TO FIX IT
+        // TRY MOVING line 225 increment and state change to end of each item function, should fix it
 
-        players[playerNumToSwapWith - 1].routePos = players[currentPlayer].routePos;
-        players[playerNumToSwapWith - 1].transform.position = players[currentPlayer].transform.position;
-        players[playerNumToSwapWith - 1].transform.rotation = players[currentPlayer].transform.rotation;
+        // Player num is index, but rather player num,
+        // so values are 0-3
+        int newRoutePos = players[playerNumToSwapWith].routePos;
+        Vector3 newPos = players[playerNumToSwapWith].transform.position;
+        Quaternion newRot = players[playerNumToSwapWith].transform.rotation;
+        
+        players[playerNumToSwapWith].routePos = players[currentPlayer].routePos;
+        players[playerNumToSwapWith].transform.position = players[currentPlayer].transform.position;
+        players[playerNumToSwapWith].transform.rotation = players[currentPlayer].transform.rotation;
 
         players[currentPlayer].routePos = newRoutePos;
         players[currentPlayer].transform.position = newPos;
         players[currentPlayer].transform.rotation = newRot;
 
-        gotItemAlready[playerNumToSwapWith - 1] = true;
-    }
+        gotItemAlready[playerNumToSwapWith] = true;
 
-    [RegisterCommand(Help = "for aj testing item UI stuff", MinArgCount = 0, MaxArgCount = 0)]
-    public static void TEST(CommandArg[] args) {
-        instance.ItemOpenMoveBackPlayerUI();
+        itemSelectPlayerToSwapWithUI.gameObject.SetActive(false);
+        itemUIOpen = false;
     }
 
     public void ItemOpenMoveBackPlayerUI() {
-        currentPlayer = 0;
         PlayerInput input = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray()[currentPlayer].Input;
         input.uiInputModule = itemMovePlayerBackUI.GetComponentInChildren<InputSystemUIInputModule>();
-        //itemMovePlayerBackUI.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(input.playerIndex);
 
-        // TODO: sSTUFF
         Sprite[] playerIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+        Button[] buttons = itemMovePlayerBackUI.GetComponentsInChildren<Button>();
+        int btnIndex = 0;
         for (int i = 0; i < playerIcons.Length; i++) {
             if (i == currentPlayer) continue;
-            // OUT OF BOUNDS ERR:
-            itemPlayerImages[i].sprite = playerIcons[i];
+            buttons[btnIndex].image.sprite = playerIcons[i];
+            int currentIndex = i;
+            buttons[btnIndex].onClick.AddListener(delegate { ItemMovePlayerBackwards(currentIndex); });
+            btnIndex++;
         }
-
         itemMovePlayerBackUI.gameObject.SetActive(true);
-
-        // TODO: Clicking a button calls: 
-        // ItemMovePlayerBackwards(playerNum);
+        itemUIOpen = true;
     }
 
     private void ItemOpenSwapPlayerUI() {
-        int playerNumToSwapWith = 1;
+        PlayerInput input = PlayerConfigurationManager.Instance.GetPlayerConfigs().ToArray()[currentPlayer].Input;
+        input.uiInputModule = itemSelectPlayerToSwapWithUI.GetComponentInChildren<InputSystemUIInputModule>();
 
-        // TODO: THIS FUNCTION, base it off ItemOpenMoveBackPlayerUI
-
-        ItemSwapWithPlayerTargeted(playerNumToSwapWith);
+        Sprite[] playerIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+        Button[] buttons = itemSelectPlayerToSwapWithUI.GetComponentsInChildren<Button>();
+        int btnIndex = 0;
+        for (int i = 0; i < playerIcons.Length; i++) {
+            if (i == currentPlayer) continue;
+            buttons[btnIndex].image.sprite = playerIcons[i];
+            int currentIndex = i;
+            buttons[btnIndex].onClick.AddListener(delegate { ItemSwapWithPlayerTargeted(currentIndex); });
+            btnIndex++;
+        }
+        itemSelectPlayerToSwapWithUI.gameObject.SetActive(true);
+        itemUIOpen = true;
     }
 
-    public void ActivateItem(int itemNum) {
-        Debug.Log("Activate item, itemNum = " + itemNum);
-        itemNum = 1;
+    public void ActivateItem(int itemNum, GameObject itemDiceObj) {
+        //Debug.Log("Activate item, itemNum = " + itemNum);
+        itemNum = 4; // TEMP
+        itemDiceObj.SetActive(false);
         switch (itemNum) {
             case 1:
                 // Move Player Backwards (Targeted, Dynamic Amount)
@@ -244,7 +257,6 @@ public class BoardManager : MonoBehaviour {
                         boardState = BoardState.Idle;
                         break;*/
 
-                        Debug.Log("On item space");
                         if (!gotItemAlready[currentPlayer]) StartCoroutine(ItemDiceManager.Instance.RollDice());
                         gotItemAlready[currentPlayer] = true;
                         break;
@@ -382,6 +394,11 @@ public class BoardManager : MonoBehaviour {
         cam.LookAt = null;
         cam.transform.SetPositionAndRotation(camDefaultPos, camDefaultRot);
         cam.m_Lens.FieldOfView = 70;
+    }
+
+    [RegisterCommand(Help = "Set currentPlayer index", MinArgCount = 1, MaxArgCount = 1)]
+    static void SetCurrentPlayer(CommandArg[] args) {
+        instance.currentPlayer = args[0].Int;
     }
 }
 

@@ -77,6 +77,6 @@ public class ItemDiceManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        BoardManager.instance.ActivateItem(diceRoll);
+        BoardManager.instance.ActivateItem(diceRoll, itemDice);
     }
 }
