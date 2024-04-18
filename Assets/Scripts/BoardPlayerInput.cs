@@ -23,13 +23,19 @@ public class BoardPlayerInput : MonoBehaviour
     {
         
     }
-    public void OnButton(bool value)
+    public void OnDiceRollButton(bool value)
     {
         // PRESS
         if (value)
         {
             diceManager.TryStartTurn();
         }
+    }
+
+    public void ShowRankingsButton(bool value)
+    {
+        // Shows the scoreboard 
+        ScoreboardManager.instance.ShowScoreboard(value);
     }
 
 
