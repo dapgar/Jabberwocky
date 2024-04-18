@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
@@ -19,6 +20,8 @@ public class PlayerInputHandler : MonoBehaviour
     private GameObject playerHat;
 
     private PlayerControls controls;
+
+    public bool moveWhilePerformed;
 
     public BoolEvent onButtonX;
     public BoolEvent onButtonY;
@@ -57,6 +60,10 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.performed)
         {
+            if (moveWhilePerformed && context.action.name == controls.Minigame.Move.name)
+            {
+                onDPad?.Invoke(context.ReadValue<Vector2>());
+            }
             return;
         }
 

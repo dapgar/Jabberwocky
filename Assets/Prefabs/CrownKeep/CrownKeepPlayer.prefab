@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2493d0f046b6f4498e5f1b5e75928b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveWhilePerformed: 1
   onButtonX:
     m_PersistentCalls:
       m_Calls: []
