@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class LP_Player : MonoBehaviour
@@ -15,6 +16,10 @@ public class LP_Player : MonoBehaviour
     float timer = 0;
     float timeBeforeNewCode = .4f;
     float timeForWrongAnswer = .6f;
+    [SerializeField]
+    private Canvas timerCanvas;
+    [SerializeField]
+    private TMP_Text preGameTimerText;
 
     State state;
 
@@ -115,6 +120,15 @@ public class LP_Player : MonoBehaviour
                 timer -= Time.deltaTime;
                 break;
             case State.waiting:
+                if (timerCanvas.enabled)
+                {
+                    preGameTimerText.text = timer.ToString("F1");
+                    if (timer <= 0)
+                    {
+                        timerCanvas.enabled = false;
+                    }
+                }
+
                 if (timer <= 0)
                 {
                     state = State.idle;
