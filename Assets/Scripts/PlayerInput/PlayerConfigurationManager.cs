@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,8 @@ public class PlayerConfigurationManager : MonoBehaviour
     private bool[] charPrefabUsed;
     [SerializeField]
     private Sprite[] charIcons;
+    [SerializeField]
+    private Sprite nullIcon;
 
     [SerializeField]
     private GameObject[] playerHats;
@@ -66,7 +69,8 @@ public class PlayerConfigurationManager : MonoBehaviour
         {
             for (int i = currentPlayers; i < maxPlayers; i++)
             {
-                usedIcons[i] = charIcons[NextAvailableCharIndex()];
+                //usedIcons[i] = charIcons[NextAvailableCharIndex()];
+                usedIcons[i] = nullIcon;
             }
         }
 
