@@ -109,6 +109,9 @@ public class BoardManager : MonoBehaviour {
         MovePlayer(playerID, -itemTargetedMoveBackAmount, false);
         itemMovePlayerBackUI.gameObject.SetActive(false);
         itemUIOpen = false;
+
+        currentPlayer++;
+        boardState = BoardState.Idle;
     }
 
     private void ItemMoveAllBack() {
@@ -116,17 +119,17 @@ public class BoardManager : MonoBehaviour {
             if (i == currentPlayer) continue;
             MovePlayer(i, -2, false);
         }
+        currentPlayer++;
+        boardState = BoardState.Idle;
     }
 
     private void ItemDoubleCurrentRoll() {
         MovePlayer(currentPlayer, GameManager.instance.diceRoll, false);
+        currentPlayer++;
+        boardState = BoardState.Idle;
     }
 
     private void ItemSwapWithPlayerTargeted(int playerNumToSwapWith) {
-        Debug.Log("Current Player: " + currentPlayer);
-        // TODO: ERROR HERE WHERE CURRENT PLAYER IS 4 NEED TO FIX IT
-        // TRY MOVING line 225 increment and state change to end of each item function, should fix it
-
         // Player num is index, but rather player num,
         // so values are 0-3
         int newRoutePos = players[playerNumToSwapWith].routePos;
@@ -145,6 +148,9 @@ public class BoardManager : MonoBehaviour {
 
         itemSelectPlayerToSwapWithUI.gameObject.SetActive(false);
         itemUIOpen = false;
+
+        currentPlayer++;
+        boardState = BoardState.Idle;
     }
 
     public void ItemOpenMoveBackPlayerUI() {
@@ -185,7 +191,6 @@ public class BoardManager : MonoBehaviour {
 
     public void ActivateItem(int itemNum, GameObject itemDiceObj) {
         //Debug.Log("Activate item, itemNum = " + itemNum);
-        itemNum = 4; // TEMP
         itemDiceObj.SetActive(false);
         switch (itemNum) {
             case 1:
@@ -219,11 +224,10 @@ public class BoardManager : MonoBehaviour {
                 ItemOpenMoveBackPlayerUI();
                 break;
             default:
+                currentPlayer++;
+                boardState = BoardState.Idle;
                 break;
         }
-
-        currentPlayer++;
-        boardState = BoardState.Idle;
     }
 
     private void Update() {
