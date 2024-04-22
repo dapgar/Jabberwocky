@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class JoustingCharacter : MonoBehaviour {
@@ -119,6 +120,17 @@ public class JoustingCharacter : MonoBehaviour {
             hp--;
             StartCoroutine(HitCoroutine());
         }
+    }
+
+    public void GetHit()
+    {
+        hp--;
+        StartCoroutine(HitCoroutine());
+    }
+
+    public void ShieldHit()
+    {
+        currentSpeed = 0;
     }
 
     IEnumerator HitCoroutine() {
