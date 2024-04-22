@@ -11,6 +11,7 @@ TagManager:
   - Face5
   - Face6
   - Node
+  - CrownKeepPlayer
   layers:
   - Default
   - TransparentFX

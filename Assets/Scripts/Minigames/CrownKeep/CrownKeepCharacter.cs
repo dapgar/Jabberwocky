@@ -3,40 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CrownKeepCharacter : MonoBehaviour {
-
-    private bool bButtonAPressed = false;
-
     private Vector2 direction;
 
     private CrownKeepManager manager;
 
-    private bool canGetHit;
-
     /* Movement */
     [SerializeField]
-    private float acceleration = 12f;
+    private float maxSpeed = 7f;
+    private Vector3 currentVelocity;
     [SerializeField]
-    private float deceleration = 12f;
+    private float turnSpeed = 250f;
     [SerializeField]
-    private float maxSpeed = 8f;
-    private float currentSpeed = 0f;
-    [SerializeField]
-    private float turnSpeed = 90f;
+    private Rigidbody rb;
+    Quaternion rotation;
 
-    public bool IsButtonAPressed { get { return bButtonAPressed; } }
+    /* Crown Stuff */
+    private float crownTime;
+    public float CrownTime { get { return crownTime; } }
+
 
     private void Start() {
         manager = GameObject.Find("CrownKeepManager").GetComponent<CrownKeepManager>();
         manager.GetPlayers(this);
-        canGetHit = true;
-    }
-
-    public void OnButtonA(bool value) {
-        bButtonAPressed = value;
     }
 
     public void OnInputMove(Vector2 direction) {
-        Debug.Log("dir in: " + direction);
         if (direction.x < 0) direction.x = -1;
         if (direction.x > 0) direction.x = 1;
         if (direction.y < 0) direction.y = -1;
@@ -45,23 +36,21 @@ public class CrownKeepCharacter : MonoBehaviour {
     }
 
     private void Update() {
-        MovePlayer();
+        if (manager.PlayersCanMove) MovePlayer();
     }
 
     private void MovePlayer() {
-        Debug.Log("Dir: " + direction);
-        //gameObject.transform.Rotate(0f, direction.x * turnSpeed * Time.deltaTime, 0f);
-        transform.forward += transform.right * direction.x * turnSpeed * Time.deltaTime;
+        currentVelocity.Set(direction.x, 0f, direction.y);
+        currentVelocity.Normalize();
 
-        if (direction.y > 0 || direction.y < 0) {
-            // Accelerate
-            currentSpeed = Mathf.MoveTowards(currentSpeed, maxSpeed, acceleration * Time.deltaTime);
-        }
-        else {
-            // Deccelerate
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);
-        }
-        gameObject.transform.Translate(0f, 0f, direction.y * currentSpeed * Time.deltaTime);
-        Debug.Log("Dir 2: " + direction);
+        Vector3 desiredForward = Vector3.RotateTowards(transform.forward, currentVelocity, turnSpeed * Time.deltaTime, 0f);
+        rotation = Quaternion.LookRotation(desiredForward);
+
+        rb.MovePosition(rb.position + currentVelocity * maxSpeed * Time.deltaTime);
+        rb.MoveRotation(rotation);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log("crown trigger");
     }
 }
