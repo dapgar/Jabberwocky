@@ -14,6 +14,11 @@ public class CrownKeepManager : MonoBehaviour {
     private float preGameTimer = 2f;
     bool bInGame = false;
 
+    private int currentCrownHolder = -1;
+
+    [SerializeField]
+    private GameObject crown;
+
     private bool bPlayersCanMove = false;
     public bool PlayersCanMove { get { return bPlayersCanMove; } }
 
@@ -39,8 +44,37 @@ public class CrownKeepManager : MonoBehaviour {
                 bPlayersCanMove = true;
             }
             timerText.text = $"Game Starts In: {preGameTimer.ToString("F1")}";
-            
+
         }
+    }
+
+    public void OnCrownTouched(CrownKeepCharacter player) {
+        Debug.Log("Crown touched");
+        int index = players.IndexOf(player);
+
+        // Initial Crown Pickup currentCrownHolder == -1, so guy who picks it up skips other checks
+        if (currentCrownHolder == -1) {
+            currentCrownHolder = index;
+            player.GotCrown();
+            AttachCrownToPlayer(player);
+            crown.GetComponent<Animator>().enabled = false;
+            return;
+        }
+
+        if (index == -1 || index == currentCrownHolder || !players[currentCrownHolder].CanGetStolen()) {
+            return;
+        }
+
+        players[currentCrownHolder].CrownStolen();
+        currentCrownHolder = index;
+        player.GotCrown();
+        AttachCrownToPlayer(player);
+    }
+
+    private void AttachCrownToPlayer(CrownKeepCharacter player) {
+        crown.transform.parent = player.transform;
+        crown.transform.localPosition = new Vector3(0f, 0.6f, 0f);
+        crown.transform.localRotation = Quaternion.identity;
     }
 
 }

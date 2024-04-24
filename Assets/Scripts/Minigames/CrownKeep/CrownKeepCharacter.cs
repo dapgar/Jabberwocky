@@ -15,10 +15,16 @@ public class CrownKeepCharacter : MonoBehaviour {
     private float turnSpeed = 250f;
     [SerializeField]
     private Rigidbody rb;
-    Quaternion rotation;
+    private Quaternion rotation;
 
     /* Crown Stuff */
     private float crownTime;
+    private float currentCrownTime;
+    private bool bHasCrown;
+    [SerializeField]
+    private float crownStealBuffer = 0.15f;
+
+
     public float CrownTime { get { return crownTime; } }
 
 
@@ -37,6 +43,10 @@ public class CrownKeepCharacter : MonoBehaviour {
 
     private void Update() {
         if (manager.PlayersCanMove) MovePlayer();
+        if (bHasCrown) {
+            currentCrownTime += Time.deltaTime;
+            crownTime += Time.deltaTime;
+        }
     }
 
     private void MovePlayer() {
@@ -51,6 +61,21 @@ public class CrownKeepCharacter : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("crown trigger");
+        manager.OnCrownTouched(this);
+    }
+
+    public bool CanGetStolen() {
+        return currentCrownTime > crownStealBuffer;
+    }
+
+    public void CrownStolen() {
+        bHasCrown = false;
+        currentCrownTime = 0f;
+        Debug.Log("LOST CROWN");
+    }
+
+    public void GotCrown() {
+        bHasCrown = true;
+        Debug.Log("GOT CROWN");
     }
 }

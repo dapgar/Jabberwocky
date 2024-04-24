@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4634246058385685108}
   m_Layer: 0
   m_Name: CrownKeepPlayer
-  m_TagString: CrownKeepPlayer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   maxSpeed: 7
   turnSpeed: 250
   rb: {fileID: 3938396772717927870}
+  crownStealBuffer: 0.15
 --- !u!54 &3938396772717927870
 Rigidbody:
   m_ObjectHideFlags: 0
