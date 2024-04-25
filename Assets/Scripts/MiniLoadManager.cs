@@ -131,7 +131,7 @@ public class MiniLoadManager : MonoBehaviour
                 break;
             case 4:
                 titleText.text = "Crown Keep";
-                controlText.text = "Use the D-Pad to move around and keep the crown for yourself for as long as possible";
+                controlText.text = "Use the d-pad to move around and keep the crown for yourself for as long as possible";
                 minigameImage.sprite = Sprite.Create(images[4], new Rect(0, 0, images[4].width, images[4].height), Vector2.zero);
                 break;
             case 5:
