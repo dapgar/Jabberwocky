@@ -87,7 +87,7 @@ public class CrownKeepManager : MonoBehaviour {
                 preGameTimer = 0f;
                 bPlayersCanMove = true;
             }
-            timerText.text = $"Game Starts In: {preGameTimer.ToString("F1")}";
+            timerText.text = $"Begins In: {preGameTimer.ToString("F1")}";
 
         }
         else {
