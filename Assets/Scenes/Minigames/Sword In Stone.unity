@@ -15145,7 +15145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Game Starts In: 5.0'
+  m_text: 'Game Begins In: 5.0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4293f1cdb5a16bf4690010abf5b169d9, type: 2}
   m_sharedMaterial: {fileID: 7949234319621001940, guid: 4293f1cdb5a16bf4690010abf5b169d9, type: 2}

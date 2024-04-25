@@ -8,7 +8,6 @@ using UnityEditor;
 
 public class MiniLoadManager : MonoBehaviour
 {
-    private int numberOfGames = 4;
     public TextMeshProUGUI hintText;
     public GameObject playButton;
 
@@ -87,7 +86,7 @@ public class MiniLoadManager : MonoBehaviour
         switch (randomHint)
         {
             case 0:
-                hintText.text = "Minigame winners move, losers like you don't. Secure victory to advance!";
+                hintText.text = "Minigame winners move, losers like you don't. Win to advance!";
                 break;
 
             case 1:
