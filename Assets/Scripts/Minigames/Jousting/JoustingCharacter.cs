@@ -112,14 +112,14 @@ public class JoustingCharacter : MonoBehaviour {
         if (!canGetHit) return;
         Vector3 direction = other.transform.position - transform.position;
         float dotProduct = Vector3.Dot(transform.forward, direction.normalized);
-        if (dotProduct > 0) {
-            Debug.Log("Trigger Hit from the front");
-        }
-        else {
-            Debug.Log("Trigger Hit from the back");
-            hp--;
-            StartCoroutine(HitCoroutine());
-        }
+        //if (dotProduct > 0) {
+        //    Debug.Log("Trigger Hit from the front");
+        //}
+        //else {
+        //    Debug.Log("Trigger Hit from the back");
+        //    hp--;
+        //    StartCoroutine(HitCoroutine());
+        //}
     }
 
     public void GetHit()
@@ -131,6 +131,7 @@ public class JoustingCharacter : MonoBehaviour {
     public void ShieldHit()
     {
         currentSpeed = 0;
+        Debug.Log("Shield has been hit.");
     }
 
     IEnumerator HitCoroutine() {

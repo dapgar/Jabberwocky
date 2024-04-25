@@ -12,21 +12,30 @@ public class JoustObj : MonoBehaviour
         JoustingCharacter otherJouster = other.gameObject.gameObject.GetComponent<JoustingCharacter>();
         if (otherJouster != null)
         {
+            otherJouster.GetHit();
+            //Vector3 direction = other.transform.position - transform.position;
+            //float dotProduct = Vector3.Dot(transform.forward, direction.normalized);
+            //if (dotProduct > 0)
+            //{
+            //    //Debug.Log("Trigger Hit from the front");
+            //    //jouster.ShieldHit();
+            //}
+            //else
+            //{
+            //    Debug.Log("Trigger Hit from the back");
+            //    otherJouster.GetHit();
+            //}
+        }
+        else
+        {
             Vector3 direction = other.transform.position - transform.position;
             float dotProduct = Vector3.Dot(transform.forward, direction.normalized);
             if (dotProduct > 0)
             {
-                Debug.Log("Trigger Hit from the front");
+                //Debug.Log("Trigger Hit from the front");
+                jouster.ShieldHit();
             }
-            else
-            {
-                Debug.Log("Trigger Hit from the back");
-                otherJouster.GetHit();
-            }
-        }
-        else
-        {
-            jouster.ShieldHit();
+            //jouster.ShieldHit();
         }
     }
 }
