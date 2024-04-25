@@ -32,5 +32,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Minigames/LockPicking.unity
     guid: 851d336511b98114f9acf7e446c7c7c2
+  - enabled: 1
+    path: Assets/Scenes/Minigames/CrownKeep.unity
+    guid: 92d275f4de1b4754bbeec57663f80ef3
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c378c930b11584b4e81b8b31f40d433c, type: 2}

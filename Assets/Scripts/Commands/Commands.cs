@@ -15,7 +15,7 @@ public class Commands : MonoBehaviour {
     }
 
     // OPTIONAL: Can add 'Name = "SetGame",' before "Help = ..." to give it a custom name (separate from function name)
-    [RegisterCommand(Help = "Next Game: RLGL | RT | SIS | LP", MinArgCount = 1, MaxArgCount = 1)]
+    [RegisterCommand(Help = "Next Game: RLGL | RT | SIS | LP | CK", MinArgCount = 1, MaxArgCount = 1)]
     static void SetGame(CommandArg[] args) {
         string parameter = args[0].String;
         if (Terminal.IssuedError) return;
@@ -37,13 +37,17 @@ public class Commands : MonoBehaviour {
                 GameManager.instance.devMinigameNumber = 3;
                 Terminal.Log("Lock Picking Set");
                 break;
+            case "ck":
+                GameManager.instance.devMinigameNumber = 4;
+                Terminal.Log("Crown Keep Set");
+                break;
             default:
-                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP");
+                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP | CK");
                 break;
         }
     }
 
-    [RegisterCommand(Help = "Open Game: RLGL | RT | SIS | LP", MinArgCount = 1, MaxArgCount = 1)]
+    [RegisterCommand(Help = "Open Game: RLGL | RT | SIS | LP | CK", MinArgCount = 1, MaxArgCount = 1)]
     static void OpenGame(CommandArg[] args) {
         GameManager.instance.devMinigameNumber = -1;
         string parameter = args[0].String;
@@ -63,8 +67,11 @@ public class Commands : MonoBehaviour {
             case "lp":
                 SceneChanger.Instance.ChangeScene(3 + buffer);
                 break;
+            case "ck":
+                SceneChanger.Instance.ChangeScene(4 + buffer);
+                break;
             default:
-                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP");
+                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP | CK");
                 break;
         }
     }

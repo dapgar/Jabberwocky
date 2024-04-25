@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 
     private int weightBase = 2;
     private int weightIncrease = 2;
-    private int[] miniGameWeights = new int[4]; //MAKE THIS EQUAL TO THE MINILOAD MANAGER GAME NUMBER
+    private int[] miniGameWeights = new int[5]; //MAKE THIS EQUAL TO THE MINILOAD MANAGER GAME NUMBER
 
 
     // Win con
