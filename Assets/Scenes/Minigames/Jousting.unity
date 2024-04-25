@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -182,7 +182,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -208,13 +208,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 546918553}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5330491, y: -0, z: -0, w: 0.84608436}
-  m_LocalPosition: {x: 0, y: 11.49, z: -6.52}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 0, y: 12, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 64.423, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!1001 &599635143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -337,6 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 813949820}
   - component: {fileID: 813949819}
+  - component: {fileID: 813949821}
   m_Layer: 0
   m_Name: JoustingManager
   m_TagString: Untagged
@@ -356,7 +357,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6292847f1de2ec429178ab4a6f16dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  onWin: {fileID: 11400000, guid: 5e4ec4959c652734aabfb5443bbaf31f, type: 2}
+  speed: 10
   turnSpeed: 2
 --- !u!4 &813949820
 Transform:
@@ -373,6 +375,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &813949821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813949818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9b81ed2e0fb7a048a7133681e7fee8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 683e2d0aa010e3d44895dd625fd104a7, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 813949819}
+        m_TargetAssemblyTypeName: JoustingManager, Assembly-CSharp
+        m_MethodName: OnPlayerDie
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1008525949
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +666,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.02}
-  m_LocalScale: {x: 2.9226, y: 1, z: 2.8524}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
