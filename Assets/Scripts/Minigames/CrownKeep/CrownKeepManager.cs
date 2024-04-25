@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
 public class CrownKeepManager : MonoBehaviour {
     private enum GameState {
@@ -13,6 +14,7 @@ public class CrownKeepManager : MonoBehaviour {
     private GameState gameState;
 
     private List<CrownKeepCharacter> players;
+    private List<CrownKeepCharacter> playersInOrder;
 
     [SerializeField]
     private float gameTimer = 45f;
@@ -34,16 +36,36 @@ public class CrownKeepManager : MonoBehaviour {
     [SerializeField]
     private TMP_Text[] scoreTimeTexts;
     [SerializeField]
-
+    private Image[] playerImages;
+    private Sprite[] playerIcons;
 
     public bool PlayersCanMove { get { return bPlayersCanMove; } }
 
     private void Start() {
         players = new List<CrownKeepCharacter>();
+        playersInOrder = new List<CrownKeepCharacter>();
         gameState = GameState.PreGame;
+
+        foreach (TMP_Text text in scoreTimeTexts) {
+            text.text = "0s";
+        }
+        playerIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
+        for (int i = 0; i < playerIcons.Length; i++) {
+            playerImages[i].sprite = playerIcons[i];
+        }
     }
     public void GetPlayers(CrownKeepCharacter player) {
         players.Add(player);
+        playersInOrder.Add(player);
+        player.playerSprite = playerIcons[players.IndexOf(player)];
+    }
+
+    private void UpdateLeaderboard() {
+        playersInOrder = playersInOrder.OrderByDescending(p => p.CrownTime).ToList();
+        for (int i = 0; i < playersInOrder.Count; i++) {
+            scoreTimeTexts[i].text = playersInOrder[i].CrownTime.ToString("F1") + "s";
+            playerImages[i].sprite = playersInOrder[i].playerSprite;
+        }
     }
 
     private void Update() {
@@ -55,7 +77,7 @@ public class CrownKeepManager : MonoBehaviour {
                 bPlayersCanMove = false;
             }
             timerText.text = $"Time Remaining: {gameTimer.ToString("F1")}";
-
+            UpdateLeaderboard();
         }
         else if (gameState == GameState.PreGame) {
             // In pregame

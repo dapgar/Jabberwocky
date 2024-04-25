@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CrownKeepCharacter : MonoBehaviour {
@@ -22,11 +20,11 @@ public class CrownKeepCharacter : MonoBehaviour {
     private float currentCrownTime;
     private bool bHasCrown;
     [SerializeField]
-    private float crownStealBuffer = 0.15f;
-
+    private float crownStealBuffer = 0.25f;
 
     public float CrownTime { get { return crownTime; } }
 
+    [HideInInspector] public Sprite playerSprite;
 
     private void Start() {
         manager = GameObject.Find("CrownKeepManager").GetComponent<CrownKeepManager>();

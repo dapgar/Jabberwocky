@@ -63,6 +63,9 @@ public class Commands : MonoBehaviour {
             case "lp":
                 SceneChanger.Instance.ChangeScene(3 + buffer);
                 break;
+            case "ck":
+                SceneChanger.Instance.ChangeScene(4 + buffer);
+                break;
             default:
                 Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP");
                 break;

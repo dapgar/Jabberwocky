@@ -114,7 +114,8 @@ MonoBehaviour:
   maxSpeed: 7
   turnSpeed: 250
   rb: {fileID: 3938396772717927870}
-  crownStealBuffer: 0.15
+  crownStealBuffer: 0.25
+  playerSprite: {fileID: 0}
 --- !u!54 &3938396772717927870
 Rigidbody:
   m_ObjectHideFlags: 0
