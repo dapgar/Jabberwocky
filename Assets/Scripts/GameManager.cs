@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour {
 
     private int weightBase = 2;
     private int weightIncrease = 2;
-    private int[] miniGameWeights = new int[5]; //MAKE THIS EQUAL TO THE MINILOAD MANAGER GAME NUMBER
+    private int[] miniGameWeights = new int[6]; //MAKE THIS EQUAL TO THE MINILOAD MANAGER GAME NUMBER
 
 
     // Win con

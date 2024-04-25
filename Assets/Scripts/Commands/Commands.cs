@@ -15,7 +15,7 @@ public class Commands : MonoBehaviour {
     }
 
     // OPTIONAL: Can add 'Name = "SetGame",' before "Help = ..." to give it a custom name (separate from function name)
-    [RegisterCommand(Help = "Next Game: RLGL | RT | SIS | LP | CK", MinArgCount = 1, MaxArgCount = 1)]
+    [RegisterCommand(Help = "Next Game: RLGL | RT | SIS | LP | CK | Jst", MinArgCount = 1, MaxArgCount = 1)]
     static void SetGame(CommandArg[] args) {
         string parameter = args[0].String;
         if (Terminal.IssuedError) return;
@@ -41,13 +41,17 @@ public class Commands : MonoBehaviour {
                 GameManager.instance.devMinigameNumber = 4;
                 Terminal.Log("Crown Keep Set");
                 break;
+            case "jst":
+                GameManager.instance.devMinigameNumber = 5;
+                Terminal.Log("Joust Set");
+                break;
             default:
-                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP | CK");
+                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP | CK | JST");
                 break;
         }
     }
 
-    [RegisterCommand(Help = "Open Game: RLGL | RT | SIS | LP | CK", MinArgCount = 1, MaxArgCount = 1)]
+    [RegisterCommand(Help = "Open Game: RLGL | RT | SIS | LP | CK | JST", MinArgCount = 1, MaxArgCount = 1)]
     static void OpenGame(CommandArg[] args) {
         GameManager.instance.devMinigameNumber = -1;
         string parameter = args[0].String;
@@ -70,8 +74,11 @@ public class Commands : MonoBehaviour {
             case "ck":
                 SceneChanger.Instance.ChangeScene(4 + buffer);
                 break;
+            case "jst":
+                SceneChanger.Instance.ChangeScene(5 + buffer);
+                break;
             default:
-                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP | CK");
+                Debug.LogError($"Game {parameter} is not recognized. Use RLGL | RT | SIS | LP | CK | JST");
                 break;
         }
     }
