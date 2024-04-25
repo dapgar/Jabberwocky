@@ -42,10 +42,12 @@ public class CrownKeepCharacter : MonoBehaviour {
     }
 
     private void Update() {
-        if (manager.PlayersCanMove) MovePlayer();
-        if (bHasCrown) {
-            currentCrownTime += Time.deltaTime;
-            crownTime += Time.deltaTime;
+        if (manager.PlayersCanMove) {
+            MovePlayer();
+            if (bHasCrown) {
+                currentCrownTime += Time.deltaTime;
+                crownTime += Time.deltaTime;
+            }
         }
     }
 
