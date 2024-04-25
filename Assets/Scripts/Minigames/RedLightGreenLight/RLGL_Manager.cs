@@ -121,7 +121,7 @@ public class RLGL_Manager : MonoBehaviour {
     private void Update() {
         if (gameStarting) {
             gameStartTimer -= Time.deltaTime;
-            preGameTimerText.text = $"Game Starts In: {gameStartTimer.ToString("F1")}";
+            preGameTimerText.text = $"Begins In: {gameStartTimer.ToString("F1")}";
             if (gameStartTimer < 0) {
                 gameStarting = false;
                 gameRunning = true;
