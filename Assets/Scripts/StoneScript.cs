@@ -67,6 +67,8 @@ public class StoneScript : MonoBehaviour
         // Player's movement is done, tell BoardManager that they're done moving
         moveFinished = true;
         isMoving = false;
+
+        BoardManager.instance.SavePlayersPos();
     }
 
     /* Deprecated

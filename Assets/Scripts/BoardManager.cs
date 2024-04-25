@@ -52,7 +52,13 @@ public class BoardManager : MonoBehaviour {
 
     public bool itemUIOpen = false;
 
+    private bool[] movedThisTurn;
+
     void Start() {
+        movedThisTurn = new bool[players.Count];
+        for (int i = 0; i < movedThisTurn.Length; i++) {
+            movedThisTurn[i] = false;
+        }
         currentPlayer = 0;
         for (int i = 0; i < gotItemAlready.Length; i++) {
             gotItemAlready[i] = false;
@@ -77,8 +83,7 @@ public class BoardManager : MonoBehaviour {
 
         // Board UI
         charIcons = PlayerConfigurationManager.Instance.GetUsedPlayerIcons();
-        for (int i = 0; i < playerIcons.Count; i++)
-        {
+        for (int i = 0; i < playerIcons.Count; i++) {
             playerIcons[i].sprite = charIcons[i];
         }
         //playerIcons[0].sprite = playerSprites[playerRankings[0].stoneID - 1];
@@ -87,11 +92,17 @@ public class BoardManager : MonoBehaviour {
         //playerIcons[3].sprite = playerSprites[playerRankings[3].stoneID - 1];
     }
 
+    public void SavePlayersPos() {
+        for (int playerIndex = 0; playerIndex < players.Count; playerIndex++) {
+            GameManager.instance.routeData[playerIndex] = players[playerIndex].routePos;
+            GameManager.instance.playersPos[playerIndex] = players[playerIndex].transform.position;
+            GameManager.instance.playerRots[playerIndex] = players[playerIndex].transform.rotation;
+        }
+        
+    }
+
     private void MovePlayer(int playerIndex, int spaces, bool bSkipAnim) {
         StartCoroutine(players[playerIndex].MovePlayer(spaces, bSkipAnim));
-        GameManager.instance.routeData[playerIndex] = players[playerIndex].routePos;
-        GameManager.instance.playersPos[playerIndex] = players[playerIndex].transform.position;
-        GameManager.instance.playerRots[playerIndex] = players[playerIndex].transform.rotation;
     }
 
     public void DevMovePlayer(int playerNum, int spaces) {
@@ -148,6 +159,8 @@ public class BoardManager : MonoBehaviour {
 
         itemSelectPlayerToSwapWithUI.gameObject.SetActive(false);
         itemUIOpen = false;
+        
+        SavePlayersPos();
 
         currentPlayer++;
         boardState = BoardState.Idle;
@@ -163,8 +176,8 @@ public class BoardManager : MonoBehaviour {
         for (int i = 0; i < playerIcons.Length; i++) {
             if (i == currentPlayer) continue;
             buttons[btnIndex].image.sprite = playerIcons[i];
-            int currentIndex = i;
-            buttons[btnIndex].onClick.AddListener(delegate { ItemMovePlayerBackwards(currentIndex); });
+            int toMoveBack = i;
+            buttons[btnIndex].onClick.AddListener(delegate { ItemMovePlayerBackwards(toMoveBack); });
             btnIndex++;
         }
         itemMovePlayerBackUI.gameObject.SetActive(true);
@@ -241,13 +254,16 @@ public class BoardManager : MonoBehaviour {
                             turnState = TurnState.PostMove;
                         }
                         else if (!player.isMoving) {
+                            if (GameManager.instance.moveData[player.stoneID - 1] > 0) {
+                                movedThisTurn[currentPlayer] = true;
+                            }
                             StartCoroutine(player.MovePlayer(GameManager.instance.moveData[player.stoneID - 1]));
                         }
                         break;
                     case TurnState.PostMove:
                         GameManager.instance.routeData[currentPlayer] = players[currentPlayer].routePos;
                         // Checks if player is on an item node
-                        if (!gotItemAlready[currentPlayer] && route.childNodeList[players[currentPlayer].routePos].GetComponent<Node>().isItemSpace) {
+                        if (!gotItemAlready[currentPlayer] && movedThisTurn[currentPlayer] && route.childNodeList[players[currentPlayer].routePos].GetComponent<Node>().isItemSpace) {
                             turnState = TurnState.Item;
                         }
                         else {
@@ -273,10 +289,10 @@ public class BoardManager : MonoBehaviour {
                 }
                 else {
                     // Clean up & save info at end of round
+                    SavePlayersPos();
                     for (int i = 0; i < players.Count; i++) {
-                        GameManager.instance.playersPos[i] = players[i].transform.position;
-                        GameManager.instance.playerRots[i] = players[i].transform.rotation;
                         GameManager.instance.moveData[i] = 0;
+                        gotItemAlready[i] = false;
                     }
                     // Setting playersMoving = false ends the round
                     GameManager.instance.playersMoving = false;
