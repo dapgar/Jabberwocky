@@ -352,7 +352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Select A Player To Swap Positions With
+  m_text: Choose a player to swap spot with
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4293f1cdb5a16bf4690010abf5b169d9, type: 2}
   m_sharedMaterial: {fileID: 7949234319621001940, guid: 4293f1cdb5a16bf4690010abf5b169d9, type: 2}
