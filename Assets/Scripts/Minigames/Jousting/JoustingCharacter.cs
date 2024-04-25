@@ -107,6 +107,10 @@ public class JoustingCharacter : MonoBehaviour {
             // Accelerate
             currentSpeed = Mathf.MoveTowards(currentSpeed, maxSpeed, acceleration * Time.deltaTime);
         }
+        else if (direction.y < 0)
+        {
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * 2 * Time.deltaTime);
+        }
         else {
             // Deccelerate
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, deceleration * Time.deltaTime);

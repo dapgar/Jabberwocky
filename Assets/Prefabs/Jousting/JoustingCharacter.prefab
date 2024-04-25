@@ -53,6 +53,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2493d0f046b6f4498e5f1b5e75928b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveWhilePerformed: 1
+  onButtonX:
+    m_PersistentCalls:
+      m_Calls: []
+  onButtonY:
+    m_PersistentCalls:
+      m_Calls: []
   onButtonA:
     m_PersistentCalls:
       m_Calls:
@@ -68,6 +75,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onButtonB:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerL:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerR:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  onRight:
+    m_PersistentCalls:
+      m_Calls: []
   onDPad:
     m_PersistentCalls:
       m_Calls:

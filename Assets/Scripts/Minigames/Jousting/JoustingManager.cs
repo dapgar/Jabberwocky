@@ -18,11 +18,13 @@ public class JoustingManager : MonoBehaviour {
     private float turnSpeed = 2.0f;
 
     private void Start() {
-        numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 2;
-        players = new List<JoustingCharacter>(numPlayers);
+        //numPlayers = GameManager.instance ? GameManager.instance.numPlayers : 4;
+        //Debug.Log(numPlayers);
+        players = new List<JoustingCharacter>();
     }
 
     public void SetupPlayer(JoustingCharacter playa) {
+        numPlayers++;
         players.Add(playa);
         int playaIndex = players.IndexOf(playa);
         playa.SetupPlayer(playaIndex, speed, turnSpeed);
@@ -36,16 +38,18 @@ public class JoustingManager : MonoBehaviour {
         {
             Debug.Log("One Left Standing");
             onWin.Invoke();
+            StartCoroutine(WinPlayer());
         }
     }
 
     IEnumerator WinPlayer()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(1.5f);
         players.RemoveAll(players => players == null);
         int[] moveData = new int[GameManager.instance.numPlayers];
         int spacesToMove = GameManager.instance.diceRoll;
         moveData[players[0].playerIndex] = spacesToMove;
+        GameManager.instance.MoveData(moveData);
 
         SceneChanger.Instance.ChangeScene(1);
     }
