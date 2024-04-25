@@ -12182,6 +12182,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4168393073392521770, guid: 9e2738df51f9b4d4189b5cf804576848, type: 3}
+      propertyPath: m_text
+      value: Select A Player To Move Back 3 Spaces
+      objectReference: {fileID: 0}
     - target: {fileID: 9164134345873788300, guid: 9e2738df51f9b4d4189b5cf804576848, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
