@@ -25,10 +25,13 @@ public class StoneScript : MonoBehaviour
     public IEnumerator MovePlayer(int amount, bool skipAnim = false) {
         moveFinished = false;
         isMoving = true;
-        if (!skipAnim) playerAnim.SetBool("isMoving", true);
+
+        // FOR ANIM TESTING
+        skipAnim = false;
 
         if (amount > 0) {
             while (amount > 0) {
+                if (!skipAnim) playerAnim.SetTrigger("movePlayer");
                 Vector3 nextPos = currentRoute.childNodeList[routePos + 1].position;
 
                 // Moving to position
@@ -57,7 +60,7 @@ public class StoneScript : MonoBehaviour
             yield return new WaitForSeconds(skipAnim ? 0.001f : 1f);
         }
         LookAtCamera();
-        if (!skipAnim) playerAnim.SetBool("isMoving", false);
+        //if (!skipAnim) playerAnim.SetBool("isMoving", false);
 
         yield return null;
 

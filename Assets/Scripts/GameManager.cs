@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public Vector3[] playersPos;
     [HideInInspector] public Quaternion[] playerRots;
 
-    private int weightBase = 1;
-    private int weightIncrease = 1;
+    private int weightBase = 2;
+    private int weightIncrease = 2;
     private int[] miniGameWeights = new int[4]; //MAKE THIS EQUAL TO THE MINILOAD MANAGER GAME NUMBER
 
 
@@ -81,11 +81,18 @@ public class GameManager : MonoBehaviour {
             if (i == gameToReturn)
             {
                 //weights[i] += weightDecrease;
-                miniGameWeights[i] = weightBase - weightIncrease;
+                miniGameWeights[i] = 0;
             }
             else
             {
-                miniGameWeights[i] += weightIncrease;
+                if (miniGameWeights[i] < weightBase)
+                {
+                    miniGameWeights[i] += 1;
+                }
+                else
+                {
+                    miniGameWeights[i] += weightIncrease;
+                }
             }
         }
 

@@ -285,7 +285,7 @@ public class ReactionTime : MonoBehaviour
 
     private IEnumerator ReturnToBoardCoroutine()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(1.5f);
 
         SceneChanger.Instance.ChangeScene(1);
     }

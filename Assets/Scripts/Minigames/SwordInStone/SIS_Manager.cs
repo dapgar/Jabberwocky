@@ -13,7 +13,7 @@ public class SIS_Manager : MonoBehaviour {
     private float maxPlayerStamina = 1f;
     /* Max height to pull sword before it comes out of rock */
     [SerializeField]
-    private float maxPullLength = 0.6f;
+    private float maxPullLength = 0.73f;
     [SerializeField]
     private float staminaRegenRate = 0.25f;
     [SerializeField]
@@ -24,10 +24,6 @@ public class SIS_Manager : MonoBehaviour {
     [Header("GameObjects")]
     [SerializeField]
     private GameObject[] Swords;
-    [SerializeField]
-    private Image[] PlayerIcons;
-    [SerializeField]
-    private GameObject[] playerIconObjects;
 
     [Header("Pre Game Stuff")]
     [SerializeField]
@@ -62,7 +58,6 @@ public class SIS_Manager : MonoBehaviour {
         players.Add(playa);
         int playaIndex = players.IndexOf(playa);
         playa.SetupPlayer(playaIndex, maxPlayerStamina, staminaRegenRate, staminaClickDrain);
-        playerIconObjects[playaIndex].SetActive(true); // not using stamina temp, just keep stamina icons hidden
     }
 
     private void Update() {
@@ -78,7 +73,6 @@ public class SIS_Manager : MonoBehaviour {
         else if (bGameRunning) {
             for (int i = 0; i < players.Count; i++) {
                 //PlayerIcons[i].fillAmount = players[i].Stamina; // if we go back to stamina
-                PlayerIcons[i].fillAmount = players[i].IsButtonPressed ? 1 : 0;
                 if (players[i].CheckClick()) {
                     Vector3 newSwordPos = new Vector3(Swords[i].transform.position.x, Swords[i].transform.position.y, Swords[i].transform.position.z);
                     newSwordPos.y += clickPullAmount;

@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6944510841533881986}
   - component: {fileID: 800012031891502518}
   m_Layer: 5
-  m_Name: MovePlayerBackUI
+  m_Name: SwapPlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -287,7 +287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 4860455114185065130}
-  playerID: 0
 --- !u!1 &1929863494063477004
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Select A Player To Move Back 3 Spaces
+  m_text: Select A Player To Swap Positions With
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4293f1cdb5a16bf4690010abf5b169d9, type: 2}
   m_sharedMaterial: {fileID: 7949234319621001940, guid: 4293f1cdb5a16bf4690010abf5b169d9, type: 2}
@@ -674,7 +673,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 4860455114185065130}
-  playerID: 0
 --- !u!1 &7272940254594362898
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +807,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 4860455114185065130}
-  playerID: 0
 --- !u!1 &8134724920685886232
 GameObject:
   m_ObjectHideFlags: 0
