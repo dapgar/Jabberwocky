@@ -129,6 +129,11 @@ public class MiniLoadManager : MonoBehaviour
                 controlText.text = "Press the arrow keys to pick the locks";
                 minigameImage.sprite = Sprite.Create(images[3], new Rect(0, 0, images[3].width, images[3].height), Vector2.zero);
                 break;
+            case 4:
+                titleText.text = "Crown Keep";
+                controlText.text = "Use the D-Pad to move around and keep the crown for yourself for as long as possible";
+                minigameImage.sprite = Sprite.Create(images[4], new Rect(0, 0, images[4].width, images[4].height), Vector2.zero);
+                break;
         }
     }
 }
