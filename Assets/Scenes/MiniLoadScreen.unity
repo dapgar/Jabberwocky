@@ -1506,8 +1506,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 89d4f446c5320454bb616a6b2cb00825, type: 3}
   - {fileID: 2800000, guid: ca2c7d9d6699297408d754828fe1eee5, type: 3}
   - {fileID: 2800000, guid: 7217cb4032966bf429d39f7bcaf1f91e, type: 3}
-  - {fileID: 2800000, guid: cad4982cb1c87fa4bbd8e00d383c1f8c, type: 3}
-  - {fileID: 2800000, guid: 0337f1433cc4e1043a2754be9b1e99a3, type: 3}
+  - {fileID: 2800000, guid: d4ec1c145a2d6ac4383bed34e9e168d7, type: 3}
+  - {fileID: 2800000, guid: 0c38f046cb1409b4c97647088f814ec7, type: 3}
   loadIcon: {fileID: 2057585698}
 --- !u!1001 &2057585696
 PrefabInstance:
