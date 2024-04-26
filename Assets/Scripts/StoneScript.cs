@@ -26,9 +26,6 @@ public class StoneScript : MonoBehaviour
         moveFinished = false;
         isMoving = true;
 
-        // FOR ANIM TESTING
-        skipAnim = false;
-
         if (amount > 0) {
             while (amount > 0) {
                 if (!skipAnim) playerAnim.SetTrigger("movePlayer");

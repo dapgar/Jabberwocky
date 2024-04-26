@@ -15,7 +15,7 @@ public class ButtonManager : MonoBehaviour
     {
         // CALL RESET HERE
         GameManager.instance.ResetGame();
-        SceneChanger.Instance.ChangeScene(1);
+        SceneChanger.Instance.ChangeScene(0);
     }
 
     public void QuitButton()
