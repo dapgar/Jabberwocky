@@ -138,8 +138,6 @@ MonoBehaviour:
   maxSpeed: 8
   crowns:
   - {fileID: 654918542481980393}
-  - {fileID: 4342195172733893421}
-  - {fileID: 4488821744779009354}
 --- !u!65 &8477049656870084404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -476,6 +474,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: crown (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 620843952725638004, guid: 4d6b367a036778548b2d7424ff56ac03, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -484,11 +486,6 @@ PrefabInstance:
 --- !u!4 &3965774804921377175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 276547951383896526, guid: 4d6b367a036778548b2d7424ff56ac03, type: 3}
-  m_PrefabInstance: {fileID: 3809831747287318617}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4342195172733893421 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 620843952725638004, guid: 4d6b367a036778548b2d7424ff56ac03, type: 3}
   m_PrefabInstance: {fileID: 3809831747287318617}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3951576418822071870
@@ -555,6 +552,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: crown (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 620843952725638004, guid: 4d6b367a036778548b2d7424ff56ac03, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -563,11 +564,6 @@ PrefabInstance:
 --- !u!4 &3819245124285253616 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 276547951383896526, guid: 4d6b367a036778548b2d7424ff56ac03, type: 3}
-  m_PrefabInstance: {fileID: 3951576418822071870}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4488821744779009354 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 620843952725638004, guid: 4d6b367a036778548b2d7424ff56ac03, type: 3}
   m_PrefabInstance: {fileID: 3951576418822071870}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5259057212290473043

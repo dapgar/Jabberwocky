@@ -21,7 +21,7 @@ public class JoustingCharacter : MonoBehaviour {
 
     private JoustingManager manager;
 
-    private int hp = 3;
+    private int hp = 1;
 
     private bool canGetHit;
 
